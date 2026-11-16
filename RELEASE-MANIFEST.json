@@ -1,0 +1,39 @@
+{
+  "version": "0.6.0",
+  "edition": "Free",
+  "plugin_display_name": "Rewards & Referrals by Abdul Hameed",
+  "sidebar": "Rewards",
+  "plugin_basename": "rewards-referrals/rewards-referrals.php",
+  "text_domain": "rewards-referrals",
+  "schema": 23,
+  "installer": {
+    "filename": "rewards-referrals-0.6.0.zip",
+    "sha256": "7773414a534e968cf542ef6a56e85cadf1e6cbda4e065da8fe6694f52315c929",
+    "files": 294
+  },
+  "consolidated_acceptance": {
+    "runs": 61,
+    "validated_runs": 61,
+    "explicit_RESULT_assertions": 1493,
+    "failed": 0,
+    "scope": "Exact attached Free archive; property iterations and repeated historical/focused checks are not added to these counters."
+  },
+  "tested_primary_runtime": {
+    "wordpress": "7.1.4",
+    "woocommerce": "11.3.0",
+    "php": "8.2.12",
+    "database": "MariaDB10.11"
+  },
+  "additional_scope": [
+    "Published0.5.2 upgrade with matched database/code rollback",
+    "Protected currentRC8/schema22 backup upgrade to schema23 with original172lots retained",
+    "Focused MySQL8.0.46 ownership/worker checks",
+    "PHP8.1/8.3/8.5 syntax checks",
+    "Native Elementor editor and multiple widgets; selected desktop/tablet/mobile and RTL workflows"
+  ],
+  "limits": [
+    "No universal provider or theme certification; external Stripe/PayPal sandbox and licensed WoodMart fixtures remain unavailable.",
+    "External mail delivery, complete translations, full assistive-technology and real-device coverage are not certified."
+  ],
+  "distribution_note": "A GitHub release, an Unreleased Freemius deployment and a WordPress.org review submission are separate states. Use the actual channel status; no automatic customer rollout is implied by this manifest."
+}

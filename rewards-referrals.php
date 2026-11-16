@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Rewards & Referrals by Abdul Hameed
- * Plugin URI: https://www.linkedin.com/in/abdul-hameed-website-developer/
+ * Plugin URI: https://github.com/abdulhameed-developer/rewards-referrals
  * Description: Customer loyalty points and direct referral rewards for WooCommerce.
  * Version: 0.6.0
  * Author: Abdul Hameed

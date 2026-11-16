@@ -101,6 +101,7 @@ final class RR_Referrals {
 		global $wpdb;
 		$customer_id = absint( $customer_id );
 		if ( ! $customer_id || ! get_userdata( $customer_id ) ) { return ''; }
+		if ( is_wp_error( RR_Wallet_Identity::check( $customer_id ) ) ) { return ''; }
 		$table = RR_Database::table( 'referral_codes' );
 		$assigned = $wpdb->get_var( $wpdb->prepare( "SELECT referral_code FROM %i WHERE customer_id = %d", $table, $customer_id ) );
 		if ( $wpdb->last_error ) { return ''; }
@@ -131,12 +132,13 @@ final class RR_Referrals {
 		$table = RR_Database::table( 'referral_codes' );
 		$customer_id = absint( $wpdb->get_var( $wpdb->prepare( "SELECT customer_id FROM %i WHERE referral_code = %s", $table, $code ) ) );
 		if ( $wpdb->last_error ) { return self::storage_error(); }
-		if ( $customer_id ) { $user = get_userdata( $customer_id ); if ( $wpdb->last_error ) { return self::storage_error(); } if ( $user ) { return $customer_id; } }
+		if ( $customer_id ) { $user = get_userdata( $customer_id ); if ( $wpdb->last_error ) { return self::storage_error(); } if ( $user ) { $owner = RR_Wallet_Identity::check( $customer_id ); return is_wp_error( $owner ) ? $owner : $customer_id; } }
 		return 0; // Unknown public tokens never trigger an unindexed scan of WordPress user metadata.
 	}
 
 	/** Migrate legacy referral codes through the usermeta primary key in bounded, restart-safe batches. */
 	public static function migrate_codes() {
+		if ( ! RR_Wallet_Identity::ready() ) { RR_Background::schedule( 'rr_referral_index', 5 ); return false; }
 		global $wpdb;
 		$lock = 'rr_referral_index_' . substr( md5( $wpdb->prefix ), 0, 20 );
 		if ( '1' !== (string) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s,0)', $lock ) ) ) { return false; }
@@ -155,7 +157,15 @@ final class RR_Referrals {
 					if ( '_br_referral_code' === $row->meta_key ) {
 						$user = get_userdata( $row->user_id );
 						if ( $wpdb->last_error ) { wp_cache_delete( (int) $row->user_id, 'user_meta' ); return false; }
-						if ( $user && '' === self::ensure_code( $row->user_id ) ) { return false; }
+						if ( $user ) {
+							$owner = RR_Wallet_Identity::check( (int) $row->user_id );
+							if ( is_wp_error( $owner ) ) {
+								$data = $owner->get_error_data();
+								if ( 'rr_wallet_identity' === $owner->get_error_code() && is_array( $data ) && true === ( $data['ownership_conflict'] ?? false ) ) { $state['after'] = (int) $row->umeta_id; continue; }
+								return false;
+							}
+							if ( '' === self::ensure_code( $row->user_id ) ) { return false; }
+						}
 					}
 					$state['after'] = (int) $row->umeta_id;
 				}

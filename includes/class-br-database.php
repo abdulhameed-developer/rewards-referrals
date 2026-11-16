@@ -2,7 +2,7 @@
 defined( 'ABSPATH' ) || exit;
 
 final class RR_Database {
-	public const SCHEMA_VERSION = 22;
+	public const SCHEMA_VERSION = 23;
 	public static function table( $suffix ) {
 		global $wpdb;
 		if ( ! in_array( $suffix, array( 'referrals', 'ledger', 'rules', 'audit', 'wallet_locks', 'redemptions', 'referral_codes', 'referral_history', 'point_wallets', 'point_lots', 'point_allocations', 'redemption_items', 'wallet_balances', 'catalog', 'catalog_queue', 'credit_facts', 'commission_totals', 'customer_lookup', 'request_limits', 'notification_outbox', 'wallet_rebuilds', 'recovery_events', 'legacy_lot_migrations' ), true ) ) {
@@ -94,6 +94,7 @@ final class RR_Database {
 		) ENGINE=InnoDB $collate;" );
 		dbDelta( "CREATE TABLE $wallet_locks (
 			customer_id bigint(20) unsigned NOT NULL,
+			owner_signature char(64) NOT NULL DEFAULT '',
 			updated_at datetime NOT NULL,
 			PRIMARY KEY  (customer_id)
 		) ENGINE=InnoDB $collate;" );
@@ -135,6 +136,7 @@ final class RR_Database {
 			reason text NOT NULL,
 			PRIMARY KEY  (id),
 			KEY customer_history (customer_id,reassigned_at),
+			KEY referrer_history (referrer_id,id),
 			KEY referral_id (referral_id)
 		) ENGINE=InnoDB $collate;" );
 		if ( version_compare( (string) get_option( 'br_schema_version', '0' ), '7', '<' ) ) {
@@ -344,7 +346,11 @@ final class RR_Database {
 		) ENGINE=InnoDB $collate;" );
 		$ready = self::verify_schema();
 		if ( is_wp_error( $ready ) ) { return $ready; }
+		$identity = RR_Wallet_Identity::start();
+		if ( is_wp_error( $identity ) ) { return $identity; }
 		update_option( 'br_schema_version', (string) self::SCHEMA_VERSION, false );
+		// Capture one atomic trust baseline; failures remain fail-closed and retry through the existing worker.
+		if ( ! RR_Wallet_Identity::ready() ) { RR_Wallet_Identity::work(); }
 		delete_option( 'rr_schema_error' );
 		delete_option( 'rr_schema_retry_after' );
 		if ( ! get_option( 'br_settings' ) ) {
@@ -406,7 +412,7 @@ final class RR_Database {
 
 	public static function verify_schema() {
 		global $wpdb;
-		$required = array( 'legacy_lot_migrations' => array( 'customer_id','upper_id','scan_after','opening_lot_id','balance','source_balance','pending','reserved','status','generation','error_code','updated_at' ), 'ledger' => array( 'id', 'customer_id', 'initial_state' ), 'wallet_locks' => array( 'customer_id' ), 'redemptions' => array( 'order_id' ), 'point_wallets' => array( 'customer_id','opening_cursor','debt' ), 'point_lots' => array( 'source_transaction_id','remaining' ), 'point_allocations' => array( 'reservation_transaction_id','returned' ), 'wallet_balances' => array( 'customer_id','balance','pending','reserved','spent','earned','referral_earned' ), 'catalog' => array( 'product_id','catalog_id','generation' ), 'catalog_queue' => array( 'product_id','scan_after','revision' ), 'credit_facts' => array( 'credit_id','active','points','volume' ), 'commission_totals' => array( 'relationship_id','rule_version','scope_kind','scope_order','orders','points' ), 'customer_lookup' => array( 'customer_id','display_name','login_prefix','email_prefix' ), 'request_limits' => array( 'actor_id','window_id','hits' ), 'notification_outbox' => array( 'event_id','status','attempts','claim_token','next_at','error_code' ), 'wallet_rebuilds' => array( 'customer_id','scan_after','upper_id','status','generation','balance','error_code' ), 'recovery_events' => array( 'event_key','customer_a','customer_b','status','auto_due','order_id','refund_id' ) );
+		$required = array( 'legacy_lot_migrations' => array( 'customer_id','upper_id','scan_after','opening_lot_id','balance','source_balance','pending','reserved','status','generation','error_code','updated_at' ), 'ledger' => array( 'id', 'customer_id', 'initial_state' ), 'wallet_locks' => array( 'customer_id','owner_signature' ), 'redemptions' => array( 'order_id' ), 'point_wallets' => array( 'customer_id','opening_cursor','debt' ), 'point_lots' => array( 'source_transaction_id','remaining' ), 'point_allocations' => array( 'reservation_transaction_id','returned' ), 'wallet_balances' => array( 'customer_id','balance','pending','reserved','spent','earned','referral_earned' ), 'catalog' => array( 'product_id','catalog_id','generation' ), 'catalog_queue' => array( 'product_id','scan_after','revision' ), 'credit_facts' => array( 'credit_id','active','points','volume' ), 'commission_totals' => array( 'relationship_id','rule_version','scope_kind','scope_order','orders','points' ), 'customer_lookup' => array( 'customer_id','display_name','login_prefix','email_prefix' ), 'request_limits' => array( 'actor_id','window_id','hits' ), 'notification_outbox' => array( 'event_id','status','attempts','claim_token','next_at','error_code' ), 'wallet_rebuilds' => array( 'customer_id','scan_after','upper_id','status','generation','balance','error_code' ), 'recovery_events' => array( 'event_key','customer_a','customer_b','status','auto_due','order_id','refund_id' ) );
 		foreach ( $required as $suffix => $columns ) {
 			$table = self::table( $suffix );
 			$engine = $wpdb->get_var( $wpdb->prepare( 'SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA=%s AND TABLE_NAME=%s', $wpdb->dbname, $table ) );
@@ -416,7 +422,7 @@ final class RR_Database {
 		$audit = self::table( 'audit' );
 		$indexes = $wpdb->get_col( "SHOW INDEX FROM $audit", 2 );
 		if ( ! in_array( 'action_actor_cursor', $indexes, true ) || ! in_array( 'actor_cursor', $indexes, true ) ) { return new WP_Error( 'rr_schema_indexes', __( 'Rewards audit indexes are missing. Retry the database upgrade after checking database permissions.', 'rewards-referrals' ) ); }
-		foreach ( array( 'legacy_lot_migrations' => array( 'recovery' ), 'ledger' => array( 'customer_maturity','customer_cursor' ), 'point_lots' => array( 'customer_maturity','customer_expiry','maturity_due' ), 'catalog' => array( 'parent','title_page','points_page','date_page' ), 'catalog_queue' => array( 'oldest' ), 'credit_facts' => array( 'customer_date','customer_version_date','relationship_order' ), 'customer_lookup' => array( 'name_prefix','login_prefix','email_prefix' ), 'notification_outbox' => array( 'due_jobs','stale_jobs','age_cleanup','status_cursor' ), 'wallet_rebuilds' => array( 'recovery' ), 'recovery_events' => array( 'buyer_hold','referrer_hold','recovery_queue' ) ) as $suffix => $names ) {
+		foreach ( array( 'referral_history' => array( 'referrer_history' ), 'legacy_lot_migrations' => array( 'recovery' ), 'ledger' => array( 'customer_maturity','customer_cursor' ), 'point_lots' => array( 'customer_maturity','customer_expiry','maturity_due' ), 'catalog' => array( 'parent','title_page','points_page','date_page' ), 'catalog_queue' => array( 'oldest' ), 'credit_facts' => array( 'customer_date','customer_version_date','relationship_order' ), 'customer_lookup' => array( 'name_prefix','login_prefix','email_prefix' ), 'notification_outbox' => array( 'due_jobs','stale_jobs','age_cleanup','status_cursor' ), 'wallet_rebuilds' => array( 'recovery' ), 'recovery_events' => array( 'buyer_hold','referrer_hold','recovery_queue' ) ) as $suffix => $names ) {
 			$table = self::table( $suffix );
 			$actual = $wpdb->get_col( "SHOW INDEX FROM $table", 2 );
 			if ( array_diff( $names, $actual ) ) { return new WP_Error( 'rr_schema_catalog_indexes', __( 'Rewards catalogue indexes are missing. Check database permissions and retry the upgrade.', 'rewards-referrals' ) ); }

@@ -98,7 +98,7 @@ final class RR_Commission_Index {
 				if ( (int) $row->amount <= 0 || ! in_array( $row->transaction_type, array( 'purchase_points','referral_commission' ), true ) ) { $s['after'] = (int) $row->id; ++$count; continue; }
 				// Rebuilding derived facts must retain but not wait on financial holds. A deleted
 				// customer's retained source history still needs indexing; no points are awarded here.
-				$start = RR_Ledger::begin_wallet_transaction( (int) $row->customer_id, false ); if ( is_wp_error( $start ) ) { return $count; }
+				$start = RR_Ledger::begin_commission_index_transaction( (int) $row->customer_id ); if ( is_wp_error( $start ) ) { return $count; }
 				$r = self::sync_locked( (int) $row->id ); $done = RR_Ledger::finish_wallet_transaction( ! is_wp_error( $r ) );
 				if ( is_wp_error( $r ) || is_wp_error( $done ) ) { return $count; }
 				$s['after'] = (int) $row->id; ++$count;

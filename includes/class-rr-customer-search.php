@@ -27,6 +27,7 @@ final class RR_Customer_Search {
 		} finally { $wpdb->get_var( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', $lock ) ); }
 	}
 	public static function work() {
+		if ( ! RR_Wallet_Identity::ready() ) { RR_Wallet_Identity::work(); if ( ! RR_Wallet_Identity::ready() ) { RR_Background::schedule( 'rr_customer_index', 1 ); } }
 		global $wpdb; $lock = 'rr_users_work_' . substr( md5( $wpdb->prefix ), 0, 20 );
 		if ( '1' !== (string) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s,0)', $lock ) ) ) { return 0; }
 		$n = 0;

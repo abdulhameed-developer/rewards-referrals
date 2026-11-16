@@ -48,10 +48,15 @@ final class RR_Frontend {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Composed markup uses trusted renderers that escape dynamic values at their source; literal control attributes are fixed.
 		echo self::render_wallet() . '<div class="rr-customer-grid"><div>' . self::render_link() . '</div><div>' . self::render_stats() . '</div></div>' . RR_Customer_Records::render() . self::catalog_shortcode() . self::render_history() . self::redemptions_shortcode() . '</div>';
 	}
+	private static function ownership_message() {
+		$owner = RR_Wallet_Identity::check( get_current_user_id() );
+		return is_wp_error( $owner ) ? '<p class="rr-customer-empty" role="status">' . esc_html( $owner->get_error_message() ) . '</p>' : '';
+	}
 	private static function signed_in_message() { return '<p class="rr-customer-empty">' . esc_html__( 'Sign in to view your rewards.', 'rewards-referrals' ) . ' <a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '">' . esc_html__( 'Sign in', 'rewards-referrals' ) . '</a></p>'; }
 	private static function render_wallet() {
 		self::enqueue();
 		if ( ! is_user_logged_in() ) { return self::signed_in_message(); }
+		$ownership = self::ownership_message(); if ( $ownership ) { return $ownership; }
 		global $wpdb;
 		$table = RR_Database::table( 'ledger' );
 		$customer_id = get_current_user_id();
@@ -76,6 +81,7 @@ final class RR_Frontend {
 	private static function render_link() {
 		self::enqueue();
 		if ( ! is_user_logged_in() ) { return ''; }
+		$ownership = self::ownership_message(); if ( $ownership ) { return $ownership; }
 		$code = RR_Referrals::ensure_code( get_current_user_id() );
 		if ( ! $code ) { return '<p class="rr-customer-empty">' . esc_html__( 'Your referral link is temporarily unavailable. Please try again later.', 'rewards-referrals' ) . '</p>'; }
 		$url = add_query_arg( 'ref', $code, home_url( '/' ) );
@@ -85,6 +91,7 @@ final class RR_Frontend {
 	private static function render_stats() {
 		self::enqueue();
 		if ( ! is_user_logged_in() ) { return ''; }
+		$ownership = self::ownership_message(); if ( $ownership ) { return $ownership; }
 		global $wpdb;
 		$customer_id = get_current_user_id();
 		$count = (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM %i WHERE referrer_id=%d AND approved=1', RR_Database::table( 'referrals' ), $customer_id ) );
@@ -118,6 +125,7 @@ final class RR_Frontend {
 	private static function render_history() {
 		self::enqueue();
 		if ( ! is_user_logged_in() ) { return ''; }
+		$ownership = self::ownership_message(); if ( $ownership ) { return $ownership; }
 		global $wpdb;
 		$table = RR_Database::table( 'ledger' );
 		$customer_id = get_current_user_id();
@@ -187,6 +195,7 @@ final class RR_Frontend {
 	public static function redemptions_shortcode() {
 		self::enqueue();
 		if ( ! is_user_logged_in() ) { return ''; }
+		$ownership = self::ownership_message(); if ( $ownership ) { return $ownership; }
 		global $wpdb;
 		$table = RR_Database::table( 'redemptions' );
 		$customer_id = get_current_user_id();

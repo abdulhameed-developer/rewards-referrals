@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rewards & Referrals by Abdul Hameed 0.6.0\n"
+"Project-Id-Version: Rewards & Referrals by Abdul Hameed 0.6.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rewards-referrals\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,10 @@ msgid "Rewards & Referrals by Abdul Hameed"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: rewards-referrals.php
+msgid "https://github.com/abdulhameed-developer/rewards-referrals"
+msgstr ""
+
 #. Author URI of the plugin
 #: rewards-referrals.php
 msgid "https://www.linkedin.com/in/abdul-hameed-website-developer/"

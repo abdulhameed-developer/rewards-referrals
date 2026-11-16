@@ -1,39 +1,66 @@
 {
-  "version": "0.6.0",
   "edition": "Free",
   "plugin_display_name": "Rewards & Referrals by Abdul Hameed",
   "sidebar": "Rewards",
   "plugin_basename": "rewards-referrals/rewards-referrals.php",
   "text_domain": "rewards-referrals",
   "schema": 23,
-  "installer": {
-    "filename": "rewards-referrals-0.6.0.zip",
-    "sha256": "cf90036d7b46f9eb134fe17bff927f2d0f4a0cd96ef993f164ef3f10ffe1eb07",
-    "files": 294
-  },
-  "consolidated_acceptance": {
-    "runs": 61,
-    "validated_runs": 61,
-    "explicit_RESULT_assertions": 1493,
-    "failed": 0,
-    "scope": "Exact attached Free archive; property iterations and repeated historical/focused checks are not added to these counters."
-  },
   "tested_primary_runtime": {
     "wordpress": "7.1.4",
     "woocommerce": "11.3.0",
     "php": "8.2.12",
     "database": "MariaDB10.11"
   },
-  "additional_scope": [
+  "limits": [
+    "No universal provider or theme certification; external Stripe/PayPal sandbox and licensed WoodMart fixtures remain unavailable.",
+    "External mail delivery, complete translations, full assistive-technology and real-device coverage are not certified."
+  ],
+  "distribution_note": "A GitHub release, an Unreleased Freemius deployment and a WordPress.org review submission are separate states. Use the actual channel status; no automatic customer rollout is implied by this manifest.",
+  "version": "0.6.1",
+  "installer": {
+    "filename": "rewards-referrals-0.6.1.zip",
+    "sha256": "9a5aa3ea7970a6a36d5c044feaa12e5d06488dd76216f9fe8213c9c489397af1",
+    "files": 294
+  },
+  "maintenance_scope": "Customer text contrast correction: nine CSS color substitutions plus coherent release and POT metadata; layout, business logic, features, technical identities and schema 23 are unchanged.",
+  "maintenance_acceptance": {
+    "independent_source_review": "PASS: exactly five product files changed; all non-color CSS fragments and all business, JavaScript and SDK implementations remain identical to 0.6.0.",
+    "rendered_normal_text_checks": {
+      "checks": 11,
+      "passed": 11,
+      "minimum_ratio": 5.411471,
+      "scope": "Observed visible customer text and solid backgrounds on the protected clone; not complete accessibility certification."
+    },
+    "temporary_translation_fixture": "Temporary German and Arabic catalogs covering 25 strings exercised layouts at 390, 768 and 1280 pixels. These fixtures are not shipped complete translations.",
+    "keyboard_scope": "Observed keyboard scrolling and visible focus in the customer history region at 390 pixels in RTL.",
+    "native_exact_package_acceptance": {
+      "status": "PASS",
+      "checks": 8,
+      "failed": 0,
+      "installer_sha256": "9a5aa3ea7970a6a36d5c044feaa12e5d06488dd76216f9fe8213c9c489397af1",
+      "scope": "Native update on the protected clone using the exact 0.6.1 Free ZIP: 294 installed files match; all 18 tracked table row hashes, saved settings and active plugins are preserved; only Free is active and schema remains 23."
+    }
+  },
+  "reused_core_acceptance": {
+    "version": "0.6.0",
+    "archive_sha256": "cf90036d7b46f9eb134fe17bff927f2d0f4a0cd96ef993f164ef3f10ffe1eb07",
+    "runs": 61,
+    "validated_runs": 61,
+    "explicit_RESULT_assertions": 1493,
+    "failed": 0,
+    "scope": "Actual 0.6.0 exact Free result: 61 runs and 1493 explicit assertions, retained for unchanged business logic. This is not a new 0.6.1 full CI execution and is not added to maintenance check counts."
+  },
+  "additional_scope_reused_from_0_6_0": [
     "Published0.5.2 upgrade with matched database/code rollback",
     "Protected currentRC8/schema22 backup upgrade to schema23 with original172lots retained",
     "Focused MySQL8.0.46 ownership/worker checks",
     "PHP8.1/8.3/8.5 syntax checks",
     "Native Elementor editor and multiple widgets; selected desktop/tablet/mobile and RTL workflows"
   ],
-  "limits": [
-    "No universal provider or theme certification; external Stripe/PayPal sandbox and licensed WoodMart fixtures remain unavailable.",
-    "External mail delivery, complete translations, full assistive-technology and real-device coverage are not certified."
-  ],
-  "distribution_note": "A GitHub release, an Unreleased Freemius deployment and a WordPress.org review submission are separate states. Use the actual channel status; no automatic customer rollout is implied by this manifest."
+  "preserved_previous_release": {
+    "version": "0.6.0",
+    "tag": "v0.6.0",
+    "installer_sha256": "cf90036d7b46f9eb134fe17bff927f2d0f4a0cd96ef993f164ef3f10ffe1eb07",
+    "changed_or_replaced": false
+  }
 }

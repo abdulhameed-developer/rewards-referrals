@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.1
+
+- Improve contrast for customer explanations, referral labels, reward availability, empty states, table headings and pagination.
+- Preserve layout, earning and redemption policies, accounting logic, all existing Free/Pro capabilities, schema 23 and installed identifiers.
+- Keep the 0.6.0 release and its installer unchanged. Correct the current Plugin URI extraction in the translation template.
+
+This maintenance change passed an independent review of five source files, focused rendered contrast, temporary German/Arabic translation-layout and keyboard checks, and 8 native update checks on the protected clone using the exact Free ZIP. All 18 tracked table row hashes, saved settings and active plugins were preserved. The 0.6.0 core regression result remains explicitly historical evidence for unchanged business logic; no new full 0.6.1 regression count or complete accessibility/translation certification is claimed. See RELEASE-MANIFEST.json and the verification guide for the exact installer and final package-acceptance status.
+
 ## 0.6.0
 
 - Preserve the existing earning, direct referrals, selected-product redemption, customer wallets and administrative workflows.

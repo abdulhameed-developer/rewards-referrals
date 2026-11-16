@@ -10,6 +10,10 @@ The Free distribution excludes private premium implementation files and developm
 
 ## Verification scope
 
+Version 0.6.1 is a narrow customer text-contrast maintenance release. Its five changed product files contain nine CSS color substitutions and release/POT metadata; business logic, layout rules, schema 23, public APIs and licensing identity are preserved. The 0.6.0 tag and installer stay intact. Its 61-run/1493-assertion core result remains evidence for that exact older archive and unchanged business logic, rather than a new 0.6.1 full-suite execution. Read RELEASE-MANIFEST.json for the current exact-package acceptance and focused maintenance checks.
+
+Temporary German/Arabic test catalogs were used only on the protected clone to exercise selected translated labels and layouts. They are not shipped complete translations. Selected contrast, viewport and keyboard observations do not establish complete assistive-technology, zoom, device or WCAG conformance.
+
 Read the release notes for the source/binary actually tested, test outcomes, known limitations and support requirements. Passing accounting tests does not establish every browser, theme, gateway or language combination. Internal review is not an external penetration test or a universal security/accessibility certification.
 
 Before updating a store, perform the staged procedure in [DEPLOYMENT-ROLLBACK.md](DEPLOYMENT-ROLLBACK.md). Confirm saved policies and representative balances/history; test one applicable purchase/redemption/refund/cancellation journey for your configuration.

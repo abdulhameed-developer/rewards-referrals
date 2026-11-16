@@ -14,6 +14,7 @@ final class RR_Ledger {
 	public const MAX_POINTS = 1000000000000;
 	private static $transactions = array();
 	private static $transaction_sequence = 0;
+	private static $reservation_sweeping = false;
 
 	public static function init() {
 		add_action( 'rr_mature_pending_points', array( __CLASS__, 'mature_pending_points' ) );
@@ -175,6 +176,9 @@ final class RR_Ledger {
 			if ( $id ) { $ids[ $id ] = $id; }
 		}
 		$balances = array_fill_keys( array_keys( $ids ), self::empty_balance() );
+		if ( ! $ids ) { return $balances; }
+		$ownership = RR_Wallet_Identity::allowed( array_values( $ids ) );
+		foreach ( $ids as $id ) { if ( true !== ( $ownership[ $id ] ?? false ) ) { $balances[ $id ]['unavailable'] = true; unset( $ids[ $id ] ); } }
 		if ( ! $ids ) { return $balances; }
 		$expiry_pending = RR_Point_Lots::expire_due_for_customers( array_values( $ids ) );
 		$rows = RR_Wallet_Balances::rows( $ids ); $found = array_column( $rows, 'customer_id' );
@@ -371,6 +375,15 @@ final class RR_Ledger {
 
 	/** Customer locks always use ascending IDs; nested work uses a savepoint. */
 	public static function begin_wallet_transaction( $customer_ids, $initialize = true ) {
+		return self::begin_locked_transaction( $customer_ids, $initialize, true );
+	}
+
+	/** Derived commission facts may index retained owners; this never grants financial permission. */
+	public static function begin_commission_index_transaction( $customer_id ) {
+		return self::begin_locked_transaction( $customer_id, false, false );
+	}
+
+	private static function begin_locked_transaction( $customer_ids, $initialize, $verify_owner ) {
 		global $wpdb;
 		$customer_ids = is_array( $customer_ids ) ? $customer_ids : array( $customer_ids );
 		$ids = array();
@@ -389,6 +402,10 @@ final class RR_Ledger {
 			$inserted = $wpdb->query( $wpdb->prepare( "INSERT INTO %i (customer_id,updated_at) VALUES (%d,%s) ON DUPLICATE KEY UPDATE customer_id = VALUES(customer_id)", $lock_table, $customer_id, current_time( 'mysql', true ) ) );
 			$locked = $wpdb->get_var( $wpdb->prepare( "SELECT customer_id FROM %i WHERE customer_id = %d FOR UPDATE", $lock_table, $customer_id ) );
 			if ( false === $inserted || (int) $locked !== $customer_id ) { self::finish_wallet_transaction( false ); return new WP_Error( 'rr_wallet_lock', __( 'The wallet could not be safely locked.', 'rewards-referrals' ) ); }
+			if ( $verify_owner ) {
+				$owner = RR_Wallet_Identity::locked( $customer_id );
+				if ( is_wp_error( $owner ) ) { self::finish_wallet_transaction( false ); return $owner; }
+			}
 			$indexed = $initialize ? RR_Wallet_Balances::ensure_locked( $customer_id ) : true;
 			if ( is_wp_error( $indexed ) ) { self::finish_wallet_transaction( false ); if ( 'rr_wallet_rebuild_pending' === $indexed->get_error_code() ) { RR_Background::schedule( 'rr_wallet_rebuild', 5, array( $customer_id ) ); } return $indexed; }
 		}
@@ -509,7 +526,7 @@ final class RR_Ledger {
 		static $ready = null;
 		if ( null !== $ready ) { return $ready; }
 		global $wpdb;
-		$tables = array( RR_Database::table( 'ledger' ), RR_Database::table( 'wallet_locks' ), RR_Database::table( 'redemptions' ), RR_Database::table( 'point_wallets' ), RR_Database::table( 'point_lots' ), RR_Database::table( 'point_allocations' ), RR_Database::table( 'wallet_balances' ), RR_Database::table( 'credit_facts' ), RR_Database::table( 'commission_totals' ), RR_Database::table( 'notification_outbox' ), RR_Database::table( 'wallet_rebuilds' ), RR_Database::table( 'recovery_events' ), RR_Database::table( 'legacy_lot_migrations' ) );
+		$tables = array( $wpdb->users, $wpdb->usermeta, RR_Database::table( 'ledger' ), RR_Database::table( 'wallet_locks' ), RR_Database::table( 'redemptions' ), RR_Database::table( 'point_wallets' ), RR_Database::table( 'point_lots' ), RR_Database::table( 'point_allocations' ), RR_Database::table( 'wallet_balances' ), RR_Database::table( 'credit_facts' ), RR_Database::table( 'commission_totals' ), RR_Database::table( 'notification_outbox' ), RR_Database::table( 'wallet_rebuilds' ), RR_Database::table( 'recovery_events' ), RR_Database::table( 'legacy_lot_migrations' ) );
 		$engines = $wpdb->get_col( $wpdb->prepare(
 			'SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA = %s AND TABLE_NAME IN (' . implode( ',', array_fill( 0, count( $tables ), '%s' ) ) . ')',
 			array_merge( array( $wpdb->dbname ), $tables )
@@ -545,14 +562,40 @@ final class RR_Ledger {
 
 	public static function expire_reservations() {
 		global $wpdb;
-		$table = RR_Database::table( 'redemptions' );
-		$expired = $wpdb->get_col( $wpdb->prepare( "SELECT order_id FROM %i WHERE status = %s AND created_at < %s ORDER BY id ASC LIMIT 100", $table, 'reserved', gmdate( 'Y-m-d H:i:s', time() - 1800 ) ) );
-		foreach ( $expired as $order_id ) {
-			$order = wc_get_order( $order_id );
-			if ( $order && ! $order->is_paid() && ! $order->get_date_paid() && ! $order->get_meta( '_rr_confirmation_waiting' ) && in_array( $order->get_status(), array( 'pending', 'failed', 'cancelled', 'on-hold' ), true ) ) {
-				self::release_redemption( $order_id, 'reservation_timeout' );
+		if ( self::$reservation_sweeping ) { return; }
+		$lock = 'rr_reservations_' . substr( md5( $wpdb->prefix ), 0, 20 );
+		if ( '1' !== (string) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s,0)', $lock ) ) ) { return; }
+		self::$reservation_sweeping = true;
+		try {
+			$table = RR_Database::table( 'redemptions' );
+			$raw = $wpdb->get_var( $wpdb->prepare( 'SELECT option_value FROM %i WHERE option_name=%s FOR UPDATE', $wpdb->options, 'rr_reservation_sweep_cursor' ) );
+			if ( $wpdb->last_error ) { return; }
+			$cursor = null === $raw ? array() : ( is_serialized( $raw ) ? @unserialize( $raw, array( 'allowed_classes' => false ) ) : null );
+			if ( ! is_array( $cursor ) ) { return; }
+			$valid = isset( $cursor['updated_at'], $cursor['id'] ) && is_string( $cursor['updated_at'] ) && preg_match( '/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/D', $cursor['updated_at'] ) && null !== self::validated_integer( $cursor['id'], 1, PHP_INT_MAX );
+			if ( $cursor && ! $valid ) { return; }
+			$after = $valid ? $wpdb->prepare( ' AND (updated_at>%s OR (updated_at=%s AND id>%d))', $cursor['updated_at'], $cursor['updated_at'], $cursor['id'] ) : '';
+			// status_updated includes the InnoDB primary-key suffix: read at most 100 candidates,
+			// then check creation age. Blocked/paid/new rows cannot monopolize the first page.
+			$rows = $wpdb->get_results( $wpdb->prepare( "SELECT id,order_id,created_at,updated_at FROM %i FORCE INDEX(status_updated) WHERE status=%s$after ORDER BY updated_at,id LIMIT 100", $table, 'reserved' ) );
+			if ( $wpdb->last_error ) { return; }
+			if ( ! $rows && $valid ) {
+				$rows = $wpdb->get_results( $wpdb->prepare( 'SELECT id,order_id,created_at,updated_at FROM %i FORCE INDEX(status_updated) WHERE status=%s ORDER BY updated_at,id LIMIT 100', $table, 'reserved' ) );
+				if ( $wpdb->last_error ) { return; }
 			}
-		}
+			$cutoff = gmdate( 'Y-m-d H:i:s', time() - 1800 );
+			foreach ( (array) $rows as $row ) {
+				if ( $row->created_at >= $cutoff ) { continue; }
+				$order = wc_get_order( $row->order_id );
+				if ( $order && ! $order->is_paid() && ! $order->get_date_paid() && ! $order->get_meta( '_rr_confirmation_waiting' ) && in_array( $order->get_status(), array( 'pending', 'failed', 'cancelled', 'on-hold' ), true ) ) {
+					self::release_redemption( $row->order_id, 'reservation_timeout' );
+				}
+			}
+			$last = $rows ? end( $rows ) : null;
+			$next = maybe_serialize( $last ? array( 'updated_at' => $last->updated_at, 'id' => (int) $last->id ) : array() );
+			$stored = $wpdb->query( $wpdb->prepare( "INSERT INTO %i (option_name,option_value,autoload) VALUES(%s,%s,'off') ON DUPLICATE KEY UPDATE option_value=VALUES(option_value),autoload='off'", $wpdb->options, 'rr_reservation_sweep_cursor', $next ) );
+			if ( false !== $stored ) { wp_cache_delete( 'rr_reservation_sweep_cursor', 'options' ); wp_cache_delete( 'notoptions', 'options' ); wp_cache_delete( 'alloptions', 'options' ); }
+		} finally { self::$reservation_sweeping = false; $wpdb->get_var( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', $lock ) ); }
 	}
 
 	public static function expire_order_reservation( $order_id ) {

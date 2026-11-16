@@ -9,12 +9,17 @@ foreach ( array( 'referrals', 'ledger', 'rules', 'audit', 'wallet_locks', 'redem
 	$table = $wpdb->prefix . 'br_' . $suffix;
 	$wpdb->query( "DROP TABLE IF EXISTS `$table`" );
 }
-foreach ( array( 'br_settings', 'br_schema_version', 'br_rules_version', 'rr_campaigns', 'rr_notifications', 'rr_delete_on_uninstall', 'rr_notification_failures', 'rr_catalog_state', 'rr_commission_index_state', 'rr_customer_index_after', 'rr_customer_index_complete', 'rr_legacy_after_customer', 'rr_referral_index_cursor', 'rr_referral_index_ready', 'rr_referral_pending_after', 'rr_maturity_after_customer', 'rr_expiry_after_customer', 'rr_outbox_floor', 'rr_outbox_retention_after', 'rr_schema_error', 'rr_schema_retry_after' ) as $key ) { delete_option( $key ); }
+foreach ( array( 'br_settings', 'br_schema_version', 'br_rules_version', 'rr_campaigns', 'rr_notifications', 'rr_delete_on_uninstall', 'rr_notification_failures', 'rr_catalog_state', 'rr_commission_index_state', 'rr_customer_index_after', 'rr_customer_index_complete', 'rr_legacy_after_customer', 'rr_referral_index_cursor', 'rr_referral_index_ready', 'rr_referral_pending_after', 'rr_maturity_after_customer', 'rr_expiry_after_customer', 'rr_outbox_floor', 'rr_outbox_retention_after', 'rr_schema_error', 'rr_schema_retry_after', 'rr_wallet_identity_state', 'rr_reservation_sweep_cursor' ) as $key ) { delete_option( $key ); }
 do {
 	$notification_options = $wpdb->get_col( $wpdb->prepare( "SELECT option_name FROM %i WHERE option_name LIKE %s LIMIT 500", $wpdb->options, $wpdb->esc_like( 'rr_notified_' ) . '%' ) );
 	foreach ( $notification_options as $notification_option ) { delete_option( $notification_option ); }
 } while ( count( $notification_options ) === 500 );
-$wpdb->query( "DELETE FROM {$wpdb->usermeta} WHERE meta_key IN ('_br_referral_code','_br_referrer_id','_rr_pending_referral')" );
+// Legacy referral metadata is global on multisite and can still be needed by another blog.
+if ( ! is_multisite() ) {
+	$wpdb->query( "DELETE FROM {$wpdb->usermeta} WHERE meta_key IN ('_br_referral_code','_br_referrer_id','_rr_pending_referral')" );
+}
+// Account proof belongs to this site; another blog can still retain its own wallet history.
+$wpdb->query( $wpdb->prepare( 'DELETE FROM %i WHERE meta_key=%s', $wpdb->usermeta, $wpdb->prefix . 'rr_wallet_identity_token' ) );
 // Exact plugin-owned keys only. Native post metadata deletion also invalidates
 // product and legacy-order metadata caches without purging unrelated site data.
 $metadata_keys = array(

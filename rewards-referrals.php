@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Rewards & Referrals
- * Plugin URI: https://www.linkedin.com/in/abdul-hameed-website-developer/
+ * Plugin Name: Rewards & Referrals by Abdul Hameed
+ * Plugin URI: https://github.com/abdulhameed-developer/rewards-referrals
  * Description: Customer loyalty points and direct referral rewards for WooCommerce.
- * Version: 0.6.0-rc.9
+ * Version: 0.6.0
  * Author: Abdul Hameed
  * Author URI: https://www.linkedin.com/in/abdul-hameed-website-developer/
  * Requires at least: 6.9
@@ -52,11 +52,12 @@ if ( function_exists( 'rr_fs' ) ) {
 	rr_fs()->add_action( 'after_uninstall', 'rr_uninstall_data' );
 	do_action( 'rr_fs_loaded' );
 
-define( 'REWARDS_REFERRALS_VERSION', '0.6.0-rc.9' );
+define( 'REWARDS_REFERRALS_VERSION', '0.6.0' );
 define( 'REWARDS_REFERRALS_FILE', __FILE__ );
 define( 'REWARDS_REFERRALS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'REWARDS_REFERRALS_URL', plugin_dir_url( __FILE__ ) );
 require_once REWARDS_REFERRALS_DIR . 'includes/class-br-database.php';
+require_once REWARDS_REFERRALS_DIR . 'includes/class-rr-wallet-identity.php';
 require_once REWARDS_REFERRALS_DIR . 'includes/class-rr-wallet-balances.php';
 require_once REWARDS_REFERRALS_DIR . 'includes/class-rr-wallet-rebuild.php';
 require_once REWARDS_REFERRALS_DIR . 'includes/class-rr-recovery.php';
@@ -109,6 +110,7 @@ add_action( 'plugins_loaded', static function () {
 		return;
 	}
 	RR_Background::init();
+	RR_Wallet_Identity::init();
 	RR_Referrals::init();
 	RR_Ledger::init();
 	RR_WooCommerce::init();

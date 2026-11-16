@@ -9,6 +9,7 @@ final class RR_Customer_Records {
 	}
 
 	public static function schedule( $customer ) {
+		$owner = RR_Wallet_Identity::check( $customer ); if ( is_wp_error( $owner ) ) { return $owner; }
 		global $wpdb;
 		$table = RR_Database::table( 'point_lots' );
 		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT source_transaction_id,remaining,status,CASE WHEN status='pending' THEN available_at ELSE expires_at END AS due_at FROM %i WHERE customer_id=%d AND remaining>0 AND ((status='pending' AND available_at IS NOT NULL) OR (status='available' AND expires_at IS NOT NULL)) ORDER BY due_at,id LIMIT 11", $table, $customer ), ARRAY_A );
@@ -43,6 +44,7 @@ final class RR_Customer_Records {
 		if ( ! $customer || ! $from || ! $to || $from > $to || strtotime( $to . ' UTC' ) - strtotime( $from . ' UTC' ) >= 31 * DAY_IN_SECONDS ) {
 			return new WP_Error( 'rr_statement_range', __( 'Choose a valid period of no more than 31 days.', 'rewards-referrals' ) );
 		}
+		$owner = RR_Wallet_Identity::check( $customer ); if ( is_wp_error( $owner ) ) { return $owner; }
 		$table = RR_Database::table( 'ledger' );
 		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT id,created_at,transaction_type,state,amount FROM %i WHERE customer_id=%d AND created_at >= %s AND created_at <= %s ORDER BY id ASC LIMIT 1001", $table, $customer, $from . ' 00:00:00', $to . ' 23:59:59' ), ARRAY_A );
 		if ( $wpdb->last_error ) { return new WP_Error( 'rr_statement_storage', __( 'Your statement could not be read. Please try again.', 'rewards-referrals' ) ); }

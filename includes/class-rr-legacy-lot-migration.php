@@ -41,10 +41,26 @@ final class RR_Legacy_Lot_Migration {
 	public static function work( $customer ) {
 		$customer = RR_Ledger::validated_integer( $customer, 1, PHP_INT_MAX );
 		if ( ! $customer ) { return false; }
-		$started = RR_Ledger::begin_wallet_transaction( $customer, false );
-		if ( is_wp_error( $started ) ) { self::enqueue( $customer, 60 ); return false; }
 		global $wpdb;
 		$table = RR_Database::table( 'legacy_lot_migrations' ); $ledger = RR_Database::table( 'ledger' );
+		$present = $wpdb->get_var( $wpdb->prepare( 'SELECT ID FROM %i WHERE ID=%d', $wpdb->users, $customer ) );
+		if ( $wpdb->last_error ) { self::enqueue( $customer, 60 ); return false; }
+		if ( ! $present ) {
+			// Terminal operational metadata only: re-check absence in the same conditional write.
+			$marked = $wpdb->query( $wpdb->prepare( "UPDATE %i j LEFT JOIN %i u ON u.ID=j.customer_id SET j.status='failed',j.error_code='customer_missing',j.updated_at=%s WHERE j.customer_id=%d AND j.status='building' AND u.ID IS NULL", $table, $wpdb->users, current_time( 'mysql', true ), $customer ) );
+			if ( false === $marked ) { self::enqueue( $customer, 60 ); }
+			return false;
+		}
+		$started = RR_Ledger::begin_wallet_transaction( $customer, false );
+		if ( is_wp_error( $started ) ) {
+			// Keep blocked ownership held, but rotate its checkpoint behind healthy work.
+			$queued = $wpdb->get_var( $wpdb->prepare( "SELECT customer_id FROM %i WHERE customer_id=%d AND status='building'", $table, $customer ) );
+			if ( $wpdb->last_error || $queued ) {
+				$wpdb->update( $table, array( 'updated_at' => gmdate( 'Y-m-d H:i:s', time() + 60 ) ), array( 'customer_id' => $customer, 'status' => 'building' ) );
+				self::enqueue( $customer, 60 );
+			}
+			return false;
+		}
 		$wallets = RR_Database::table( 'point_wallets' ); $lots = RR_Database::table( 'point_lots' ); $allocations = RR_Database::table( 'point_allocations' );
 		$again = false; $hard_error = ''; $job = null;
 		try {

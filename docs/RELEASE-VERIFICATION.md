@@ -4,7 +4,7 @@ Use the version, source revision, package hashes and verification notes publishe
 
 ## Package identity
 
-Compare the downloaded Free ZIP's SHA-256 with the release's published checksum. The archive should contain one `rewards-referrals/` plugin folder and `rewards-referrals.php` as its main entry. Its plugin header/version and readme stable tag should agree. Keep the downloaded package with your backup so recovery uses the exact version you installed.
+Use the attached installable Free ZIP. GitHub's automatically generated source archives are for source inspection and can use a different folder name. Compare the downloaded Free ZIP's SHA-256 with the release's published checksum. The archive should contain one `rewards-referrals/` plugin folder and `rewards-referrals.php` as its main entry. Its plugin header/version and readme stable tag should agree. Keep the downloaded package with your backup so recovery uses the exact version you installed.
 
 The Free distribution excludes private premium implementation files and development/test fixtures. The bundled SDK's original license texts and THIRD-PARTY-NOTICES are retained. The two form-construction adapters are independently authored compatible replacements; the notice identifies them. Source and build references for the unchanged compiled pricing application appear in readme.txt.
 

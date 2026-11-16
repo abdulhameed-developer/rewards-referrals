@@ -1,10 +1,11 @@
-=== Rewards & Referrals ===
+=== Rewards & Referrals by Abdul Hameed ===
+Contributors: codian
 Tags: woocommerce, rewards, loyalty, referrals, points
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 0.6.0-rc.9
+Stable tag: 0.6.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,13 +22,13 @@ Create a loyalty program with customer wallets, direct referral commissions, pro
 * Administrative reports, settings transfer, and privacy-tool integration.
 * Program check with catalogue setup guidance and purchase examples that create no order or points.
 
-This is a staging release candidate. WordPress 6.9+, WooCommerce 10.8+, PHP 8.1+ and InnoDB accounting/order tables are required. Exact tested combinations and remaining release gates are documented in the development bundle; these minimum versions are not a promise for every combination. Network activation is not supported; activate separately on each site.
+Version 0.6.0 preserves the existing loyalty program and adds durable account ownership protection. WordPress 6.9+, WooCommerce 10.8+, PHP 8.1+ and InnoDB accounting, order, user and usermeta tables are required. Exact tested combinations and known limits are recorded with each release at https://github.com/abdulhameed-developer/rewards-referrals/releases and in the public verification guide at https://github.com/abdulhameed-developer/rewards-referrals/blob/main/docs/RELEASE-VERIFICATION.md . These minimum versions are not a promise for every combination. Network activation is not supported; activate separately on each site.
 
 Free includes core points, direct referrals, wallets, redemption, accounting exports and privacy tools, without a product-count limit. Pro adds scheduled earning campaigns, filtered summary reports and custom notification templates.
 
 The bundled Freemius SDK provides optional account connection in Free, and license activation, paid downloads and updates in Pro. Free can be used without connecting an account. When connecting or activating a license, the SDK communicates with Freemius and shares the information shown on its consent screen. See https://freemius.com/privacy/ and https://freemius.com/terms/ . Customer rewards balances and order accounting are stored locally; our integration does not upload the ledger to Freemius. Optional customer email notifications use the site's WordPress mail configuration. Referral attribution uses a first-party, HTTP-only br_ref cookie with SameSite=Lax and a configurable lifetime. Store owners are responsible for appropriate customer notices and consent configuration.
 
-Accounting data is retained on deactivation and, by default, on uninstall. Explicit data deletion can be enabled under Tools & diagnostics. WordPress privacy export includes the customer's ledger; privacy erasure reports the accounting records retained for balance and audit integrity.
+Accounting data is retained on deactivation and, by default, on uninstall. Explicit data deletion can be enabled under Tools & diagnostics. On multisite, globally shared legacy referral metadata is retained for other sites; site-specific tables, options and ownership tokens are removed. Private account-ownership tokens and retained identity markers protect financial records when numeric customer IDs are reused. These security tokens are not included in customer statements. WordPress privacy export includes the customer's ledger; privacy erasure reports the accounting records retained for balance and audit integrity.
 
 == Source and build tools ==
 
@@ -61,6 +62,9 @@ It follows Default product redemption mode in Program settings. Variations inher
 = Why is a product absent from the customer catalog? =
 Enable Point redemption and set a positive whole-point price with a points-enabled mode. Published, visible, in-stock simple products and eligible individual variations appear after the background catalogue refresh. An eligible child can appear even when its parent is cash only; its parent must still be published and visible. Checkout rechecks current eligibility. Keep the store default at Cash only to show selected rewards.
 
+= Why is an imported rewards account awaiting ownership review? =
+An import may have assigned a previously used customer ID to a different person. Earlier reward and referral history is preserved and cannot be claimed by the replacement account. Allocate a fresh customer ID or restore the original account with its matching ownership records. Ordinary name, email and password updates preserve ownership. Restore matching plugin files, database and user metadata together when recovering a backup.
+
 = Does deactivation delete points? =
 No. Accounting history is preserved. Full deletion requires the explicit uninstall data-deletion option.
 
@@ -68,6 +72,16 @@ No. Accounting history is preserved. Full deletion requires the explicit uninsta
 [rewards_wallet], [rewards_referral_link], [rewards_referral_stats], [rewards_referral_dashboard], [rewards_transaction_history], [rewards_catalog], [rewards_redemption_history], and [rewards_summary].
 
 == Changelog ==
+
+= 0.6.0 =
+* Stable successor to the 0.6.0 release-candidate series; all Free and Pro capabilities retained.
+* Atomically bind rewards and referral history to its account owner; preserve and quarantine conflicting imported IDs.
+* Protect customer balances, histories, statements, delayed jobs and refund accounting from identity reuse.
+* Keep commission, referral and reservation maintenance progressing past protected historical accounts without granting financial access.
+* Record missing-account migration and reconstruction failures safely and prevent blocked checkpoints from starving healthy jobs.
+* Preserve historical data while upgrading to schema 23 and retain the existing plugin basename and APIs.
+* Include the compatible independently authored form adapter and corresponding-source disclosures.
+
 
 = 0.6.0-rc.9 =
 * Keep unattributable point lots isolated when an import reuses a deleted customer ID.

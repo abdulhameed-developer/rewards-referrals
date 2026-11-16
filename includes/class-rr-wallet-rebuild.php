@@ -29,9 +29,24 @@ final class RR_Wallet_Rebuild {
 		return false !== $wpdb->replace( $table, $row );
 	}
 	public static function work( $customer ) {
-		$customer = RR_Ledger::validated_integer( $customer, 1, PHP_INT_MAX ); if ( ! $customer || ! get_userdata( $customer ) ) { return false; }
+		$customer = RR_Ledger::validated_integer( $customer, 1, PHP_INT_MAX ); if ( ! $customer ) { return false; }
 		global $wpdb; $table = RR_Database::table( 'wallet_rebuilds' ); $ledger = RR_Database::table( 'ledger' );
-		$start = RR_Ledger::begin_wallet_transaction( $customer, false ); if ( is_wp_error( $start ) ) { RR_Background::schedule( 'rr_wallet_rebuild', 60, array( $customer ) ); return false; }
+		$present = $wpdb->get_var( $wpdb->prepare( 'SELECT ID FROM %i WHERE ID=%d', $wpdb->users, $customer ) );
+		if ( $wpdb->last_error ) { RR_Background::schedule( 'rr_wallet_rebuild', 60, array( $customer ) ); return false; }
+		if ( ! $present ) {
+			$marked = $wpdb->query( $wpdb->prepare( "UPDATE %i j LEFT JOIN %i u ON u.ID=j.customer_id SET j.status='failed',j.error_code='customer_missing',j.updated_at=%s WHERE j.customer_id=%d AND j.status='building' AND u.ID IS NULL", $table, $wpdb->users, current_time( 'mysql', true ), $customer ) );
+			if ( false === $marked ) { RR_Background::schedule( 'rr_wallet_rebuild', 60, array( $customer ) ); }
+			return false;
+		}
+		$start = RR_Ledger::begin_wallet_transaction( $customer, false );
+		if ( is_wp_error( $start ) ) {
+			$queued = $wpdb->get_var( $wpdb->prepare( "SELECT customer_id FROM %i WHERE customer_id=%d AND status='building'", $table, $customer ) );
+			if ( $wpdb->last_error || $queued ) {
+				$wpdb->update( $table, array( 'updated_at' => gmdate( 'Y-m-d H:i:s', time() + 60 ) ), array( 'customer_id' => $customer, 'status' => 'building' ) );
+				RR_Background::schedule( 'rr_wallet_rebuild', 60, array( $customer ) );
+			}
+			return false;
+		}
 		$again = false;
 		try {
 			$job = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM %i WHERE customer_id=%d FOR UPDATE", $table, $customer ), ARRAY_A );

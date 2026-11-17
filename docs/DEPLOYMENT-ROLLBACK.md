@@ -29,3 +29,7 @@ If an update fails, stop new reward transactions while investigating. Preserve t
 A full-site database restore can also remove unrelated orders or edits made after the backup. Reconcile those changes with the store owner before restoring production. After recovery, verify rules, representative wallets, orders and scheduled jobs before reopening reward activity.
 
 Deactivation preserves rewards data. Uninstall preserves it by default, but the explicit data-deletion option permanently removes owned plugin data. On multisite, globally shared legacy referral metadata is retained because another site can still use it; the current site's own ownership token, tables and options are removed. Uninstall is not a rollback procedure.
+
+## 0.6.4 transport security boundary
+
+Keep matching code/database backups and the package hash. A code-only return to a version before 0.6.4 also removes this transport enforcement, even though schema 23 is unchanged. Treat that as a security regression requiring a deliberate incident/maintenance decision. Do not disable TLS checks to obtain a package or activate a license. Verify the intended Free/Pro edition and transport behavior after a controlled recovery.

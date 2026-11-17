@@ -23,3 +23,9 @@ Queries and customer/catalog pages use bounded batches and indexes. Test reports
 Consult the release's verification notes for exact tested versions, HPOS/legacy/cache conditions, unresolved test limitations and external integrations. Stripe/PayPal callbacks, licensed WoodMart workflows and controlled external mail delivery require their own authorized environments. Existing integration code is preserved; certification must be based on observed tests.
 
 Report a suspected vulnerability privately using [SECURITY.md](../SECURITY.md). Do not include real customer records, credentials or payment details in a public issue.
+
+## Verified Freemius transport boundary in 0.6.4
+
+A first-party WordPress HTTP boundary now enforces verified HTTPS, certificate/hostname validation and the canonical WordPress CA bundle for the official Freemius service origins. It rejects plaintext API fallback, unsafe authorities and unsafe redirect destinations, retains bounded verified HTTPS CDN downloads and strips origin credential headers across allowed download redirects. Bundled SDK source is unchanged. No actual interception or credential exposure is claimed; signup requests already requested TLS verification, while the separately verified shared API path could request false verification.
+
+The enforcement is loaded before this product starts the SDK and also works when shared SDK verification constants already exist. It uses the native WordPress/Requests request and redirect boundaries. It does not rewrite the SDK, introduce another HTTP client, trust an arbitrary public certificate or force production to one transport. It cannot secure HTTP actions that other trusted PHP code executed before it loaded, or defend against malicious server code altering callbacks. The relevant WordPress CA file must remain readable and current.

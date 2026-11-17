@@ -8,7 +8,17 @@ Use the attached installable Free ZIP. GitHub's automatically generated source a
 
 The Free distribution excludes private premium implementation files and development/test fixtures. The bundled SDK's original license texts and THIRD-PARTY-NOTICES are retained. The two form-construction adapters are independently authored compatible replacements; the notice identifies them. Source and build references for the unchanged compiled pricing application appear in readme.txt.
 
-## Verification scope
+## Verification scope for 0.6.3
+
+Version 0.6.3 corrects one existing product-editor constraint. Ordinary cash products can retain an unused zero points price without the browser blocking Update. A positive points price is still required before a reward appears in the customer catalog or can be redeemed. Exactly five distributed files differ from 0.6.2: the single numeric input minimum in the WooCommerce class and four version/documentation metadata files. All previous catalog, component and export corrections, financial modules, schema 23, SDK/assets and paid implementation are byte-identical.
+
+The matching candidate passed 23 independent read-only policy contracts. Native product save and purchase/commission previews were also exercised on the isolated runtime with that exact one-byte correction: zero-price rewards stayed unavailable and a five-point reward retained its real charge. These are bounded policy/editor observations, not a new full licensed Pro or provider test suite.
+
+The exact 0.6.3 installers passed 181 PHP and six JavaScript syntax checks, archive/edition checks, and 36 content-preservation checks. All 1,035 translation entries are preserved; only the translation Project-Id-Version changes. The immutable 0.6.2 installers and tags remain unchanged.
+
+The exact 0.6.3 Free ZIP passed native WordPress replacement on the isolated QA site. All 294 installed files match, schema 23 is preserved, and all ten tracked financial table hash sets, saved settings and rule version remain unchanged. A subsequent native Update of the ordinary cash product succeeded with the points-price field at zero and no browser-invalid fields. These scoped installation and product-save observations are separate from the earlier matching-candidate checks. The current source freeze, exact installer hash and evidence hashes are in RELEASE-MANIFEST.json.
+
+## Previous 0.6.2 maintenance evidence
 
 Version 0.6.2 corrects three existing workflows: catalog filters and page survive selected-product changes; reusable customer components have distinct control and link identifiers while ordinary pagination still resolves across requests; and a ledger export is fully prepared before attachment headers are sent. Database or temporary-storage errors return an error instead of a misleading empty or partial CSV. Seven product files changed: three runtime classes and four release/translation metadata files. The financial policy implementations, SDK, assets, schema 23, public APIs and licensing identity are preserved. The 0.6.0 and 0.6.1 tags and installers stay intact.
 

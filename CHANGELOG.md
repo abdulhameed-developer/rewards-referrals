@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.3
+
+- Allow an ordinary cash product with an unused zero points price to save in the native product editor.
+- Preserve positive-price reward eligibility, financial policies, all 0.6.2 corrections, technical identifiers, SDK/assets and schema 23.
+
+This is one input-constraint correction and four metadata files. Matching-candidate policy checks, exact package checks and native final-ZIP acceptance passed. The isolated 0.6.3 update preserved all ten tracked financial table hashes, settings and rule version; all 294 installed files match the installer. A subsequent native zero-price cash-product Update succeeded. Prior 0.6.2 evidence remains separate and unchanged; no new full licensed Pro, gateway or universal compatibility suite is claimed.
+
 ## 0.6.2
 
 - Preserve catalog search, filters and page after applying selected product reward changes.

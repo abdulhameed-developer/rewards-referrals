@@ -19,97 +19,13 @@
     "No new licensed Pro entitlement test or universal expired/revoked gateway/provider matrix is claimed."
   ],
   "distribution_note": "A GitHub release, an Unreleased Freemius deployment and a WordPress.org review submission are separate states. Use the actual channel status; no automatic customer rollout is implied by this manifest.",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "installer": {
-    "filename": "rewards-referrals-0.6.2.zip",
-    "sha256": "4236a0b9cbb538910c0fefb43f1059f0fa3cdf5fa134c3da8ce740294eb2e88a",
+    "filename": "rewards-referrals-0.6.3.zip",
+    "sha256": "ca55552d00d12ecda33248e92a08a12a33f63a26003e9509bcebb6c14b3c8bd4",
     "files": 294
   },
-  "maintenance_scope": "Three existing-feature corrections: preserve catalog operation context; isolate reusable component control/link IDs while preserving full-page navigation; prepare ledger CSV before attachment headers and fail clearly on database/storage errors. Earning, referral, redemption policies, account ownership, technical identifiers, SDK, assets and schema 23 are preserved.",
-  "maintenance_acceptance": {
-    "package_build": {
-      "status": "PASS",
-      "php_lint_files": 181,
-      "javascript_syntax_files": 6,
-      "errors": 0,
-      "archive_files": 294,
-      "scope": "Exact immutable 0.6.2 Free ZIP CRC/edition/config exclusions and synchronized version metadata; this is not runtime installation acceptance."
-    },
-    "catalog_context": {
-      "passed": 30,
-      "failed": 0,
-      "scope": "Actual WordPress rendering and normalization contracts on isolated candidate source; allowed context/defaults/malformed arrays/encoded query-shaped search/escaped hidden fields."
-    },
-    "reusable_components": {
-      "namespace_contract_checks": 33,
-      "independent_reference_boundary_checks": 21,
-      "separate_full_page_navigation_checks": 6,
-      "separate_AJAX_REST_composition_checks": 4,
-      "failed": 0,
-      "scope": "Candidate source checks preserve canonical account anchors; ordinary page namespaces are deterministic across independent requests and AJAX/REST preview fragments use independent identifiers. Counts overlap in behavior and are not feature counts."
-    },
-    "ledger_CSV": {
-      "actual_registered_callback_checks": 47,
-      "callback_processes": 16,
-      "independent_helper_check_definitions": 19,
-      "helper_runtime_versions": [
-        "8.1.34",
-        "8.2.12",
-        "8.3.36"
-      ],
-      "helper_assertions_across_three_runtimes": 57,
-      "failed": 0,
-      "scope": "Normal/filtered/empty CSV matched previous healthy bytes. First/later query, temporary file creation, zero-write and positive short-write failures returned 503 without partial records in actual isolated WordPress CLI callbacks. Independent helper checks cover cleanup/rewind/private 0600 file/long to short rows. No native browser CSV download or fresh PHP 8.4 runtime is claimed."
-    },
-    "minimum_runtime_smoke": {
-      "wordpress": "6.9",
-      "woocommerce": "10.8.0",
-      "php": "8.1.34",
-      "database": "MariaDB10.11.19",
-      "passed": 15,
-      "failed": 0,
-      "scope": "Real isolated minimum combination: native activation/schema 23, 100 buyer points and 25 direct-referrer points, cancellation/replay/reconciliation, TagProcessor APIs and full-page history navigation on the two UI corrections. Performed before the later CSV correction; not a full final-binary matrix."
-    },
-    "source_preservation": {
-      "status": "PASS",
-      "changed_product_files": 7,
-      "runtime_classes": 3,
-      "metadata_files": 4,
-      "scope": "Other product files byte-identical to 0.6.1; accounting/policy/schema implementations and SDK/assets unchanged. No new feature or dependency."
-    },
-    "native_exact_package_acceptance": {
-      "status": "PASS",
-      "installer_sha256": "4236a0b9cbb538910c0fefb43f1059f0fa3cdf5fa134c3da8ce740294eb2e88a",
-      "installed_files_exact": 294,
-      "package_and_runtime_attestation": {
-        "passed": 38,
-        "failed": 0,
-        "scope": "Exact Free/Pro/source archive contents and edition boundaries plus actual Free runtime identity; this count does not imply fresh Pro entitlement activation."
-      },
-      "synthetic_clone_preservation": {
-        "passed": 6,
-        "failed": 0,
-        "financial_table_hash_sets_unchanged": 10,
-        "settings_and_rules_unchanged": true,
-        "schema": 23,
-        "active_edition": "Free",
-        "scope": "Native WordPress uploaded-ZIP replacement from 0.6.1 to 0.6.2 on the protected synthetic site; all tracked financial hashes and reconciliation components preserved."
-      },
-      "faithful_backup_clone_rehearsal": {
-        "status": "PASS",
-        "tracked_rowsets_unchanged": 18,
-        "schema": 23,
-        "settings_active_edition_and_ownership_preserved": true,
-        "scope": "Restored protected localhost backup; native WordPress upgrader followed by fresh full WordPress bootstrap. No external gateway or SMTP action."
-      },
-      "evidence_sha256": {
-        "package_and_runtime_attestation": "f99c3a46fe675e7c220e0fb8fc991a7aa795ff47976014b2e54a5c813e8c14f7",
-        "native_preservation_summary": "e0b9fe61177bb784f7ce36305bd7082a293d6cbb5a7af85d5a9157e6258a12f0",
-        "faithful_backup_upgrade_summary": "5c03016c13b5ee61aeb510fc8d7a353661fa2112a4d0ad3c442f0cf432fc9355"
-      },
-      "limits": "Native installation and data-preservation acceptance do not certify every browser,theme,gateway or paid account state. The scoped source,CLI export and browser checks remain separately stated."
-    }
-  },
+  "maintenance_scope": "One existing product-editor correction: an unused zero points price no longer blocks saving an ordinary cash product. Only the simple-product input minimum changes from one to zero; server-side positive reward prices, financial policies, schema 23, prior 0.6.2 corrections, SDK/assets, Pro modules and technical identifiers remain unchanged.",
   "reused_core_acceptance": {
     "version": "0.6.0",
     "archive_sha256": "cf90036d7b46f9eb134fe17bff927f2d0f4a0cd96ef993f164ef3f10ffe1eb07",
@@ -127,11 +43,11 @@
     "Native Elementor editor and multiple widgets; selected desktop/tablet/mobile and RTL workflows"
   ],
   "preserved_previous_release": {
-    "version": "0.6.1",
-    "tag": "v0.6.1",
-    "installer_sha256": "9a5aa3ea7970a6a36d5c044feaa12e5d06488dd76216f9fe8213c9c489397af1",
+    "version": "0.6.2",
+    "tag": "v0.6.2",
+    "installer_sha256": "4236a0b9cbb538910c0fefb43f1059f0fa3cdf5fa134c3da8ce740294eb2e88a",
     "changed_or_replaced": false,
-    "also_preserved": "0.6.0 tag/installer"
+    "also_preserved": "0.6.0 and 0.6.1 tags/installers"
   },
   "additional_targeted_accounting_evidence": {
     "version": "0.6.1",
@@ -149,15 +65,152 @@
       "limits": "Target WordPress cache entries cleared; database and OS storage caches not purged. Service inside fresh PHP only, not HTTP request latency."
     }
   },
-  "source_freeze_revision": "59f0a154daa81996c670cefb4eed62c56ee3dabb",
+  "source_freeze_revision": "f3326bb5c0faae0e60952e4fc967bac2df71814a",
   "historical_Pro_evidence": {
     "original_version": "0.6.0",
     "passed": 33,
     "failed": 0,
     "reuse_through_versions": [
       "0.6.1",
-      "0.6.2"
+      "0.6.2",
+      "0.6.3"
     ],
-    "scope": "Original genuine licensed Pro checks are historical. The paid implementation remains byte-identical through 0.6.1 and 0.6.2; shared fixes have the focused tests listed above. This is not a fresh 0.6.1 or 0.6.2 license activation,revoked/expired entitlement fixture,Pro browser report journey or native CSV download."
+    "scope": "Original 0.6.0 genuine licensed Pro checks are historical. The paid implementation remains byte-identical through 0.6.3; shared corrections have their separate targeted evidence. No new 0.6.3 licensed activation, expired/revoked entitlement fixture or paid browser workflow is claimed."
+  },
+  "previous_maintenance_release_0_6_2": {
+    "version": "0.6.2",
+    "source_revision": "59f0a154daa81996c670cefb4eed62c56ee3dabb",
+    "public_tag_commit": "4ea56dd771b1d795bdc3ed737c67323cfaf45f7d",
+    "installer_sha256": "4236a0b9cbb538910c0fefb43f1059f0fa3cdf5fa134c3da8ce740294eb2e88a",
+    "manifest_sha256": "2061a42479c8918e35b1446257cef4ef713be399ea80914f2082571e66bfd6f5",
+    "changed_or_replaced": false,
+    "maintenance_acceptance": {
+      "package_build": {
+        "status": "PASS",
+        "php_lint_files": 181,
+        "javascript_syntax_files": 6,
+        "errors": 0,
+        "archive_files": 294,
+        "scope": "Exact immutable 0.6.2 Free ZIP CRC/edition/config exclusions and synchronized version metadata; this is not runtime installation acceptance."
+      },
+      "catalog_context": {
+        "passed": 30,
+        "failed": 0,
+        "scope": "Actual WordPress rendering and normalization contracts on isolated candidate source; allowed context/defaults/malformed arrays/encoded query-shaped search/escaped hidden fields."
+      },
+      "reusable_components": {
+        "namespace_contract_checks": 33,
+        "independent_reference_boundary_checks": 21,
+        "separate_full_page_navigation_checks": 6,
+        "separate_AJAX_REST_composition_checks": 4,
+        "failed": 0,
+        "scope": "Candidate source checks preserve canonical account anchors; ordinary page namespaces are deterministic across independent requests and AJAX/REST preview fragments use independent identifiers. Counts overlap in behavior and are not feature counts."
+      },
+      "ledger_CSV": {
+        "actual_registered_callback_checks": 47,
+        "callback_processes": 16,
+        "independent_helper_check_definitions": 19,
+        "helper_runtime_versions": [
+          "8.1.34",
+          "8.2.12",
+          "8.3.36"
+        ],
+        "helper_assertions_across_three_runtimes": 57,
+        "failed": 0,
+        "scope": "Normal/filtered/empty CSV matched previous healthy bytes. First/later query, temporary file creation, zero-write and positive short-write failures returned 503 without partial records in actual isolated WordPress CLI callbacks. Independent helper checks cover cleanup/rewind/private 0600 file/long to short rows. No native browser CSV download or fresh PHP 8.4 runtime is claimed."
+      },
+      "minimum_runtime_smoke": {
+        "wordpress": "6.9",
+        "woocommerce": "10.8.0",
+        "php": "8.1.34",
+        "database": "MariaDB10.11.19",
+        "passed": 15,
+        "failed": 0,
+        "scope": "Real isolated minimum combination: native activation/schema 23, 100 buyer points and 25 direct-referrer points, cancellation/replay/reconciliation, TagProcessor APIs and full-page history navigation on the two UI corrections. Performed before the later CSV correction; not a full final-binary matrix."
+      },
+      "source_preservation": {
+        "status": "PASS",
+        "changed_product_files": 7,
+        "runtime_classes": 3,
+        "metadata_files": 4,
+        "scope": "Other product files byte-identical to 0.6.1; accounting/policy/schema implementations and SDK/assets unchanged. No new feature or dependency."
+      },
+      "native_exact_package_acceptance": {
+        "status": "PASS",
+        "installer_sha256": "4236a0b9cbb538910c0fefb43f1059f0fa3cdf5fa134c3da8ce740294eb2e88a",
+        "installed_files_exact": 294,
+        "package_and_runtime_attestation": {
+          "passed": 38,
+          "failed": 0,
+          "scope": "Exact Free/Pro/source archive contents and edition boundaries plus actual Free runtime identity; this count does not imply fresh Pro entitlement activation."
+        },
+        "synthetic_clone_preservation": {
+          "passed": 6,
+          "failed": 0,
+          "financial_table_hash_sets_unchanged": 10,
+          "settings_and_rules_unchanged": true,
+          "schema": 23,
+          "active_edition": "Free",
+          "scope": "Native WordPress uploaded-ZIP replacement from 0.6.1 to 0.6.2 on the protected synthetic site; all tracked financial hashes and reconciliation components preserved."
+        },
+        "faithful_backup_clone_rehearsal": {
+          "status": "PASS",
+          "tracked_rowsets_unchanged": 18,
+          "schema": 23,
+          "settings_active_edition_and_ownership_preserved": true,
+          "scope": "Restored protected localhost backup; native WordPress upgrader followed by fresh full WordPress bootstrap. No external gateway or SMTP action."
+        },
+        "evidence_sha256": {
+          "package_and_runtime_attestation": "f99c3a46fe675e7c220e0fb8fc991a7aa795ff47976014b2e54a5c813e8c14f7",
+          "native_preservation_summary": "e0b9fe61177bb784f7ce36305bd7082a293d6cbb5a7af85d5a9157e6258a12f0",
+          "faithful_backup_upgrade_summary": "5c03016c13b5ee61aeb510fc8d7a353661fa2112a4d0ad3c442f0cf432fc9355"
+        },
+        "limits": "Native installation and data-preservation acceptance do not certify every browser,theme,gateway or paid account state. The scoped source,CLI export and browser checks remain separately stated."
+      }
+    },
+    "scope": "Prior 0.6.2 results retained as historical evidence for its exact archive and byte-identical unchanged implementations; not a newly executed 0.6.3 full suite."
+  },
+  "maintenance_acceptance": {
+    "product_editor_minimum": {
+      "status": "PASS",
+      "fix_sha256": "d11673a722f82ab4f8bc75b798c7188c5897a7bee8845381f103dbcba39b80b1",
+      "independent_read_only_contracts": {
+        "passed": 23,
+        "failed": 0
+      },
+      "scope": "The exact one-byte candidate passed native product save and purchase/commission previews on the isolated runtime, with23 independent read-only contracts. After installing the final0.6.3 ZIP, the zero-price cash product again passed native Update. Positive-price reward eligibility and charges remain enforced."
+    },
+    "package_build": {
+      "status": "PASS",
+      "php_lint_files": 181,
+      "javascript_syntax_files": 6,
+      "errors": 0,
+      "archive_files": 294
+    },
+    "exact_content_attestation": {
+      "status": "PASS",
+      "passed": 36,
+      "failed": 0,
+      "changed_product_files": 5,
+      "scope": "One exact input minimum plus four metadata files; all other source bytes match immutable 0.6.2. No behavioral suite is executed by the content attester."
+    },
+    "native_exact_package_acceptance": {
+      "status": "PASS",
+      "installer_sha256": "ca55552d00d12ecda33248e92a08a12a33f63a26003e9509bcebb6c14b3c8bd4",
+      "installed_files_exact": 294,
+      "version": "0.6.3",
+      "schema": 23,
+      "financial_table_hash_sets_unchanged": 10,
+      "settings_and_rule_version_unchanged": true,
+      "native_product_update_with_zero_price": "PASS",
+      "scope": "Actual native uploaded-ZIP replacement on the isolated QA site followed by exact294-file identity and financial/settings preservation. Subsequent ordinary cash-product Update succeeded with min0/value0 and no invalid fields. This does not claim a new licensedPro activation, provider test or universal browser/compatibility suite.",
+      "evidence_sha256": {
+        "runtime": "28ae2de108fd591552ec1c1a097dbf1c6096f68cb7991780e6228c5e6b16764f",
+        "native_upgrade": "80e78761e2c079026f5be1ca0f2ffcaa687c60e51ffb20002bf06046a2ed6a02",
+        "native_product_update": "45cd3e55fe9aeaa313d149a9ddcf78903e543e31f9888167f3a91abfa9a16a02",
+        "field_validity": "a5a13fbaa993aef77108240072e58bcb582f8a1783ef53b6eead4c23f1891bb6",
+        "after_product_update_snapshot": "424e23906a540056fe55a063b7d21f0df3d43fe8cda1d88923cef42ed8b7d2ce"
+      }
+    }
   }
 }

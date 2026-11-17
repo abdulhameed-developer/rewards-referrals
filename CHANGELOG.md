@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.2
+
+- Preserve catalog search, filters and page after applying selected product reward changes.
+- Keep reusable rewards component IDs and control references distinct while preserving full-page pagination and canonical account links.
+- Prepare ledger CSV before sending attachment headers and report database/storage errors without returning a misleading partial export.
+- Preserve earning, referral, redemption, data-retention policies, SDK/assets and schema 23.
+
+This maintenance change has focused source/runtime checks for the three existing-feature corrections and exact installer syntax/archive checks. Counters and limits are separated in RELEASE-MANIFEST.json; earlier 0.6.1/0.6.0 results remain historical evidence for the corresponding exact bytes and unchanged modules. The exact 0.6.2 Free package passed native update, runtime identity and data-preservation acceptance on protected test sites; the separate scopes are recorded in the manifest. No new capability, universal certification or fresh licensed Pro/gateway/email test is claimed.
+
 ## 0.6.1
 
 - Improve contrast for customer explanations, referral labels, reward availability, empty states, table headings and pagination.

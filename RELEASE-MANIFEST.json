@@ -13,32 +13,101 @@
   },
   "limits": [
     "No universal provider or theme certification; external Stripe/PayPal sandbox and licensed WoodMart fixtures remain unavailable.",
-    "External mail delivery, complete translations, full assistive-technology and real-device coverage are not certified."
+    "External mail delivery, complete human translations, full assistive technology and real device coverage are not certified.",
+    "CSV uses at most 500 query rows and one serialized row in PHP memory, but requires available private temporary storage and hosting time. Client/network/process interruption can still prevent full delivery or cleanup.",
+    "PHP 8.4 CSV call semantics reviewed against the official manual; no fresh 8.4 runtime execution. Backslash CSV escaping intentionally preserves prior healthy bytes; no new RFC 4180 claim.",
+    "No new licensed Pro entitlement test or universal expired/revoked gateway/provider matrix is claimed."
   ],
   "distribution_note": "A GitHub release, an Unreleased Freemius deployment and a WordPress.org review submission are separate states. Use the actual channel status; no automatic customer rollout is implied by this manifest.",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "installer": {
-    "filename": "rewards-referrals-0.6.1.zip",
-    "sha256": "9a5aa3ea7970a6a36d5c044feaa12e5d06488dd76216f9fe8213c9c489397af1",
+    "filename": "rewards-referrals-0.6.2.zip",
+    "sha256": "4236a0b9cbb538910c0fefb43f1059f0fa3cdf5fa134c3da8ce740294eb2e88a",
     "files": 294
   },
-  "maintenance_scope": "Customer text contrast correction: nine CSS color substitutions plus coherent release and POT metadata; layout, business logic, features, technical identities and schema 23 are unchanged.",
+  "maintenance_scope": "Three existing-feature corrections: preserve catalog operation context; isolate reusable component control/link IDs while preserving full-page navigation; prepare ledger CSV before attachment headers and fail clearly on database/storage errors. Earning, referral, redemption policies, account ownership, technical identifiers, SDK, assets and schema 23 are preserved.",
   "maintenance_acceptance": {
-    "independent_source_review": "PASS: exactly five product files changed; all non-color CSS fragments and all business, JavaScript and SDK implementations remain identical to 0.6.0.",
-    "rendered_normal_text_checks": {
-      "checks": 11,
-      "passed": 11,
-      "minimum_ratio": 5.411471,
-      "scope": "Observed visible customer text and solid backgrounds on the protected clone; not complete accessibility certification."
+    "package_build": {
+      "status": "PASS",
+      "php_lint_files": 181,
+      "javascript_syntax_files": 6,
+      "errors": 0,
+      "archive_files": 294,
+      "scope": "Exact immutable 0.6.2 Free ZIP CRC/edition/config exclusions and synchronized version metadata; this is not runtime installation acceptance."
     },
-    "temporary_translation_fixture": "Temporary German and Arabic catalogs covering 25 strings exercised layouts at 390, 768 and 1280 pixels. These fixtures are not shipped complete translations.",
-    "keyboard_scope": "Observed keyboard scrolling and visible focus in the customer history region at 390 pixels in RTL.",
+    "catalog_context": {
+      "passed": 30,
+      "failed": 0,
+      "scope": "Actual WordPress rendering and normalization contracts on isolated candidate source; allowed context/defaults/malformed arrays/encoded query-shaped search/escaped hidden fields."
+    },
+    "reusable_components": {
+      "namespace_contract_checks": 33,
+      "independent_reference_boundary_checks": 21,
+      "separate_full_page_navigation_checks": 6,
+      "separate_AJAX_REST_composition_checks": 4,
+      "failed": 0,
+      "scope": "Candidate source checks preserve canonical account anchors; ordinary page namespaces are deterministic across independent requests and AJAX/REST preview fragments use independent identifiers. Counts overlap in behavior and are not feature counts."
+    },
+    "ledger_CSV": {
+      "actual_registered_callback_checks": 47,
+      "callback_processes": 16,
+      "independent_helper_check_definitions": 19,
+      "helper_runtime_versions": [
+        "8.1.34",
+        "8.2.12",
+        "8.3.36"
+      ],
+      "helper_assertions_across_three_runtimes": 57,
+      "failed": 0,
+      "scope": "Normal/filtered/empty CSV matched previous healthy bytes. First/later query, temporary file creation, zero-write and positive short-write failures returned 503 without partial records in actual isolated WordPress CLI callbacks. Independent helper checks cover cleanup/rewind/private 0600 file/long to short rows. No native browser CSV download or fresh PHP 8.4 runtime is claimed."
+    },
+    "minimum_runtime_smoke": {
+      "wordpress": "6.9",
+      "woocommerce": "10.8.0",
+      "php": "8.1.34",
+      "database": "MariaDB10.11.19",
+      "passed": 15,
+      "failed": 0,
+      "scope": "Real isolated minimum combination: native activation/schema 23, 100 buyer points and 25 direct-referrer points, cancellation/replay/reconciliation, TagProcessor APIs and full-page history navigation on the two UI corrections. Performed before the later CSV correction; not a full final-binary matrix."
+    },
+    "source_preservation": {
+      "status": "PASS",
+      "changed_product_files": 7,
+      "runtime_classes": 3,
+      "metadata_files": 4,
+      "scope": "Other product files byte-identical to 0.6.1; accounting/policy/schema implementations and SDK/assets unchanged. No new feature or dependency."
+    },
     "native_exact_package_acceptance": {
       "status": "PASS",
-      "checks": 8,
-      "failed": 0,
-      "installer_sha256": "9a5aa3ea7970a6a36d5c044feaa12e5d06488dd76216f9fe8213c9c489397af1",
-      "scope": "Native update on the protected clone using the exact 0.6.1 Free ZIP: 294 installed files match; all 18 tracked table row hashes, saved settings and active plugins are preserved; only Free is active and schema remains 23."
+      "installer_sha256": "4236a0b9cbb538910c0fefb43f1059f0fa3cdf5fa134c3da8ce740294eb2e88a",
+      "installed_files_exact": 294,
+      "package_and_runtime_attestation": {
+        "passed": 38,
+        "failed": 0,
+        "scope": "Exact Free/Pro/source archive contents and edition boundaries plus actual Free runtime identity; this count does not imply fresh Pro entitlement activation."
+      },
+      "synthetic_clone_preservation": {
+        "passed": 6,
+        "failed": 0,
+        "financial_table_hash_sets_unchanged": 10,
+        "settings_and_rules_unchanged": true,
+        "schema": 23,
+        "active_edition": "Free",
+        "scope": "Native WordPress uploaded-ZIP replacement from 0.6.1 to 0.6.2 on the protected synthetic site; all tracked financial hashes and reconciliation components preserved."
+      },
+      "faithful_backup_clone_rehearsal": {
+        "status": "PASS",
+        "tracked_rowsets_unchanged": 18,
+        "schema": 23,
+        "settings_active_edition_and_ownership_preserved": true,
+        "scope": "Restored protected localhost backup; native WordPress upgrader followed by fresh full WordPress bootstrap. No external gateway or SMTP action."
+      },
+      "evidence_sha256": {
+        "package_and_runtime_attestation": "f99c3a46fe675e7c220e0fb8fc991a7aa795ff47976014b2e54a5c813e8c14f7",
+        "native_preservation_summary": "e0b9fe61177bb784f7ce36305bd7082a293d6cbb5a7af85d5a9157e6258a12f0",
+        "faithful_backup_upgrade_summary": "5c03016c13b5ee61aeb510fc8d7a353661fa2112a4d0ad3c442f0cf432fc9355"
+      },
+      "limits": "Native installation and data-preservation acceptance do not certify every browser,theme,gateway or paid account state. The scoped source,CLI export and browser checks remain separately stated."
     }
   },
   "reused_core_acceptance": {
@@ -48,7 +117,7 @@
     "validated_runs": 61,
     "explicit_RESULT_assertions": 1493,
     "failed": 0,
-    "scope": "Actual 0.6.0 exact Free result: 61 runs and 1493 explicit assertions, retained for unchanged business logic. This is not a new 0.6.1 full CI execution and is not added to maintenance check counts."
+    "scope": "Actual 0.6.0 exact Free result: 61 runs and 1,493 assertions retained for unchanged financial modules. This is not a new 0.6.2 full CI execution and is not added to maintenance check counts."
   },
   "additional_scope_reused_from_0_6_0": [
     "Published0.5.2 upgrade with matched database/code rollback",
@@ -58,9 +127,37 @@
     "Native Elementor editor and multiple widgets; selected desktop/tablet/mobile and RTL workflows"
   ],
   "preserved_previous_release": {
-    "version": "0.6.0",
-    "tag": "v0.6.0",
-    "installer_sha256": "cf90036d7b46f9eb134fe17bff927f2d0f4a0cd96ef993f164ef3f10ffe1eb07",
-    "changed_or_replaced": false
+    "version": "0.6.1",
+    "tag": "v0.6.1",
+    "installer_sha256": "9a5aa3ea7970a6a36d5c044feaa12e5d06488dd76216f9fe8213c9c489397af1",
+    "changed_or_replaced": false,
+    "also_preserved": "0.6.0 tag/installer"
+  },
+  "additional_targeted_accounting_evidence": {
+    "version": "0.6.1",
+    "installer_sha256": "9a5aa3ea7970a6a36d5c044feaa12e5d06488dd76216f9fe8213c9c489397af1",
+    "passed": 148,
+    "failed": 0,
+    "scope": "Fresh exact 0.6.1 Free isolated runtime: 128 assertions across 16 refund/spend/cancellation scenarios with no object cache and Redis 7.4, 18 fresh-process wallet reads and two financial nonmutation checks. Evidence for unchanged financial modules is reused; this is not a new 0.6.2 full-suite count or high-load HTTP benchmark.",
+    "cold_target_wallet_service_samples": {
+      "per_mode": 9,
+      "no_object_cache_p50_ms": 3.612,
+      "no_object_cache_p95_ms": 5.757,
+      "redis_p50_ms": 3.297,
+      "redis_p95_ms": 10.536,
+      "queries_per_read": 9,
+      "limits": "Target WordPress cache entries cleared; database and OS storage caches not purged. Service inside fresh PHP only, not HTTP request latency."
+    }
+  },
+  "source_freeze_revision": "59f0a154daa81996c670cefb4eed62c56ee3dabb",
+  "historical_Pro_evidence": {
+    "original_version": "0.6.0",
+    "passed": 33,
+    "failed": 0,
+    "reuse_through_versions": [
+      "0.6.1",
+      "0.6.2"
+    ],
+    "scope": "Original genuine licensed Pro checks are historical. The paid implementation remains byte-identical through 0.6.1 and 0.6.2; shared fixes have the focused tests listed above. This is not a fresh 0.6.1 or 0.6.2 license activation,revoked/expired entitlement fixture,Pro browser report journey or native CSV download."
   }
 }

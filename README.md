@@ -1,6 +1,6 @@
 # Rewards & Referrals
 
-**0.6.1.** Author: [Abdul Hameed](https://www.linkedin.com/in/abdul-hameed-website-developer/). The WordPress directory display name is Rewards & Referrals by Abdul Hameed; the installed folder, text domain, public APIs and database identifiers remain rewards-referrals. Verification scope and external integration limits are documented on the [public releases page](https://github.com/abdulhameed-developer/rewards-referrals/releases). This release does not claim universal gateway, theme or accessibility certification.
+**0.6.2.** Author: [Abdul Hameed](https://www.linkedin.com/in/abdul-hameed-website-developer/). This maintenance update preserves catalog filters after bulk changes, keeps reusable component links and controls distinct, and reports ledger export preparation failures without returning a misleading partial CSV. The WordPress directory display name is Rewards & Referrals by Abdul Hameed; the installed folder, text domain, public APIs and database identifiers remain rewards-referrals. Verification scope and external integration limits are documented on the [public releases page](https://github.com/abdulhameed-developer/rewards-referrals/releases). This release does not claim universal gateway, theme or accessibility certification.
 
 ## Program controls
 

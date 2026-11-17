@@ -2,6 +2,7 @@
 defined( 'ABSPATH' ) || exit;
 
 final class RR_Frontend {
+	private static $component_sequence = 0;
 	public static function init() {
 		add_action( 'init', array( __CLASS__, 'endpoint' ) );
 		add_filter( 'woocommerce_account_menu_items', array( __CLASS__, 'menu' ) );
@@ -46,7 +47,7 @@ final class RR_Frontend {
 		self::enqueue();
 		echo '<div class="rr-storefront"><header class="rr-customer-header"><span class="rr-customer-kicker">' . esc_html__( 'YOUR LOYALTY PROGRAM', 'rewards-referrals' ) . '</span><h2>' . esc_html__( 'Your rewards', 'rewards-referrals' ) . '</h2><p>' . esc_html__( 'Earn on eligible purchases, share your referral link, and choose your next reward.', 'rewards-referrals' ) . '</p></header><nav class="rr-customer-nav" aria-label="' . esc_attr__( 'Your rewards sections', 'rewards-referrals' ) . '"><a href="#rr-your-wallet">' . esc_html__( 'Wallet', 'rewards-referrals' ) . '</a><a href="#rr-your-referrals">' . esc_html__( 'Referrals', 'rewards-referrals' ) . '</a><a href="#rr-customer-catalog">' . esc_html__( 'Rewards catalog', 'rewards-referrals' ) . '</a><a href="#rr-your-activity">' . esc_html__( 'Activity', 'rewards-referrals' ) . '</a></nav>';
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Composed markup uses trusted renderers that escape dynamic values at their source; literal control attributes are fixed.
-		echo self::render_wallet() . '<div class="rr-customer-grid"><div>' . self::render_link() . '</div><div>' . self::render_stats() . '</div></div>' . RR_Customer_Records::render() . self::catalog_shortcode() . self::render_history() . self::redemptions_shortcode() . '</div>';
+		echo self::render_wallet() . '<div class="rr-customer-grid"><div>' . self::render_link() . '</div><div>' . self::render_stats() . '</div></div>' . RR_Customer_Records::render() . self::render_catalog() . self::render_history() . self::render_redemptions() . '</div>';
 	}
 	private static function ownership_message() {
 		$owner = RR_Wallet_Identity::check( get_current_user_id() );
@@ -148,6 +149,9 @@ final class RR_Frontend {
 		return $out . '</tbody></table></div>' . self::pagination( $page, $total, 20, 'rr_history_page', 'rr-your-activity' ) . '</section>';
 	}
 	public static function catalog_shortcode( $attributes = array() ) {
+		return self::component_markup( self::render_catalog( $attributes ) );
+	}
+	private static function render_catalog( $attributes = array() ) {
 		self::enqueue();
 		$settings = RR_Rules::get();
 		$out = '<section id="rr-customer-catalog" class="rr-customer-catalog"><h3>' . esc_html__( 'Choose your next reward', 'rewards-referrals' ) . '</h3><p>' . esc_html__( 'Browse available rewards and open a product to choose its options and redeem.', 'rewards-referrals' ) . '</p>';
@@ -193,6 +197,9 @@ final class RR_Frontend {
 	}
 
 	public static function redemptions_shortcode() {
+		return self::component_markup( self::render_redemptions() );
+	}
+	private static function render_redemptions() {
 		self::enqueue();
 		if ( ! is_user_logged_in() ) { return ''; }
 		$ownership = self::ownership_message(); if ( $ownership ) { return $ownership; }
@@ -223,10 +230,67 @@ final class RR_Frontend {
 		if ( $page < $pages ) { $out .= '<a href="' . esc_url( add_query_arg( $parameter, $page + 1 ) . '#' . $anchor ) . '">' . esc_html__( 'Next', 'rewards-referrals' ) . '</a>'; }
 		return $out . '</nav>';
 	}
-	public static function wallet_shortcode() { return self::render_wallet(); }
-	public static function link_shortcode() { return self::render_link(); }
-	public static function stats_shortcode() { return self::render_stats(); }
-	public static function history_shortcode() { return self::render_history(); }
-	public static function referral_shortcode() { return self::render_link() . self::render_stats(); }
-	public static function summary_shortcode() { return self::render_wallet() . self::render_stats(); }
+	/** Reusable shortcodes, blocks and widgets must not take the account page's anchor IDs. */
+	private static function component_markup( $html ) {
+		$reader = new WP_HTML_Tag_Processor( $html );
+		$ids = array();
+		while ( $reader->next_tag() ) {
+			$id = $reader->get_attribute( 'id' );
+			if ( is_string( $id ) && '' !== $id ) { $ids[ $id ] = true; }
+		}
+		if ( ! $ids ) { return $html; }
+		// Full-page navigation needs stable anchors; independent editor fragments need cross-request IDs.
+		$fragment_request = wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST );
+		$prefix = 'rr-component-' . ( $fragment_request ? wp_generate_uuid4() : ++self::$component_sequence );
+		foreach ( $ids as $id => $_present ) { $ids[ $id ] = $prefix . '-' . $id; }
+		$writer = new WP_HTML_Tag_Processor( $html );
+		while ( $writer->next_tag() ) {
+			foreach ( array( 'id', 'for', 'data-rr-copy', 'data-rr-share', 'form', 'list' ) as $attribute ) {
+				$value = $writer->get_attribute( $attribute );
+				if ( is_string( $value ) && isset( $ids[ $value ] ) ) { $writer->set_attribute( $attribute, $ids[ $value ] ); }
+			}
+			foreach ( array( 'aria-controls', 'aria-labelledby', 'aria-describedby', 'aria-owns', 'aria-activedescendant', 'aria-details', 'aria-errormessage', 'headers' ) as $attribute ) {
+				$value = $writer->get_attribute( $attribute );
+				if ( ! is_string( $value ) || '' === trim( $value ) ) { continue; }
+				$references = preg_split( '/\s+/', trim( $value ) ); $changed = false;
+				foreach ( $references as &$reference ) { if ( isset( $ids[ $reference ] ) ) { $reference = $ids[ $reference ]; $changed = true; } }
+				unset( $reference );
+				if ( $changed ) { $writer->set_attribute( $attribute, implode( ' ', $references ) ); }
+			}
+			$href = $writer->get_attribute( 'href' );
+			if ( is_string( $href ) ) {
+				$scoped = self::component_href( $href, $ids );
+				if ( $scoped !== $href ) { $writer->set_attribute( 'href', $scoped ); }
+			}
+		}
+		return $writer->get_updated_html();
+	}
+	/** Scope only fragments owned by this component on the current page, never external links. */
+	private static function component_href( $href, $ids ) {
+		$hash = strpos( $href, '#' );
+		if ( false === $hash ) { return $href; }
+		$fragment = rawurldecode( substr( $href, $hash + 1 ) );
+		if ( ! isset( $ids[ $fragment ] ) ) { return $href; }
+		$base = substr( $href, 0, $hash );
+		if ( '' !== $base ) {
+			$target = wp_parse_url( $base ); $home = wp_parse_url( home_url( '/' ) );
+			if ( ! is_array( $target ) || ! is_array( $home ) || isset( $target['user'] ) || isset( $target['pass'] ) ) { return $href; }
+			if ( isset( $target['scheme'] ) && strtolower( $target['scheme'] ) !== strtolower( $home['scheme'] ?? '' ) ) { return $href; }
+			if ( isset( $target['host'] ) ) {
+				if ( strtolower( $target['host'] ) !== strtolower( $home['host'] ?? '' ) ) { return $href; }
+				$default_port = 'https' === strtolower( $home['scheme'] ?? '' ) ? 443 : 80;
+				if ( (int) ( $target['port'] ?? $default_port ) !== (int) ( $home['port'] ?? $default_port ) ) { return $href; }
+			}
+			$request_uri = isset( $_SERVER['REQUEST_URI'] ) && is_string( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '/';
+			$current_path = wp_parse_url( $request_uri, PHP_URL_PATH ) ?: '/';
+			if ( ! empty( $target['path'] ) && $target['path'] !== $current_path ) { return $href; }
+		}
+		return $base . '#' . $ids[ $fragment ];
+	}
+	public static function wallet_shortcode() { return self::component_markup( self::render_wallet() ); }
+	public static function link_shortcode() { return self::component_markup( self::render_link() ); }
+	public static function stats_shortcode() { return self::component_markup( self::render_stats() ); }
+	public static function history_shortcode() { return self::component_markup( self::render_history() ); }
+	public static function referral_shortcode() { return self::component_markup( self::render_link() . self::render_stats() ); }
+	public static function summary_shortcode() { return self::component_markup( self::render_wallet() . self::render_stats() ); }
 }

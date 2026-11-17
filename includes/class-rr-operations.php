@@ -297,22 +297,71 @@ final class RR_Operations {
 			header( 'Content-Disposition: attachment; filename="rewards-referrals-settings.json"' );
 			echo wp_json_encode( array( 'plugin' => 'rewards-referrals', 'version' => REWARDS_REFERRALS_VERSION, 'settings' => RR_Rules::get() ), JSON_PRETTY_PRINT );
 		} else {
-			global $wpdb;
-			$table = RR_Database::table( 'ledger' );
 			$where = self::report_where( self::report_filter( wp_unslash( $_GET ) ) );
+			$stream = self::prepare_ledger_export( $where );
+			if ( is_wp_error( $stream ) ) { wp_die( esc_html( $stream->get_error_message() ), '', array( 'response' => 503, 'back_link' => true ) ); }
 			header( 'Content-Type: text/csv; charset=utf-8' );
 			header( 'Content-Disposition: attachment; filename="rewards-referrals-ledger.csv"' );
-			$stream = fopen( 'php://output', 'w' );
-			fputcsv( $stream, array( 'ID', 'Customer ID', 'Signed points', 'Type', 'State', 'Order ID', 'Referral ID', 'Rule version', 'Reference ID', 'Created UTC' ) );
-			$cursor = 0;
-			do {
-				$rows = $wpdb->get_results( $wpdb->prepare( "SELECT id,customer_id,amount,transaction_type,state,order_id,referral_id,rule_version,reference_id,created_at FROM $table$where AND id > %d ORDER BY id ASC LIMIT 500", $cursor ), ARRAY_A );
-				foreach ( $rows as $row ) { fputcsv( $stream, array_map( array( __CLASS__, 'csv_cell' ), array_values( $row ) ) ); $cursor = absint( $row['id'] ); }
-			} while ( count( $rows ) === 500 );
-			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- This closes the php://output CSV response stream, not a filesystem file.
+			fpassthru( $stream );
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closes and automatically deletes the private CSV preparation file.
 			fclose( $stream );
 		}
 		exit;
+	}
+
+
+	/** Prepare the complete CSV before sending attachment headers or any customer data. */
+	private static function prepare_ledger_export( $where ) {
+		global $wpdb;
+		$error = new WP_Error( 'rr_export_prepare_failed', __( 'The ledger export could not be prepared. Please try again. If the problem continues, contact your site administrator.', 'rewards-referrals' ) );
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Storage failure is handled without exposing private filesystem paths.
+		$stream = @tmpfile();
+		if ( false === $stream ) { return $error; }
+		// Keep only one serialized row in memory so a short disk write can be detected exactly.
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- The memory-stream failure is handled explicitly before sending the attachment.
+		$row_stream = @fopen( 'php://memory', 'w+' );
+		if ( false === $row_stream ) {
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closes and automatically deletes the private preparation file.
+			fclose( $stream );
+			return $error;
+		}
+		$complete = false;
+		try {
+			if ( ! self::write_export_row( $stream, $row_stream, array( 'ID', 'Customer ID', 'Signed points', 'Type', 'State', 'Order ID', 'Referral ID', 'Rule version', 'Reference ID', 'Created UTC' ) ) ) { return $error; }
+			$table = RR_Database::table( 'ledger' );
+			$cursor = 0;
+			do {
+				$rows = $wpdb->get_results( $wpdb->prepare( "SELECT id,customer_id,amount,transaction_type,state,order_id,referral_id,rule_version,reference_id,created_at FROM $table$where AND id > %d ORDER BY id ASC LIMIT 500", $cursor ), ARRAY_A );
+				if ( $wpdb->last_error || ! is_array( $rows ) ) { return $error; }
+				foreach ( $rows as $row ) {
+					if ( ! self::write_export_row( $stream, $row_stream, array_map( array( __CLASS__, 'csv_cell' ), array_values( $row ) ) ) ) { return $error; }
+					$cursor = absint( $row['id'] );
+				}
+			} while ( count( $rows ) === 500 );
+			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- An unreadable preparation file is discarded before customer data is emitted.
+			if ( ! @rewind( $stream ) ) { return $error; }
+			$complete = true;
+			return $stream;
+		} finally {
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closes the bounded in-memory serialization buffer.
+			fclose( $row_stream );
+			if ( ! $complete ) {
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Automatically deletes the incomplete private CSV, including any earlier batches.
+				fclose( $stream );
+			}
+		}
+	}
+
+	/** Write one CSV row in full; fputcsv alone may report a positive short disk write. */
+	private static function write_export_row( $stream, $row_stream, $row ) {
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Buffer failures are returned to the preparation error path.
+		if ( ! @rewind( $row_stream ) || ! @ftruncate( $row_stream, 0 ) ) { return false; }
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Serialization failure is handled before attachment headers.
+		$length = @fputcsv( $row_stream, $row, ',', '"', '\\' );
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Failed rewinds cannot produce an apparently successful CSV download.
+		if ( false === $length || ! @rewind( $row_stream ) ) { return false; }
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Compare the complete serialized size to catch storage errors and positive short writes.
+		return $length === @stream_copy_to_stream( $row_stream, $stream );
 	}
 
 	public static function csv_cell( $value ) { $value = (string) $value; return preg_match( '/^[\s\x00-\x1f]*[=+\-@]/u', $value ) && ! preg_match( '/^-?\d+$/', $value ) ? "'" . $value : $value; }

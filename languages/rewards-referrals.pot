@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rewards & Referrals by Abdul Hameed 0.6.1\n"
+"Project-Id-Version: Rewards & Referrals by Abdul Hameed 0.6.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rewards-referrals\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-13 00:00+0000\n"
+"POT-Creation-Date: 2026-11-17T09:00:01+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rewards-referrals\n"
@@ -24,11 +24,6 @@ msgstr ""
 msgid "https://github.com/abdulhameed-developer/rewards-referrals"
 msgstr ""
 
-#. Author URI of the plugin
-#: rewards-referrals.php
-msgid "https://www.linkedin.com/in/abdul-hameed-website-developer/"
-msgstr ""
-
 #. Description of the plugin
 #: rewards-referrals.php
 msgid "Customer loyalty points and direct referral rewards for WooCommerce."
@@ -39,20 +34,25 @@ msgstr ""
 msgid "Abdul Hameed"
 msgstr ""
 
+#. Author URI of the plugin
+#: rewards-referrals.php
+msgid "https://www.linkedin.com/in/abdul-hameed-website-developer/"
+msgstr ""
+
 #: includes/class-br-admin.php:21
 #: includes/class-br-admin.php:177
 #: includes/class-br-admin.php:201
 #: includes/class-br-woocommerce.php:487
 #: includes/class-rr-elementor-widget.php:7
-#: includes/class-rr-operations.php:326
-#: includes/class-rr-operations.php:329
-#: includes/class-rr-operations.php:368
-#: includes/class-rr-operations.php:370
+#: includes/class-rr-operations.php:375
+#: includes/class-rr-operations.php:378
+#: includes/class-rr-operations.php:417
+#: includes/class-rr-operations.php:419
 msgid "Rewards & Referrals"
 msgstr ""
 
 #: includes/class-br-admin.php:21
-#: includes/class-br-frontend.php:29
+#: includes/class-br-frontend.php:30
 msgid "Rewards"
 msgstr ""
 
@@ -250,7 +250,7 @@ msgid "Purchase rewards and commissions"
 msgstr ""
 
 #: includes/class-br-admin.php:212
-#: includes/class-br-frontend.php:100
+#: includes/class-br-frontend.php:101
 #: includes/class-rr-program-check.php:39
 msgid "Direct referrals"
 msgstr ""
@@ -612,8 +612,8 @@ msgstr ""
 
 #: includes/class-br-admin.php:341
 #: includes/class-br-admin.php:404
-#: includes/class-br-frontend.php:47
-#: includes/class-br-frontend.php:141
+#: includes/class-br-frontend.php:48
+#: includes/class-br-frontend.php:142
 #: includes/class-rr-pro__premium_only.php:48
 #: includes/class-rr-pro__premium_only.php:52
 msgid "Activity"
@@ -622,8 +622,8 @@ msgstr ""
 #: includes/class-br-admin.php:341
 #: includes/class-br-admin.php:369
 #: includes/class-br-admin.php:404
-#: includes/class-br-frontend.php:141
-#: includes/class-br-frontend.php:211
+#: includes/class-br-frontend.php:142
+#: includes/class-br-frontend.php:218
 #: includes/class-rr-customer-records.php:27
 msgid "Points"
 msgstr ""
@@ -631,9 +631,9 @@ msgstr ""
 #: includes/class-br-admin.php:341
 #: includes/class-br-admin.php:369
 #: includes/class-br-admin.php:404
-#: includes/class-br-admin.php:587
-#: includes/class-br-frontend.php:141
-#: includes/class-br-frontend.php:211
+#: includes/class-br-admin.php:609
+#: includes/class-br-frontend.php:142
+#: includes/class-br-frontend.php:218
 msgid "Order"
 msgstr ""
 
@@ -643,8 +643,8 @@ msgstr ""
 
 #: includes/class-br-admin.php:341
 #: includes/class-br-admin.php:404
-#: includes/class-br-frontend.php:141
-#: includes/class-br-frontend.php:211
+#: includes/class-br-frontend.php:142
+#: includes/class-br-frontend.php:218
 msgid "Date"
 msgstr ""
 
@@ -816,15 +816,15 @@ msgstr ""
 
 #: includes/class-br-admin.php:403
 #: includes/class-br-admin.php:435
-#: includes/class-br-frontend.php:68
-#: includes/class-br-frontend.php:120
+#: includes/class-br-frontend.php:69
+#: includes/class-br-frontend.php:121
 msgid "Pending"
 msgstr ""
 
 #: includes/class-br-admin.php:403
 #: includes/class-br-admin.php:435
-#: includes/class-br-frontend.php:68
-#: includes/class-br-frontend.php:120
+#: includes/class-br-frontend.php:69
+#: includes/class-br-frontend.php:121
 msgid "Reserved"
 msgstr ""
 
@@ -838,8 +838,8 @@ msgid "Recent wallet activity"
 msgstr ""
 
 #: includes/class-br-admin.php:404
-#: includes/class-br-frontend.php:141
-#: includes/class-br-frontend.php:211
+#: includes/class-br-frontend.php:142
+#: includes/class-br-frontend.php:218
 #: includes/class-rr-pro__premium_only.php:52
 msgid "State"
 msgstr ""
@@ -865,7 +865,7 @@ msgid "Browse 20 customers at a time, or enter an ID or the first 3–80 charact
 msgstr ""
 
 #: includes/class-br-admin.php:435
-#: includes/class-br-frontend.php:47
+#: includes/class-br-frontend.php:48
 msgid "Wallet"
 msgstr ""
 
@@ -882,7 +882,7 @@ msgid "Customer pages"
 msgstr ""
 
 #: includes/class-br-admin.php:445
-#: includes/class-br-frontend.php:190
+#: includes/class-br-frontend.php:194
 msgid "Start over"
 msgstr ""
 
@@ -971,7 +971,7 @@ msgid "Product category"
 msgstr ""
 
 #: includes/class-br-admin.php:498
-#: includes/class-br-frontend.php:167
+#: includes/class-br-frontend.php:171
 msgid "All categories"
 msgstr ""
 
@@ -1024,135 +1024,135 @@ msgstr ""
 msgid "Search products"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Bulk action"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Enable selected as points rewards"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Disable selected rewards"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Enable cash or points choice"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Set selected point prices"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Reset selected overrides"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 #: includes/class-br-woocommerce.php:490
 #: includes/class-br-woocommerce.php:538
 msgid "Points price"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Apply to selected"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Select all products on this page"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Product"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "SKU"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Cash price"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Availability"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Stock"
 msgstr ""
 
-#: includes/class-br-admin.php:505
+#: includes/class-br-admin.php:507
 msgid "Actions"
 msgstr ""
 
-#: includes/class-br-admin.php:511
+#: includes/class-br-admin.php:513
 msgid "In stock"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-admin.php:511
-#: includes/class-br-frontend.php:182
+#: includes/class-br-admin.php:513
+#: includes/class-br-frontend.php:186
 msgid "Out of stock"
 msgstr ""
 
 #. translators: %s is the product name.
-#: includes/class-br-admin.php:513
+#: includes/class-br-admin.php:515
 #, php-format
 msgid "Select %s"
 msgstr ""
 
 #. translators: %s is the product name.
-#: includes/class-br-admin.php:513
+#: includes/class-br-admin.php:515
 msgid "Uncategorized"
 msgstr ""
 
 #. translators: %s is the product name.
-#: includes/class-br-admin.php:513
+#: includes/class-br-admin.php:515
 msgid "Edit product"
 msgstr ""
 
-#: includes/class-br-admin.php:515
+#: includes/class-br-admin.php:517
 msgid "No products match these filters."
 msgstr ""
 
-#: includes/class-br-admin.php:517
+#: includes/class-br-admin.php:519
 msgid "Product catalog pages"
 msgstr ""
 
-#: includes/class-br-admin.php:519
+#: includes/class-br-admin.php:521
 msgid "Reward catalog help"
 msgstr ""
 
-#: includes/class-br-admin.php:519
+#: includes/class-br-admin.php:521
 msgid "Can I use this with thousands of products?"
 msgstr ""
 
-#: includes/class-br-admin.php:519
+#: includes/class-br-admin.php:521
 msgid "Yes. Search, filters, and pagination are performed by WooCommerce; only the current page of products is rendered. Bulk actions are limited to 100 selected products for a bounded, reviewable update."
 msgstr ""
 
-#: includes/class-br-admin.php:519
+#: includes/class-br-admin.php:521
 msgid "How do variations work?"
 msgstr ""
 
-#: includes/class-br-admin.php:519
+#: includes/class-br-admin.php:521
 msgid "Use the product type filter “Individual variations” to set an exception on a specific variation. Otherwise, edit the parent product when the same reward policy applies across the product."
 msgstr ""
 
-#: includes/class-br-admin.php:519
+#: includes/class-br-admin.php:521
 msgid "What does Inherit mean?"
 msgstr ""
 
-#: includes/class-br-admin.php:519
+#: includes/class-br-admin.php:521
 msgid "Inherit has no local redemption choice and follows Default product redemption mode in Program settings. For an opt-in catalog, keep that default as Cash only, then enable only selected products. Reset removes a local override without deleting the WooCommerce product."
 msgstr ""
 
-#: includes/class-br-admin.php:523
-#: includes/class-br-admin.php:679
-#: includes/class-br-admin.php:707
-#: includes/class-br-admin.php:730
-#: includes/class-br-admin.php:743
+#: includes/class-br-admin.php:544
+#: includes/class-br-admin.php:701
+#: includes/class-br-admin.php:729
+#: includes/class-br-admin.php:752
+#: includes/class-br-admin.php:765
 #: includes/class-br-referrals.php:217
 #: includes/class-br-referrals.php:284
 #: includes/class-rr-customer-search.php:79
@@ -1166,132 +1166,132 @@ msgstr ""
 msgid "Permission denied."
 msgstr ""
 
-#: includes/class-br-admin.php:529
+#: includes/class-br-admin.php:550
 msgid "Choose a valid catalog action."
 msgstr ""
 
-#: includes/class-br-admin.php:530
+#: includes/class-br-admin.php:551
 msgid "Enter a positive whole points price before applying this action."
 msgstr ""
 
-#: includes/class-br-admin.php:531
+#: includes/class-br-admin.php:552
 msgid "Select at least one product."
 msgstr ""
 
 #. translators: 1: product ID, 2: number of fully saved and audited products.
-#: includes/class-br-admin.php:543
+#: includes/class-br-admin.php:564
 #, php-format
 msgid "Processing stopped at product #%1$d after %2$d products were saved and audited. This product may already have changed before a save integration failed. Refresh the catalog and review it before retrying; earlier changes were not rolled back."
 msgstr ""
 
 #. translators: 1: product ID, 2: number of fully saved and audited products.
-#: includes/class-br-admin.php:547
+#: includes/class-br-admin.php:568
 #, php-format
 msgid "Processing stopped because product #%1$d could not be confirmed saved. %2$d products were already saved and audited. Refresh the catalog before retrying; earlier changes were not rolled back."
 msgstr ""
 
 #. translators: 1: product ID, 2: number of earlier fully saved and audited products.
-#: includes/class-br-admin.php:554
+#: includes/class-br-admin.php:575
 #, php-format
 msgid "Product #%1$d was saved, but its audit record could not be written. Processing stopped; %2$d earlier products were saved and audited. Changes were not rolled back. Review the product and restore database health before retrying."
 msgstr ""
 
-#: includes/class-br-admin.php:582
+#: includes/class-br-admin.php:604
 msgid "Your ledger is ready"
 msgstr ""
 
-#: includes/class-br-admin.php:582
+#: includes/class-br-admin.php:604
 msgid "Points activity will appear here as customers earn rewards."
 msgstr ""
 
 #. translators: %d is the customer ID.
-#: includes/class-br-admin.php:595
+#: includes/class-br-admin.php:617
 #, php-format
 msgid "Customer #%d"
 msgstr ""
 
-#: includes/class-br-admin.php:607
-#: includes/class-br-frontend.php:220
+#: includes/class-br-admin.php:629
+#: includes/class-br-frontend.php:227
 msgid "Previous"
 msgstr ""
 
-#: includes/class-br-admin.php:615
-#: includes/class-br-frontend.php:223
+#: includes/class-br-admin.php:637
+#: includes/class-br-frontend.php:230
 msgid "Next"
 msgstr ""
 
-#: includes/class-br-admin.php:622
+#: includes/class-br-admin.php:644
 #: includes/class-rr-operations.php:129
 msgid "GUIDANCE"
 msgstr ""
 
-#: includes/class-br-admin.php:622
+#: includes/class-br-admin.php:644
 #: includes/class-rr-operations.php:129
 msgid "Short answers for the decisions on this screen."
 msgstr ""
 
-#: includes/class-br-admin.php:670
+#: includes/class-br-admin.php:692
 msgid "First order"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-admin.php:672
+#: includes/class-br-admin.php:694
 #, php-format
 msgid "First %d orders"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-admin.php:674
+#: includes/class-br-admin.php:696
 #, php-format
 msgid "%d days"
 msgstr ""
 
-#: includes/class-br-admin.php:675
+#: includes/class-br-admin.php:697
 msgid "Lifetime"
 msgstr ""
 
-#: includes/class-br-admin.php:716
+#: includes/class-br-admin.php:738
 msgid "Choose a valid customer, non-zero whole points, and an adjustment reason."
 msgstr ""
 
-#: includes/class-br-admin.php:721
+#: includes/class-br-admin.php:743
 msgid "Adjustment could not be recorded"
 msgstr ""
 
-#: includes/class-br-admin.php:744
+#: includes/class-br-admin.php:766
 msgid "Choose a valid referral relationship."
 msgstr ""
 
-#: includes/class-br-admin.php:750
+#: includes/class-br-admin.php:772
 #: includes/class-br-referrals.php:230
 msgid "Referral relationships are being updated. Please retry."
 msgstr ""
 
-#: includes/class-br-admin.php:755
+#: includes/class-br-admin.php:777
 msgid "Referral storage could not be verified. No approval was saved."
 msgstr ""
 
-#: includes/class-br-admin.php:758
+#: includes/class-br-admin.php:780
 msgid "The relationship could not be read. Please retry."
 msgstr ""
 
-#: includes/class-br-admin.php:759
+#: includes/class-br-admin.php:781
 msgid "This relationship no longer exists. Refresh the referral list."
 msgstr ""
 
-#: includes/class-br-admin.php:764
+#: includes/class-br-admin.php:786
 msgid "The relationship could not be locked. Please retry."
 msgstr ""
 
-#: includes/class-br-admin.php:767
+#: includes/class-br-admin.php:789
 msgid "The approval could not be saved. Please retry."
 msgstr ""
 
-#: includes/class-br-admin.php:769
+#: includes/class-br-admin.php:791
 msgid "The approval audit could not be saved. No approval was saved."
 msgstr ""
 
-#: includes/class-br-admin.php:773
+#: includes/class-br-admin.php:795
 msgid "The approval could not be safely saved."
 msgstr ""
 
@@ -1323,385 +1323,385 @@ msgstr ""
 msgid "Rewards catalogue indexes are missing. Check database permissions and retry the upgrade."
 msgstr ""
 
-#: includes/class-br-frontend.php:43
+#: includes/class-br-frontend.php:44
 msgid "Referral link copied."
 msgstr ""
 
-#: includes/class-br-frontend.php:43
+#: includes/class-br-frontend.php:44
 msgid "Select the link and copy it using your device controls."
 msgstr ""
 
-#: includes/class-br-frontend.php:43
+#: includes/class-br-frontend.php:44
 msgid "Join me and earn rewards"
 msgstr ""
 
-#: includes/class-br-frontend.php:47
+#: includes/class-br-frontend.php:48
 msgid "YOUR LOYALTY PROGRAM"
 msgstr ""
 
 #. translators: 1: Available wallet points. 2: Points used by this cart.
-#: includes/class-br-frontend.php:47
+#: includes/class-br-frontend.php:48
 #: includes/class-br-woocommerce.php:799
 msgid "Your rewards"
 msgstr ""
 
-#: includes/class-br-frontend.php:47
+#: includes/class-br-frontend.php:48
 msgid "Earn on eligible purchases, share your referral link, and choose your next reward."
 msgstr ""
 
-#: includes/class-br-frontend.php:47
+#: includes/class-br-frontend.php:48
 msgid "Your rewards sections"
 msgstr ""
 
-#: includes/class-br-frontend.php:47
+#: includes/class-br-frontend.php:48
 msgid "Referrals"
 msgstr ""
 
-#: includes/class-br-frontend.php:47
+#: includes/class-br-frontend.php:48
 #: includes/class-rr-integrations.php:10
 msgid "Rewards catalog"
 msgstr ""
 
-#: includes/class-br-frontend.php:55
+#: includes/class-br-frontend.php:56
 msgid "Sign in to view your rewards."
 msgstr ""
 
-#: includes/class-br-frontend.php:55
+#: includes/class-br-frontend.php:56
 msgid "Sign in"
 msgstr ""
 
-#: includes/class-br-frontend.php:64
+#: includes/class-br-frontend.php:65
 msgid "Your wallet is temporarily unavailable. Please try again shortly."
 msgstr ""
 
-#: includes/class-br-frontend.php:67
+#: includes/class-br-frontend.php:68
 msgid "Available points"
 msgstr ""
 
-#: includes/class-br-frontend.php:67
+#: includes/class-br-frontend.php:68
 msgid "Ready to use on eligible rewards"
 msgstr ""
 
-#: includes/class-br-frontend.php:68
+#: includes/class-br-frontend.php:69
 msgid "Total earned"
 msgstr ""
 
-#: includes/class-br-frontend.php:68
+#: includes/class-br-frontend.php:69
 msgid "Redeemed"
 msgstr ""
 
 #. translators: 1: Point amount. 2: Localized expiration date.
-#: includes/class-br-frontend.php:74
+#: includes/class-br-frontend.php:75
 #, php-format
 msgid "%1$s available points expire on %2$s."
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-frontend.php:78
+#: includes/class-br-frontend.php:79
 #, php-format
 msgid "Future earnings first offset a previous adjustment of %s points."
 msgstr ""
 
-#: includes/class-br-frontend.php:86
+#: includes/class-br-frontend.php:87
 msgid "Your referral link is temporarily unavailable. Please try again later."
 msgstr ""
 
-#: includes/class-br-frontend.php:89
+#: includes/class-br-frontend.php:90
 msgid "Invite friends. Share the rewards."
 msgstr ""
 
-#: includes/class-br-frontend.php:89
+#: includes/class-br-frontend.php:90
 msgid "Share your personal link. Eligible purchases by your direct referrals can earn you extra points."
 msgstr ""
 
-#: includes/class-br-frontend.php:89
+#: includes/class-br-frontend.php:90
 msgid "Your referral link"
 msgstr ""
 
-#: includes/class-br-frontend.php:89
+#: includes/class-br-frontend.php:90
 msgid "Copy link"
 msgstr ""
 
-#: includes/class-br-frontend.php:89
+#: includes/class-br-frontend.php:90
 msgid "Share"
 msgstr ""
 
-#: includes/class-br-frontend.php:89
+#: includes/class-br-frontend.php:90
 msgid "Referral code:"
 msgstr ""
 
-#: includes/class-br-frontend.php:100
+#: includes/class-br-frontend.php:101
 msgid "Your referral impact"
 msgstr ""
 
-#: includes/class-br-frontend.php:100
+#: includes/class-br-frontend.php:101
 msgid "Referral points earned"
 msgstr ""
 
-#: includes/class-br-frontend.php:100
+#: includes/class-br-frontend.php:101
 msgid "Only your immediate referrals count toward direct referral rewards."
 msgstr ""
 
-#: includes/class-br-frontend.php:105
+#: includes/class-br-frontend.php:106
 msgid "Purchase points"
 msgstr ""
 
-#: includes/class-br-frontend.php:105
+#: includes/class-br-frontend.php:106
 msgid "Points earned on an eligible purchase."
 msgstr ""
 
-#: includes/class-br-frontend.php:106
+#: includes/class-br-frontend.php:107
 msgid "Referral points"
 msgstr ""
 
-#: includes/class-br-frontend.php:106
+#: includes/class-br-frontend.php:107
 msgid "Points earned from an eligible purchase by your direct referral."
 msgstr ""
 
-#: includes/class-br-frontend.php:107
+#: includes/class-br-frontend.php:108
 msgid "Earned points reversed"
 msgstr ""
 
-#: includes/class-br-frontend.php:107
+#: includes/class-br-frontend.php:108
 msgid "Previously earned points removed after a refund or cancellation. This is separate from points returned for a redeemed reward."
 msgstr ""
 
-#: includes/class-br-frontend.php:108
+#: includes/class-br-frontend.php:109
 msgid "Reward points returned"
 msgstr ""
 
-#: includes/class-br-frontend.php:108
+#: includes/class-br-frontend.php:109
 msgid "Points spent on a reward returned after a refund or cancellation."
 msgstr ""
 
-#: includes/class-br-frontend.php:109
+#: includes/class-br-frontend.php:110
 msgid "Reward points reserved"
 msgstr ""
 
-#: includes/class-br-frontend.php:109
+#: includes/class-br-frontend.php:110
 msgid "Points set aside while a reward order is processed. A later entry records spending or release; do not add every history row to calculate your balance."
 msgstr ""
 
-#: includes/class-br-frontend.php:110
+#: includes/class-br-frontend.php:111
 msgid "Reward redeemed"
 msgstr ""
 
-#: includes/class-br-frontend.php:110
+#: includes/class-br-frontend.php:111
 msgid "Reserved points spent on a confirmed reward order."
 msgstr ""
 
-#: includes/class-br-frontend.php:111
+#: includes/class-br-frontend.php:112
 msgid "Reserved points released"
 msgstr ""
 
-#: includes/class-br-frontend.php:111
+#: includes/class-br-frontend.php:112
 msgid "A reward reservation was released. The points are no longer held for that order."
 msgstr ""
 
-#: includes/class-br-frontend.php:112
+#: includes/class-br-frontend.php:113
 msgid "Points expired"
 msgstr ""
 
-#: includes/class-br-frontend.php:112
+#: includes/class-br-frontend.php:113
 msgid "Unused points reached their saved expiry date."
 msgstr ""
 
-#: includes/class-br-frontend.php:113
+#: includes/class-br-frontend.php:114
 msgid "Expired points reconciled"
 msgstr ""
 
-#: includes/class-br-frontend.php:113
+#: includes/class-br-frontend.php:114
 msgid "An earlier expiry was accounted for during a refund so those points are not deducted twice."
 msgstr ""
 
-#: includes/class-br-frontend.php:114
+#: includes/class-br-frontend.php:115
 msgid "Bonus points"
 msgstr ""
 
-#: includes/class-br-frontend.php:114
+#: includes/class-br-frontend.php:115
 msgid "Additional points credited to your rewards account."
 msgstr ""
 
-#: includes/class-br-frontend.php:115
+#: includes/class-br-frontend.php:116
 msgid "Points adjustment"
 msgstr ""
 
-#: includes/class-br-frontend.php:115
+#: includes/class-br-frontend.php:116
 msgid "The store recorded a correction to your points. Contact the store if you need more information."
 msgstr ""
 
-#: includes/class-br-frontend.php:116
+#: includes/class-br-frontend.php:117
 msgid "Points added"
 msgstr ""
 
-#: includes/class-br-frontend.php:116
+#: includes/class-br-frontend.php:117
 msgid "The store added points to your rewards account."
 msgstr ""
 
-#: includes/class-br-frontend.php:117
+#: includes/class-br-frontend.php:118
 msgid "Points deducted"
 msgstr ""
 
-#: includes/class-br-frontend.php:117
+#: includes/class-br-frontend.php:118
 msgid "The store deducted points from your rewards account."
 msgstr ""
 
-#: includes/class-br-frontend.php:118
+#: includes/class-br-frontend.php:119
 msgid "Historical balance correction"
 msgstr ""
 
-#: includes/class-br-frontend.php:118
+#: includes/class-br-frontend.php:119
 msgid "A correction was recorded while bringing earlier rewards history into this account."
 msgstr ""
 
-#: includes/class-br-frontend.php:120
-#: includes/class-br-frontend.php:122
+#: includes/class-br-frontend.php:121
+#: includes/class-br-frontend.php:123
 msgid "Recorded"
 msgstr ""
 
-#: includes/class-br-frontend.php:120
+#: includes/class-br-frontend.php:121
 msgid "Spent"
 msgstr ""
 
-#: includes/class-br-frontend.php:120
+#: includes/class-br-frontend.php:121
 msgid "Expired"
 msgstr ""
 
-#: includes/class-br-frontend.php:120
+#: includes/class-br-frontend.php:121
 msgid "Reversed"
 msgstr ""
 
-#: includes/class-br-frontend.php:120
+#: includes/class-br-frontend.php:121
 msgid "Adjusted"
 msgstr ""
 
-#: includes/class-br-frontend.php:121
-#: includes/class-br-frontend.php:138
-#: includes/class-br-frontend.php:141
+#: includes/class-br-frontend.php:122
+#: includes/class-br-frontend.php:139
+#: includes/class-br-frontend.php:142
 msgid "Points activity"
 msgstr ""
 
-#: includes/class-br-frontend.php:121
+#: includes/class-br-frontend.php:122
 msgid "A change was recorded in your rewards history. Contact the store for help."
 msgstr ""
 
-#: includes/class-br-frontend.php:139
+#: includes/class-br-frontend.php:140
 msgid "Your points history is temporarily unavailable. Please try again shortly."
 msgstr ""
 
-#: includes/class-br-frontend.php:140
+#: includes/class-br-frontend.php:141
 msgid "Your rewards activity will appear here after your first eligible purchase."
 msgstr ""
 
-#: includes/class-br-frontend.php:153
+#: includes/class-br-frontend.php:157
 msgid "Choose your next reward"
 msgstr ""
 
-#: includes/class-br-frontend.php:153
+#: includes/class-br-frontend.php:157
 msgid "Browse available rewards and open a product to choose its options and redeem."
 msgstr ""
 
-#: includes/class-br-frontend.php:154
+#: includes/class-br-frontend.php:158
 msgid "Rewards are being prepared and will be available here soon. Your available points remain safely in your wallet."
 msgstr ""
 
-#: includes/class-br-frontend.php:158
+#: includes/class-br-frontend.php:162
 msgid "The rewards catalog is being refreshed. More eligible products may appear shortly."
 msgstr ""
 
-#: includes/class-br-frontend.php:167
+#: includes/class-br-frontend.php:171
 msgid "Category"
 msgstr ""
 
-#: includes/class-br-frontend.php:169
+#: includes/class-br-frontend.php:173
 msgid "Sort rewards"
 msgstr ""
 
-#: includes/class-br-frontend.php:170
+#: includes/class-br-frontend.php:174
 #: includes/class-rr-pro__premium_only.php:20
 msgid "Name"
 msgstr ""
 
-#: includes/class-br-frontend.php:170
+#: includes/class-br-frontend.php:174
 msgid "Newest first"
 msgstr ""
 
-#: includes/class-br-frontend.php:170
+#: includes/class-br-frontend.php:174
 msgid "Points: low to high"
 msgstr ""
 
-#: includes/class-br-frontend.php:170
+#: includes/class-br-frontend.php:174
 msgid "Points: high to low"
 msgstr ""
 
-#: includes/class-br-frontend.php:171
+#: includes/class-br-frontend.php:175
 msgid "Filter rewards"
 msgstr ""
 
-#: includes/class-br-frontend.php:172
+#: includes/class-br-frontend.php:176
 msgid "No rewards match this page. Try another page or filter."
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-frontend.php:182
+#: includes/class-br-frontend.php:186
 msgid "Sign in to check your balance"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-frontend.php:182
+#: includes/class-br-frontend.php:186
 msgid "Your balance covers this reward"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-frontend.php:182
+#: includes/class-br-frontend.php:186
 #, php-format
 msgid "%s more points needed"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-frontend.php:184
+#: includes/class-br-frontend.php:188
 #: includes/class-br-woocommerce.php:613
 #, php-format
 msgid "%s points"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-frontend.php:184
+#: includes/class-br-frontend.php:188
 msgid "Choose options"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-frontend.php:184
+#: includes/class-br-frontend.php:188
 msgid "View reward"
 msgstr ""
 
-#: includes/class-br-frontend.php:189
+#: includes/class-br-frontend.php:193
 msgid "Reward catalog pages"
 msgstr ""
 
-#: includes/class-br-frontend.php:191
+#: includes/class-br-frontend.php:195
 msgid "More rewards"
 msgstr ""
 
-#: includes/class-br-frontend.php:208
-#: includes/class-br-frontend.php:211
+#: includes/class-br-frontend.php:215
+#: includes/class-br-frontend.php:218
 msgid "Your redemption orders"
 msgstr ""
 
-#: includes/class-br-frontend.php:209
+#: includes/class-br-frontend.php:216
 msgid "Your redemption history is temporarily unavailable. Please try again shortly."
 msgstr ""
 
-#: includes/class-br-frontend.php:210
+#: includes/class-br-frontend.php:217
 msgid "Your reward orders will appear here when you redeem points."
 msgstr ""
 
-#: includes/class-br-frontend.php:219
+#: includes/class-br-frontend.php:226
 msgid "Rewards pages"
 msgstr ""
 
 #. translators: 1: Current page number. 2: Total page count.
-#: includes/class-br-frontend.php:222
+#: includes/class-br-frontend.php:229
 #, php-format
 msgid "Page %1$d of %2$d"
 msgstr ""
@@ -3239,42 +3239,46 @@ msgstr ""
 msgid "Unknown export format."
 msgstr ""
 
-#: includes/class-rr-operations.php:329
+#: includes/class-rr-operations.php:316
+msgid "The ledger export could not be prepared. Please try again. If the problem continues, contact your site administrator."
+msgstr ""
+
+#: includes/class-rr-operations.php:378
 msgid "Rewards & Referrals stores points transactions, order links, direct referral relationships and referral codes to operate the store loyalty program. A private account-incarnation token and a retained hashed ownership binding prevent a newly created account from inheriting another account’s reward history when a numeric user ID is reused. These ownership proofs are not sent to external services or included in customer statements, plugin privacy exports or support diagnostics. A staff-only search index copies customer names, usernames and email addresses from WordPress. A referral link can set an HTTP-only, SameSite=Lax br_ref cookie for the configured attribution period; the store owner must obtain any consent required before permitting referral tracking through the rr_referral_tracking_allowed filter."
 msgstr ""
 
-#: includes/class-rr-operations.php:329
+#: includes/class-rr-operations.php:378
 msgid "Optional reward emails use the site mail service. Delivery records store transaction identifiers and status, not copies of the message or recipient address. Accepted/skipped delivery records are retained for 90 days; failed/uncertain records for 365 days; queued notices expire after 90 days. Customer statements and the WordPress personal-data exporter include reward records. Financial transaction amounts, account identifiers and referral history are retained on erasure requests to protect balances and audit integrity. The store owner must review the applicable retention basis. Uninstall preserves plugin data by default; explicit deletion removes owned records. Any Freemius connection has its own opt-in and privacy notice."
 msgstr ""
 
-#: includes/class-rr-operations.php:339
-#: includes/class-rr-operations.php:344
-#: includes/class-rr-operations.php:348
-#: includes/class-rr-operations.php:360
+#: includes/class-rr-operations.php:388
+#: includes/class-rr-operations.php:393
+#: includes/class-rr-operations.php:397
+#: includes/class-rr-operations.php:409
 msgid "Rewards personal data could not be read. Retry after checking database health."
 msgstr ""
 
-#: includes/class-rr-operations.php:341
+#: includes/class-rr-operations.php:390
 msgid "Rewards history"
 msgstr ""
 
-#: includes/class-rr-operations.php:345
+#: includes/class-rr-operations.php:394
 msgid "Referral history"
 msgstr ""
 
-#: includes/class-rr-operations.php:349
+#: includes/class-rr-operations.php:398
 msgid "Reward email delivery"
 msgstr ""
 
-#: includes/class-rr-operations.php:361
+#: includes/class-rr-operations.php:410
 msgid "Rewards account information"
 msgstr ""
 
-#: includes/class-rr-operations.php:367
+#: includes/class-rr-operations.php:416
 msgid "Record type"
 msgstr ""
 
-#: includes/class-rr-operations.php:373
+#: includes/class-rr-operations.php:422
 msgid "Rewards accounting records and referral relationships are retained for audit and balance integrity. Contact the store owner to review applicable retention requirements."
 msgstr ""
 

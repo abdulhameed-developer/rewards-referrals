@@ -5,7 +5,7 @@ Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 0.6.1
+Stable tag: 0.6.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,7 @@ Create a loyalty program with customer wallets, direct referral commissions, pro
 * Administrative reports, settings transfer, and privacy-tool integration.
 * Program check with catalogue setup guidance and purchase examples that create no order or points.
 
-Version 0.6.1 improves customer-facing text contrast while preserving the existing loyalty program and durable account ownership protection. WordPress 6.9+, WooCommerce 10.8+, PHP 8.1+ and InnoDB accounting, order, user and usermeta tables are required. Exact tested combinations and known limits are recorded with each release at https://github.com/abdulhameed-developer/rewards-referrals/releases and in the public verification guide at https://github.com/abdulhameed-developer/rewards-referrals/blob/main/docs/RELEASE-VERIFICATION.md . These minimum versions are not a promise for every combination. Network activation is not supported; activate separately on each site.
+Version 0.6.2 preserves catalog filters after bulk changes, keeps reusable component links and controls distinct, and reports ledger export preparation failures without returning a misleading partial CSV. Existing loyalty policies and durable account ownership protection remain supported. WordPress 6.9+, WooCommerce 10.8+, PHP 8.1+ and InnoDB accounting, order, user and usermeta tables are required. Exact tested combinations and known limits are recorded with each release at https://github.com/abdulhameed-developer/rewards-referrals/releases and in the public verification guide at https://github.com/abdulhameed-developer/rewards-referrals/blob/main/docs/RELEASE-VERIFICATION.md . These minimum versions are not a promise for every combination. Network activation is not supported; activate separately on each site.
 
 Free includes core points, direct referrals, wallets, redemption, accounting exports and privacy tools, without a product-count limit. Pro adds scheduled earning campaigns, filtered summary reports and custom notification templates.
 
@@ -72,6 +72,12 @@ No. Accounting history is preserved. Full deletion requires the explicit uninsta
 [rewards_wallet], [rewards_referral_link], [rewards_referral_stats], [rewards_referral_dashboard], [rewards_transaction_history], [rewards_catalog], [rewards_redemption_history], and [rewards_summary].
 
 == Changelog ==
+
+= 0.6.2 =
+* Preserve catalog search, filters and page after applying selected product reward changes.
+* Keep reusable rewards component IDs and control references distinct while preserving full-page pagination and canonical account links.
+* Prepare ledger CSV downloads before sending attachment headers and report database or storage failures without returning a misleading partial export.
+* Preserve earning, referral, redemption, data-retention policies and schema 23.
 
 = 0.6.1 =
 * Improve contrast for customer explanations, referral labels, reward availability, empty states, table headings and pagination.

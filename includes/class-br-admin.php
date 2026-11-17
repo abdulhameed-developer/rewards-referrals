@@ -502,6 +502,8 @@ final class RR_Admin {
 		echo '</select></label><label><span class="screen-reader-text">' . esc_html__( 'Product status', 'rewards-referrals' ) . '</span><select class="rr-control" name="product_status"><option value="">' . esc_html__( 'All statuses', 'rewards-referrals' ) . '</option><option value="publish" ' . selected( $status, 'publish', false ) . '>' . esc_html__( 'Published', 'rewards-referrals' ) . '</option><option value="draft" ' . selected( $status, 'draft', false ) . '>' . esc_html__( 'Draft', 'rewards-referrals' ) . '</option><option value="private" ' . selected( $status, 'private', false ) . '>' . esc_html__( 'Private', 'rewards-referrals' ) . '</option></select></label><button class="rr-button rr-button-primary" type="submit">' . esc_html__( 'Search products', 'rewards-referrals' ) . '</button></form>';
 		echo '<form class="rr-catalog-bulk" method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"><input type="hidden" name="action" value="rr_catalog_bulk">';
 		wp_nonce_field( 'rr_catalog_bulk' );
+		$context = self::catalog_context( array( 's' => $search, 'category' => $category_id, 'product_type' => $type, 'product_status' => $status, 'paged' => $page ) );
+		foreach ( $context as $key => $value ) { echo '<input type="hidden" name="catalog_context[' . esc_attr( $key ) . ']" value="' . esc_attr( $value ) . '">'; }
 		echo '<div class="rr-catalog-toolbar"><label><span class="screen-reader-text">' . esc_html__( 'Bulk action', 'rewards-referrals' ) . '</span><select class="rr-control" name="bulk_action"><option value="enable">' . esc_html__( 'Enable selected as points rewards', 'rewards-referrals' ) . '</option><option value="disable">' . esc_html__( 'Disable selected rewards', 'rewards-referrals' ) . '</option><option value="cash_or_points">' . esc_html__( 'Enable cash or points choice', 'rewards-referrals' ) . '</option><option value="set_price">' . esc_html__( 'Set selected point prices', 'rewards-referrals' ) . '</option><option value="reset">' . esc_html__( 'Reset selected overrides', 'rewards-referrals' ) . '</option></select></label><label class="rr-bulk-price"><span class="screen-reader-text">' . esc_html__( 'Points price', 'rewards-referrals' ) . '</span><input class="rr-control" type="number" min="1" max="1000000000" step="1" name="points_price" placeholder="' . esc_attr__( 'Points price', 'rewards-referrals' ) . '"></label><button class="rr-button rr-button-light" type="submit">' . esc_html__( 'Apply to selected', 'rewards-referrals' ) . '</button></div><div class="rr-table-scroll"><table class="rr-table rr-catalog-table"><thead><tr><th><input id="rr-select-all" type="checkbox" aria-label="' . esc_attr__( 'Select all products on this page', 'rewards-referrals' ) . '"></th><th>' . esc_html__( 'Product', 'rewards-referrals' ) . '</th><th>' . esc_html__( 'SKU', 'rewards-referrals' ) . '</th><th>' . esc_html__( 'Cash price', 'rewards-referrals' ) . '</th><th>' . esc_html__( 'Points price', 'rewards-referrals' ) . '</th><th>' . esc_html__( 'Availability', 'rewards-referrals' ) . '</th><th>' . esc_html__( 'Stock', 'rewards-referrals' ) . '</th><th>' . esc_html__( 'Actions', 'rewards-referrals' ) . '</th></tr></thead><tbody>';
 		if ( $products ) {
 			foreach ( $products as $product ) {
@@ -517,6 +519,25 @@ final class RR_Admin {
 		self::pagination( $page, $pages, array( 'page' => self::page_for_tab( 'catalog' ), 'tab' => 'catalog', 's' => $search, 'category' => $category_id, 'product_type' => $type, 'product_status' => $status ), __( 'Product catalog pages', 'rewards-referrals' ) );
 		echo '</section>';
 		self::faq( __( 'Reward catalog help', 'rewards-referrals' ), array( array( __( 'Can I use this with thousands of products?', 'rewards-referrals' ), __( 'Yes. Search, filters, and pagination are performed by WooCommerce; only the current page of products is rendered. Bulk actions are limited to 100 selected products for a bounded, reviewable update.', 'rewards-referrals' ) ), array( __( 'How do variations work?', 'rewards-referrals' ), __( 'Use the product type filter “Individual variations” to set an exception on a specific variation. Otherwise, edit the parent product when the same reward policy applies across the product.', 'rewards-referrals' ) ), array( __( 'What does Inherit mean?', 'rewards-referrals' ), __( 'Inherit has no local redemption choice and follows Default product redemption mode in Program settings. For an opt-in catalog, keep that default as Cash only, then enable only selected products. Reset removes a local override without deleting the WooCommerce product.', 'rewards-referrals' ) ) ) );
+	}
+
+	/** Preserve only validated catalog filters; this never accepts a return URL or page slug. */
+	private static function catalog_context( $input ) {
+		$input = is_array( $input ) ? $input : array();
+		$context = array();
+		if ( isset( $input['s'] ) && is_scalar( $input['s'] ) ) {
+			$search = sanitize_text_field( (string) $input['s'] );
+			if ( '' !== $search ) { $context['s'] = $search; }
+		}
+		foreach ( array( 'category' => 0, 'paged' => 1 ) as $key => $minimum ) {
+			$value = isset( $input[ $key ] ) && is_scalar( $input[ $key ] ) ? filter_var( (string) $input[ $key ], FILTER_VALIDATE_INT, array( 'options' => array( 'min_range' => $minimum ) ) ) : false;
+			if ( false !== $value && $value > $minimum ) { $context[ $key ] = $value; }
+		}
+		foreach ( array( 'product_type' => array( 'simple', 'variable', 'variation', 'grouped', 'external' ), 'product_status' => array( 'publish', 'draft', 'private' ) ) as $key => $allowed ) {
+			$value = isset( $input[ $key ] ) && is_scalar( $input[ $key ] ) ? sanitize_key( (string) $input[ $key ] ) : '';
+			if ( in_array( $value, $allowed, true ) ) { $context[ $key ] = $value; }
+		}
+		return $context;
 	}
 
 	public static function catalog_bulk() {
@@ -555,7 +576,8 @@ final class RR_Admin {
 			}
 			++$completed;
 		}
-		wp_safe_redirect( self::tab_url( 'catalog', array( 'catalog_updated' => '1' ) ) );
+		$context = self::catalog_context( isset( $_POST['catalog_context'] ) && is_array( $_POST['catalog_context'] ) ? wp_unslash( $_POST['catalog_context'] ) : array() );
+		wp_safe_redirect( self::tab_url( 'catalog', array_merge( array_map( 'rawurlencode', $context ), array( 'catalog_updated' => '1' ) ) ) );
 		exit;
 	}
 

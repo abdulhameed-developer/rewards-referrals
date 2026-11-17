@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.4 — verified Freemius transport security maintenance
+
+- Enforce certificate and hostname verification at the WordPress HTTP boundary, including when another SDK instance previously set a shared verification constant false.
+- Block plaintext API fallback and unsafe redirect destinations. Preserve bounded verified HTTPS CDN downloads, removing origin authorization/cookies before allowed cross-origin download requests.
+- Preserve same-origin verified HTTPS 307 request/body semantics and the existing Free/Pro identities, financial logic, database schema 23, SDK/assets, dependencies and UI.
+- Pro: validate nonempty event email overrides on the server and apply character-safe Unicode length limits. This is a correction to an existing authorized save workflow; no Pro implementation is shipped in Free.
+- This fixes a verified transport-policy weakness; no actual interception or customer credential exposure is asserted. The Free release adds one first-party module and reviewed early bootstrap initialization, plus version/translation/release metadata.
+
+
 ## 0.6.3
 
 - Allow an ordinary cash product with an unused zero points price to save in the native product editor.

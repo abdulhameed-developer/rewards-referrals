@@ -16,16 +16,16 @@
     "External mail delivery, complete human translations, full assistive technology and real device coverage are not certified.",
     "CSV uses at most 500 query rows and one serialized row in PHP memory, but requires available private temporary storage and hosting time. Client/network/process interruption can still prevent full delivery or cleanup.",
     "PHP 8.4 CSV call semantics reviewed against the official manual; no fresh 8.4 runtime execution. Backslash CSV escaping intentionally preserves prior healthy bytes; no new RFC 4180 claim.",
-    "No new licensed Pro entitlement test or universal expired/revoked gateway/provider matrix is claimed."
+    "Artifact/source attestation does not certify every entitlement, expired/revoked license, provider or distribution workflow. Prior per-version evidence retains its historical scope."
   ],
   "distribution_note": "A GitHub release, an Unreleased Freemius deployment and a WordPress.org review submission are separate states. Use the actual channel status; no automatic customer rollout is implied by this manifest.",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "installer": {
-    "filename": "rewards-referrals-0.6.3.zip",
-    "sha256": "ca55552d00d12ecda33248e92a08a12a33f63a26003e9509bcebb6c14b3c8bd4",
-    "files": 294
+    "filename": "rewards-referrals-0.6.4.zip",
+    "sha256": "b43451b84386f30294c8b5fc5e142a16cc402b740c631c83686fb3dcee7d4080",
+    "files": 295
   },
-  "maintenance_scope": "One existing product-editor correction: an unused zero points price no longer blocks saving an ordinary cash product. Only the simple-product input minimum changes from one to zero; server-side positive reward prices, financial policies, schema 23, prior 0.6.2 corrections, SDK/assets, Pro modules and technical identifiers remain unchanged.",
+  "maintenance_scope": "A first-party WordPress HTTP boundary now enforces verified HTTPS, certificate/hostname validation and the canonical WordPress CA bundle for the official Freemius service origins. It rejects plaintext API fallback, unsafe authorities and unsafe redirect destinations, retains bounded verified HTTPS CDN downloads and strips origin credential headers across allowed download redirects. Bundled SDK source is unchanged. No actual interception or credential exposure is claimed; signup requests already requested TLS verification, while the separately verified shared API path could request false verification. The commercial edition also rejects blank, whitespace-only or empty-after-sanitization event email subject/body overrides at the authorized server-side save boundary. Character-safe length limits preserve valid Unicode. Only that existing Pro save method changed; its implementation remains excluded from this Free tree.",
   "reused_core_acceptance": {
     "version": "0.6.0",
     "archive_sha256": "cf90036d7b46f9eb134fe17bff927f2d0f4a0cd96ef993f164ef3f10ffe1eb07",
@@ -43,11 +43,11 @@
     "Native Elementor editor and multiple widgets; selected desktop/tablet/mobile and RTL workflows"
   ],
   "preserved_previous_release": {
-    "version": "0.6.2",
-    "tag": "v0.6.2",
-    "installer_sha256": "4236a0b9cbb538910c0fefb43f1059f0fa3cdf5fa134c3da8ce740294eb2e88a",
-    "changed_or_replaced": false,
-    "also_preserved": "0.6.0 and 0.6.1 tags/installers"
+    "version": "0.6.3",
+    "public_tag": "v0.6.3",
+    "public_commit": "f26951b368b842076b011b5ac3bface2601d5d14",
+    "installer_sha256": "ca55552d00d12ecda33248e92a08a12a33f63a26003e9509bcebb6c14b3c8bd4",
+    "unchanged": true
   },
   "additional_targeted_accounting_evidence": {
     "version": "0.6.1",
@@ -65,7 +65,7 @@
       "limits": "Target WordPress cache entries cleared; database and OS storage caches not purged. Service inside fresh PHP only, not HTTP request latency."
     }
   },
-  "source_freeze_revision": "f3326bb5c0faae0e60952e4fc967bac2df71814a",
+  "source_freeze_revision": "4a89f520ed48fa111946aef090cc882b7e271bc7",
   "historical_Pro_evidence": {
     "original_version": "0.6.0",
     "passed": 33,
@@ -171,45 +171,93 @@
     "scope": "Prior 0.6.2 results retained as historical evidence for its exact archive and byte-identical unchanged implementations; not a newly executed 0.6.3 full suite."
   },
   "maintenance_acceptance": {
-    "product_editor_minimum": {
-      "status": "PASS",
-      "fix_sha256": "d11673a722f82ab4f8bc75b798c7188c5897a7bee8845381f103dbcba39b80b1",
-      "independent_read_only_contracts": {
-        "passed": 23,
-        "failed": 0
-      },
-      "scope": "The exact one-byte candidate passed native product save and purchase/commission previews on the isolated runtime, with23 independent read-only contracts. After installing the final0.6.3 ZIP, the zero-price cash product again passed native Update. Positive-price reward eligibility and charges remain enforced."
+    "scope": "0.6.4 artifact/source preservation and separately executed transport tests. Historical/0.6.3 business acceptance is reused only for byte-identical implementations.",
+    "artifact_preservation": {
+      "local_assertions": 40,
+      "local_failures": 0,
+      "combined_local_and_generated_assertions": 50,
+      "combined_failures": 0,
+      "counting_note": "The combined count includes the local assertions; counts must not be added.",
+      "generated_Free_files": 282,
+      "generated_Free_sha256": "2bfc664540b59b7b16a9f4231035046490cd5a51fa501f4bbc3069e2baee97ff",
+      "processor_changes": "Thirteen SDK PO source omissions and reviewed equivalent bootstrap metadata transforms only."
     },
-    "package_build": {
-      "status": "PASS",
-      "php_lint_files": 181,
-      "javascript_syntax_files": 6,
-      "errors": 0,
-      "archive_files": 294
+    "new_module_sha256": "0532966fa3ea1a9c09aab25cdeb14a2020b7d3540acd0e12694676ca48d24e74",
+    "SDK_native_offline_contracts": {
+      "assertions_per_PHP_runtime": 36,
+      "PHP_runtimes": [
+        "8.1",
+        "8.2",
+        "8.3"
+      ],
+      "scope": "Actual SDK and native WordPress HTTP/Requests with offline transport and isolated environment adapters; not real TLS handshakes."
     },
-    "exact_content_attestation": {
-      "status": "PASS",
-      "passed": 36,
+    "physical_loopback_TLS_assertions": {
+      "assertions": 4,
       "failed": 0,
-      "changed_product_files": 5,
-      "scope": "One exact input minimum plus four metadata files; all other source bytes match immutable 0.6.2. No behavioral suite is executed by the content attester."
+      "scope": "Native HTTP/Requests/cURL, synthetic private QA trust anchor, trusted/untrusted server certificate and plaintext fallback; no official vendor certificate or genuine credential."
     },
-    "native_exact_package_acceptance": {
-      "status": "PASS",
-      "installer_sha256": "ca55552d00d12ecda33248e92a08a12a33f63a26003e9509bcebb6c14b3c8bd4",
-      "installed_files_exact": 294,
-      "version": "0.6.3",
-      "schema": 23,
-      "financial_table_hash_sets_unchanged": 10,
-      "settings_and_rule_version_unchanged": true,
-      "native_product_update_with_zero_price": "PASS",
-      "scope": "Actual native uploaded-ZIP replacement on the isolated QA site followed by exact294-file identity and financial/settings preservation. Subsequent ordinary cash-product Update succeeded with min0/value0 and no invalid fields. This does not claim a new licensedPro activation, provider test or universal browser/compatibility suite.",
-      "evidence_sha256": {
-        "runtime": "28ae2de108fd591552ec1c1a097dbf1c6096f68cb7991780e6228c5e6b16764f",
-        "native_upgrade": "80e78761e2c079026f5be1ca0f2ffcaa687c60e51ffb20002bf06046a2ed6a02",
-        "native_product_update": "45cd3e55fe9aeaa313d149a9ddcf78903e543e31f9888167f3a91abfa9a16a02",
-        "field_validity": "a5a13fbaa993aef77108240072e58bcb582f8a1783ef53b6eead4c23f1891bb6",
-        "after_product_update_snapshot": "424e23906a540056fe55a063b7d21f0df3d43fe8cda1d88923cef42ed8b7d2ce"
+    "reused_0_6_3_physical_checkout": {
+      "assertions": 35,
+      "failed": 0,
+      "scope": "Four actual browser Classic/Blocks mixed physical orders, shipping/taxes, offline COD, native cancellation/refunds/replays. Exact financial modules remain unchanged; not newly repeated on 0.6.4."
+    },
+    "not_claimed": [
+      "Universal gateway/theme/locale/device/accessibility certification",
+      "Actual customer credential exposure or an interception incident",
+      "A new complete historical regression campaign",
+      "Current ordinary Premium fulfillment before supported commercial release"
+    ]
+  },
+  "previous_maintenance_release_0_6_3": {
+    "installer": {
+      "filename": "rewards-referrals-0.6.3.zip",
+      "sha256": "ca55552d00d12ecda33248e92a08a12a33f63a26003e9509bcebb6c14b3c8bd4",
+      "files": 294
+    },
+    "source_freeze_revision": "f3326bb5c0faae0e60952e4fc967bac2df71814a",
+    "maintenance_scope": "One existing product-editor correction: an unused zero points price no longer blocks saving an ordinary cash product. Only the simple-product input minimum changes from one to zero; server-side positive reward prices, financial policies, schema 23, prior 0.6.2 corrections, SDK/assets, Pro modules and technical identifiers remain unchanged.",
+    "maintenance_acceptance": {
+      "product_editor_minimum": {
+        "status": "PASS",
+        "fix_sha256": "d11673a722f82ab4f8bc75b798c7188c5897a7bee8845381f103dbcba39b80b1",
+        "independent_read_only_contracts": {
+          "passed": 23,
+          "failed": 0
+        },
+        "scope": "The exact one-byte candidate passed native product save and purchase/commission previews on the isolated runtime, with23 independent read-only contracts. After installing the final0.6.3 ZIP, the zero-price cash product again passed native Update. Positive-price reward eligibility and charges remain enforced."
+      },
+      "package_build": {
+        "status": "PASS",
+        "php_lint_files": 181,
+        "javascript_syntax_files": 6,
+        "errors": 0,
+        "archive_files": 294
+      },
+      "exact_content_attestation": {
+        "status": "PASS",
+        "passed": 36,
+        "failed": 0,
+        "changed_product_files": 5,
+        "scope": "One exact input minimum plus four metadata files; all other source bytes match immutable 0.6.2. No behavioral suite is executed by the content attester."
+      },
+      "native_exact_package_acceptance": {
+        "status": "PASS",
+        "installer_sha256": "ca55552d00d12ecda33248e92a08a12a33f63a26003e9509bcebb6c14b3c8bd4",
+        "installed_files_exact": 294,
+        "version": "0.6.3",
+        "schema": 23,
+        "financial_table_hash_sets_unchanged": 10,
+        "settings_and_rule_version_unchanged": true,
+        "native_product_update_with_zero_price": "PASS",
+        "scope": "Actual native uploaded-ZIP replacement on the isolated QA site followed by exact294-file identity and financial/settings preservation. Subsequent ordinary cash-product Update succeeded with min0/value0 and no invalid fields. This does not claim a new licensedPro activation, provider test or universal browser/compatibility suite.",
+        "evidence_sha256": {
+          "runtime": "28ae2de108fd591552ec1c1a097dbf1c6096f68cb7991780e6228c5e6b16764f",
+          "native_upgrade": "80e78761e2c079026f5be1ca0f2ffcaa687c60e51ffb20002bf06046a2ed6a02",
+          "native_product_update": "45cd3e55fe9aeaa313d149a9ddcf78903e543e31f9888167f3a91abfa9a16a02",
+          "field_validity": "a5a13fbaa993aef77108240072e58bcb582f8a1783ef53b6eead4c23f1891bb6",
+          "after_product_update_snapshot": "424e23906a540056fe55a063b7d21f0df3d43fe8cda1d88923cef42ed8b7d2ce"
+        }
       }
     }
   }

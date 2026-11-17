@@ -3,7 +3,7 @@
  * Plugin Name: Rewards & Referrals by Abdul Hameed
  * Plugin URI: https://github.com/abdulhameed-developer/rewards-referrals
  * Description: Customer loyalty points and direct referral rewards for WooCommerce.
- * Version: 0.6.3
+ * Version: 0.6.4
  * Author: Abdul Hameed
  * Author URI: https://www.linkedin.com/in/abdul-hameed-website-developer/
  * Requires at least: 6.9
@@ -18,6 +18,12 @@
  */
 defined( 'ABSPATH' ) || exit;
 add_action( 'init', static function () { load_plugin_textdomain( 'rewards-referrals', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); }, 0 );
+
+// Shared SDK constants may already be set by another plugin; enforce the HTTP boundary too.
+if ( ! class_exists( 'RR_Freemius_Transport', false ) ) {
+	require_once __DIR__ . '/includes/class-rr-freemius-transport.php';
+}
+RR_Freemius_Transport::init();
 
 // Freemius uses this branch to deactivate the other edition before loading it.
 if ( function_exists( 'rr_fs' ) ) {
@@ -52,7 +58,7 @@ if ( function_exists( 'rr_fs' ) ) {
 	rr_fs()->add_action( 'after_uninstall', 'rr_uninstall_data' );
 	do_action( 'rr_fs_loaded' );
 
-define( 'REWARDS_REFERRALS_VERSION', '0.6.3' );
+define( 'REWARDS_REFERRALS_VERSION', '0.6.4' );
 define( 'REWARDS_REFERRALS_FILE', __FILE__ );
 define( 'REWARDS_REFERRALS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'REWARDS_REFERRALS_URL', plugin_dir_url( __FILE__ ) );

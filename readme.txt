@@ -5,7 +5,7 @@ Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 0.6.4
+Stable tag: 0.6.5
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,7 @@ Create a loyalty program with customer wallets, direct referral commissions, pro
 * Administrative reports, settings transfer, and privacy-tool integration.
 * Program check with catalogue setup guidance and purchase examples that create no order or points.
 
-Version 0.6.4 enforces certificate-verified HTTPS for Freemius services, rejects insecure fallback and protects credentials across download redirects while preserving secure CDN downloads. The SDK and all existing earning, referral, redemption and accounting behavior remain supported. WordPress 6.9+, WooCommerce 10.8+, PHP 8.1+ and InnoDB accounting, order, user and usermeta tables are required. Exact tested combinations and known limits are recorded with each release at https://github.com/abdulhameed-developer/rewards-referrals/releases and in the public verification guide at https://github.com/abdulhameed-developer/rewards-referrals/blob/main/docs/RELEASE-VERIFICATION.md . These minimum versions are not a promise for every combination. Network activation is not supported; activate separately on each site.
+Version 0.6.5 detects interrupted wallet transactions, prevents later database writes from falsely completing their accounting, and retains recovery or retry work after database deadlocks. It also corrects localized earning-rate formatting and primary reward-price plurals. The verified HTTPS protections, SDK, existing Free/Pro capabilities and schema 23 remain supported. WordPress 6.9+, WooCommerce 10.8+, PHP 8.1+ and InnoDB accounting, order, user and usermeta tables are required. Exact tested combinations and known limits are recorded with each release at https://github.com/abdulhameed-developer/rewards-referrals/releases and in the public verification guide at https://github.com/abdulhameed-developer/rewards-referrals/blob/main/docs/RELEASE-VERIFICATION.md . These minimum versions are not a promise for every combination. Network activation is not supported; activate separately on each site.
 
 Free includes core points, direct referrals, wallets, redemption, accounting exports and privacy tools, without a product-count limit. Pro adds scheduled earning campaigns, filtered summary reports and custom notification templates.
 
@@ -72,6 +72,12 @@ No. Accounting history is preserved. Full deletion requires the explicit uninsta
 [rewards_wallet], [rewards_referral_link], [rewards_referral_stats], [rewards_referral_dashboard], [rewards_transaction_history], [rewards_catalog], [rewards_redemption_history], and [rewards_summary].
 
 == Changelog ==
+
+= 0.6.5 =
+* Detect database transaction loss during wallet processing, block unsafe continuation after deadlocks, and preserve pending recovery or award retries instead of recording false success.
+* Keep nested and caller-owned rollback boundaries intact and prevent recovery checkpoints from completing outside their live wallet transaction.
+* Correct localized earning-rate decimals, primary reward-price plurals and translation extraction of short option labels.
+* Preserve all Free/Pro features, existing financial history, installed plugin identity and schema 23. This update does not silently reconcile historical orders; review affected orders through the existing recovery workflow.
 
 = 0.6.4 =
 * Enforce certificate and hostname verification for Freemius service requests, including when shared SDK constants disable it.

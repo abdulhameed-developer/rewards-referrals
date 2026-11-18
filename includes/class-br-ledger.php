@@ -15,8 +15,10 @@ final class RR_Ledger {
 	private static $transactions = array();
 	private static $transaction_sequence = 0;
 	private static $reservation_sweeping = false;
+	private static $guard_query_depth = 0;
 
 	public static function init() {
+		add_filter( 'query', array( __CLASS__, 'guard_query' ), PHP_INT_MAX );
 		add_action( 'rr_mature_pending_points', array( __CLASS__, 'mature_pending_points' ) );
 		add_action( 'rr_expire_credit_lots', array( 'RR_Point_Lots', 'expire_batch' ) );
 		add_action( 'rr_expire_customer_lots', array( 'RR_Point_Lots', 'expire_customer_batch' ) );
@@ -397,6 +399,7 @@ final class RR_Ledger {
 		sort( $ids, SORT_NUMERIC );
 		$started = self::start_transaction();
 		if ( is_wp_error( $started ) ) { return $started; }
+		try {
 		$lock_table = RR_Database::table( 'wallet_locks' );
 		foreach ( $ids as $customer_id ) {
 			$inserted = $wpdb->query( $wpdb->prepare( "INSERT INTO %i (customer_id,updated_at) VALUES (%d,%s) ON DUPLICATE KEY UPDATE customer_id = VALUES(customer_id)", $lock_table, $customer_id, current_time( 'mysql', true ) ) );
@@ -410,10 +413,18 @@ final class RR_Ledger {
 			if ( is_wp_error( $indexed ) ) { self::finish_wallet_transaction( false ); if ( 'rr_wallet_rebuild_pending' === $indexed->get_error_code() ) { RR_Background::schedule( 'rr_wallet_rebuild', 5, array( $customer_id ) ); } return $indexed; }
 		}
 		return true;
+		} catch ( Throwable $error ) {
+			$finished = self::finish_wallet_transaction( false );
+			return is_wp_error( $finished ) ? $finished : new WP_Error( 'rr_wallet_lock', __( 'The wallet could not be safely locked.', 'rewards-referrals' ) );
+		}
 	}
 
 	private static function start_transaction() {
 		global $wpdb;
+		if ( self::$transactions ) {
+			$alive = self::verify_wallet_transaction();
+			if ( is_wp_error( $alive ) ) { return $alive; }
+		}
 		$savepoint = 'rr_wallet_' . ++self::$transaction_sequence;
 		$external = false;
 		if ( ! self::$transactions ) {
@@ -428,27 +439,86 @@ final class RR_Ledger {
 		$nested = (bool) self::$transactions || $external;
 		$result = $nested ? $wpdb->query( $wpdb->prepare( 'SAVEPOINT %i', $savepoint ) ) : $wpdb->query( 'START TRANSACTION' );
 		if ( false === $result ) { return new WP_Error( 'rr_transaction_start', __( 'The wallet transaction could not be started.', 'rewards-referrals' ) ); }
-		self::$transactions[] = array( 'savepoint' => $nested ? $savepoint : '', 'external' => $external, 'events' => array() );
+		$guard = $savepoint . '_alive';
+		if ( false === self::internal_query( $wpdb->prepare( 'SAVEPOINT %i', $guard ) ) ) {
+			if ( $nested ) { self::internal_query( $wpdb->prepare( 'ROLLBACK TO SAVEPOINT %i', $savepoint ), true ); self::internal_query( $wpdb->prepare( 'RELEASE SAVEPOINT %i', $savepoint ), true ); }
+			else { self::internal_query( 'ROLLBACK', true ); }
+			return new WP_Error( 'rr_transaction_start', __( 'The wallet transaction could not be started.', 'rewards-referrals' ) );
+		}
+		self::$transactions[] = array( 'savepoint' => $nested ? $savepoint : '', 'guard' => $guard, 'connection' => self::driver_state()['connection'], 'external' => $external, 'events' => array() );
 		return true;
 	}
 
 	public static function transaction_open() { return (bool) self::$transactions; }
 
+	private static function interrupted() {
+		foreach ( self::$transactions as &$frame ) { $frame['rollback_only'] = true; $frame['interrupted'] = true; }
+		unset( $frame );
+		return new WP_Error( 'rr_wallet_transaction_lost', __( 'Rewards accounting was interrupted. Successful completion was not recorded. Please retry or review pending recovery.', 'rewards-referrals' ) );
+	}
+
+	private static function driver_state() {
+		global $wpdb;
+		$connection = property_exists( $wpdb, 'dbh' ) ? $wpdb->dbh : null;
+		if ( ! $connection instanceof mysqli ) { return array( 'error' => 0, 'connection' => 0 ); }
+		try { return array( 'error' => mysqli_errno( $connection ), 'connection' => mysqli_thread_id( $connection ) ); }
+		catch ( Throwable $error ) { return array( 'error' => 2006, 'connection' => 0 ); }
+	}
+
+	/** Runs before wpdb flushes its previous error, stopping third-party CRUD continuation. */
+	public static function guard_query( $query ) {
+		if ( ! self::$transactions || self::$guard_query_depth ) { return $query; }
+		global $wpdb;
+		$frame = end( self::$transactions ); $driver = self::driver_state();
+		$lost_connection = ! empty( $frame['connection'] ) && $driver['connection'] !== $frame['connection'];
+		$database_abort = in_array( $driver['error'], array( 1205, 1213, 2006, 2013 ), true ) || preg_match( '/deadlock found|lock wait timeout|server has gone away|lost connection/i', (string) $wpdb->last_error );
+		if ( ! empty( $frame['interrupted'] ) || $lost_connection || $database_abort ) {
+			self::interrupted();
+			// An empty filtered query returns false before wpdb's normal flush. Clear
+			// preceding results so read helpers cannot return stale successful rows.
+			$wpdb->flush();
+			$wpdb->last_error = 'Rewards wallet transaction was interrupted; query blocked until rollback.';
+			return '';
+		}
+		return $query;
+	}
+
+	/** Only our rollback/marker operations bypass the sticky financial-query fence. */
+	private static function internal_query( $query, $quiet = false ) {
+		global $wpdb; ++self::$guard_query_depth;
+		$previous = $quiet ? $wpdb->suppress_errors( true ) : null; $last_error = $wpdb->last_error;
+		try { return $wpdb->query( $query ); }
+		finally { if ( $quiet ) { $wpdb->suppress_errors( $previous ); $wpdb->last_error = $last_error; } --self::$guard_query_depth; }
+	}
+
+	/** A separate liveness marker never moves a nested/caller-owned rollback anchor. */
+	public static function verify_wallet_transaction() {
+		if ( ! self::$transactions ) { return new WP_Error( 'rr_transaction_missing', __( 'There is no wallet transaction to finish.', 'rewards-referrals' ) ); }
+		global $wpdb; $frame = end( self::$transactions ); $driver = self::driver_state();
+		if ( ! empty( $frame['interrupted'] ) || in_array( $driver['error'], array( 1205, 1213, 2006, 2013 ), true ) || ( ! empty( $frame['connection'] ) && $driver['connection'] !== $frame['connection'] ) ) { return self::interrupted(); }
+		$released = self::internal_query( $wpdb->prepare( 'RELEASE SAVEPOINT %i', $frame['guard'] ), true );
+		if ( false === $released || false === self::internal_query( $wpdb->prepare( 'SAVEPOINT %i', $frame['guard'] ), true ) ) { return self::interrupted(); }
+		return true;
+	}
+
 	public static function finish_wallet_transaction( $commit = true ) {
 		global $wpdb;
 		if ( ! self::$transactions ) { return new WP_Error( 'rr_transaction_missing', __( 'There is no wallet transaction to finish.', 'rewards-referrals' ) ); }
+		$alive = self::verify_wallet_transaction();
 		$frame = array_pop( self::$transactions );
 		try {
 		$requested_commit = $commit;
-		if ( ! empty( $frame['rollback_only'] ) ) { $commit = false; }
+		if ( is_wp_error( $alive ) || ! empty( $frame['rollback_only'] ) ) { $commit = false; }
+		if ( ! is_wp_error( $alive ) ) { self::internal_query( $wpdb->prepare( 'RELEASE SAVEPOINT %i', $frame['guard'] ) ); }
 		if ( $frame['savepoint'] ) {
-			$result = $commit ? true : $wpdb->query( $wpdb->prepare( 'ROLLBACK TO SAVEPOINT %i', $frame['savepoint'] ) );
-			$released = $wpdb->query( $wpdb->prepare( 'RELEASE SAVEPOINT %i', $frame['savepoint'] ) );
+			$result = $commit ? true : self::internal_query( $wpdb->prepare( 'ROLLBACK TO SAVEPOINT %i', $frame['savepoint'] ), is_wp_error( $alive ) );
+			$released = self::internal_query( $wpdb->prepare( 'RELEASE SAVEPOINT %i', $frame['savepoint'] ), is_wp_error( $alive ) );
 			if ( false === $released ) { $result = false; }
 		} else {
-			$result = $commit ? $wpdb->query( 'COMMIT' ) : $wpdb->query( 'ROLLBACK' );
-			if ( false === $result && $commit ) { $wpdb->query( 'ROLLBACK' ); }
+			$result = self::internal_query( $commit ? 'COMMIT' : 'ROLLBACK', is_wp_error( $alive ) );
+			if ( false === $result && $commit ) { self::internal_query( 'ROLLBACK', true ); }
 		}
+		if ( is_wp_error( $alive ) ) { return $alive; }
 		if ( false === $result ) {
 			if ( self::$transactions ) { self::$transactions[ count( self::$transactions ) - 1 ]['rollback_only'] = true; }
 			return new WP_Error( 'rr_wallet_commit', __( 'The wallet accounting transaction could not be completed.', 'rewards-referrals' ) ); }

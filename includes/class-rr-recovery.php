@@ -46,6 +46,8 @@ final class RR_Recovery {
 	}
 	/** Called in the SAME transaction as the successful reversal; holds disappear only with its commit. */
 	public static function complete( $kind, $order, $refund = 0 ) {
+		$alive = RR_Ledger::verify_wallet_transaction();
+		if ( is_wp_error( $alive ) ) { throw new RuntimeException( $alive->get_error_code() ); }
 		global $wpdb; $table = RR_Database::table( 'recovery_events' );
 		if ( false === $wpdb->update( $table, array( 'status' => 'complete','updated_at' => current_time( 'mysql', true ) ), array( 'event_key' => self::key( $kind, $order, $refund ) ) ) ) { throw new RuntimeException( 'Recovery checkpoint failed.' ); }
 	}
@@ -79,9 +81,10 @@ final class RR_Recovery {
 		global $wpdb; $table = RR_Database::table( 'recovery_events' );
 		if ( ! $wpdb->get_var( $wpdb->prepare( "SELECT event_key FROM %i WHERE event_key=%s AND status='queued'", $table, self::key( 'review', $order_id ) ) ) ) { return; }
 		$start = RR_Ledger::begin_wallet_transaction( self::owners( $order ), false ); if ( is_wp_error( $start ) ) { return; }
-		$order->get_data_store()->read( $order );
-		if ( ! $order->has_status( array( 'processing','completed' ) ) ) { RR_Ledger::finish_wallet_transaction( false ); return; }
-		try { self::complete( 'review', $order_id ); RR_Admin::audit( 'payment_review_resolved', $order_id ); RR_Ledger::finish_wallet_transaction( ! $wpdb->last_error ); }
+		try {
+			$order->get_data_store()->read( $order );
+			if ( ! $order->has_status( array( 'processing','completed' ) ) ) { RR_Ledger::finish_wallet_transaction( false ); return; }
+			self::complete( 'review', $order_id ); RR_Admin::audit( 'payment_review_resolved', $order_id ); RR_Ledger::finish_wallet_transaction( ! $wpdb->last_error ); }
 		catch ( Throwable $e ) { RR_Ledger::finish_wallet_transaction( false ); }
 	}
 	public static function finish_reversal_review( $order_id, $cancelled = false ) {

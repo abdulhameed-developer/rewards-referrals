@@ -33,3 +33,7 @@ Deactivation preserves rewards data. Uninstall preserves it by default, but the 
 ## 0.6.4 transport security boundary
 
 Keep matching code/database backups and the package hash. A code-only return to a version before 0.6.4 also removes this transport enforcement, even though schema 23 is unchanged. Treat that as a security regression requiring a deliberate incident/maintenance decision. Do not disable TLS checks to obtain a package or activate a license. Verify the intended Free/Pro edition and transport behavior after a controlled recovery.
+
+## 0.6.5 interrupted-accounting boundary
+
+Keep a complete matched database/plugin backup and verify the 0.6.5 installer checksum before staging the update. Schema remains 23; no identity/slug/basename migration is required. Recheck the intended exclusive Free/Pro edition and recovery queue. This update preserves historical records and does not automatically scan/reconcile older false-complete orders. Inspect relevant cancelled/refunded orders, retain audit evidence and use the supported accounting retry action. Do not remove holds or rewrite ledger rows directly. Returning only code to an older version removes the new interruption guard and is not an accounting rollback. Restore the matched database AND code in a controlled maintenance window.

@@ -2,16 +2,16 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rewards & Referrals by Abdul Hameed 0.6.4\n"
+"Project-Id-Version: Rewards & Referrals by Abdul Hameed 0.6.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rewards-referrals\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-17 10:53+0000\n"
+"POT-Creation-Date: 2026-11-13 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: Targeted maintenance of WP-CLI 2.12.0 baseline\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rewards-referrals\n"
 
 #. Plugin Name of the plugin
@@ -1149,10 +1149,10 @@ msgid "Inherit has no local redemption choice and follows Default product redemp
 msgstr ""
 
 #: includes/class-br-admin.php:544
-#: includes/class-br-admin.php:701
-#: includes/class-br-admin.php:729
-#: includes/class-br-admin.php:752
-#: includes/class-br-admin.php:765
+#: includes/class-br-admin.php:706
+#: includes/class-br-admin.php:734
+#: includes/class-br-admin.php:757
+#: includes/class-br-admin.php:770
 #: includes/class-br-referrals.php:217
 #: includes/class-br-referrals.php:284
 #: includes/class-rr-customer-search.php:79
@@ -1230,68 +1230,68 @@ msgstr ""
 msgid "Short answers for the decisions on this screen."
 msgstr ""
 
-#: includes/class-br-admin.php:692
+#: includes/class-br-admin.php:697
 msgid "First order"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-admin.php:694
+#: includes/class-br-admin.php:699
 #, php-format
 msgid "First %d orders"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-admin.php:696
+#: includes/class-br-admin.php:701
 #, php-format
 msgid "%d days"
 msgstr ""
 
-#: includes/class-br-admin.php:697
+#: includes/class-br-admin.php:702
 msgid "Lifetime"
 msgstr ""
 
-#: includes/class-br-admin.php:738
+#: includes/class-br-admin.php:743
 msgid "Choose a valid customer, non-zero whole points, and an adjustment reason."
 msgstr ""
 
-#: includes/class-br-admin.php:743
+#: includes/class-br-admin.php:748
 msgid "Adjustment could not be recorded"
 msgstr ""
 
-#: includes/class-br-admin.php:766
+#: includes/class-br-admin.php:771
 msgid "Choose a valid referral relationship."
 msgstr ""
 
-#: includes/class-br-admin.php:772
+#: includes/class-br-admin.php:777
 #: includes/class-br-referrals.php:230
 msgid "Referral relationships are being updated. Please retry."
 msgstr ""
 
-#: includes/class-br-admin.php:777
+#: includes/class-br-admin.php:782
 msgid "Referral storage could not be verified. No approval was saved."
 msgstr ""
 
-#: includes/class-br-admin.php:780
+#: includes/class-br-admin.php:785
 msgid "The relationship could not be read. Please retry."
 msgstr ""
 
-#: includes/class-br-admin.php:781
+#: includes/class-br-admin.php:786
 msgid "This relationship no longer exists. Refresh the referral list."
 msgstr ""
 
-#: includes/class-br-admin.php:786
+#: includes/class-br-admin.php:791
 msgid "The relationship could not be locked. Please retry."
 msgstr ""
 
-#: includes/class-br-admin.php:789
+#: includes/class-br-admin.php:794
 msgid "The approval could not be saved. Please retry."
 msgstr ""
 
-#: includes/class-br-admin.php:791
+#: includes/class-br-admin.php:796
 msgid "The approval audit could not be saved. No approval was saved."
 msgstr ""
 
-#: includes/class-br-admin.php:795
+#: includes/class-br-admin.php:800
 msgid "The approval could not be safely saved."
 msgstr ""
 
@@ -1341,7 +1341,7 @@ msgstr ""
 
 #. translators: 1: Available wallet points. 2: Points used by this cart.
 #: includes/class-br-frontend.php:48
-#: includes/class-br-woocommerce.php:799
+#: includes/class-br-woocommerce.php:800
 msgid "Your rewards"
 msgstr ""
 
@@ -1659,11 +1659,14 @@ msgid "%s more points needed"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
+#. translators: %s is the localized number of reward points.
 #: includes/class-br-frontend.php:188
-#: includes/class-br-woocommerce.php:613
+#: includes/class-br-woocommerce.php:614
 #, php-format
-msgid "%s points"
-msgstr ""
+msgid "%s point"
+msgid_plural "%s points"
+msgstr[0] ""
+msgstr[1] ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
 #: includes/class-br-frontend.php:188
@@ -1706,236 +1709,243 @@ msgstr ""
 msgid "Page %1$d of %2$d"
 msgstr ""
 
-#: includes/class-br-ledger.php:33
+#: includes/class-br-ledger.php:35
 msgid "Ledger points must be a non-zero whole number within the supported range."
 msgstr ""
 
-#: includes/class-br-ledger.php:38
+#: includes/class-br-ledger.php:40
 msgid "A real customer and a valid idempotency key are required."
 msgstr ""
 
-#: includes/class-br-ledger.php:39
+#: includes/class-br-ledger.php:41
 msgid "That ledger transaction type is not allowed."
 msgstr ""
 
-#: includes/class-br-ledger.php:40
+#: includes/class-br-ledger.php:42
 msgid "That ledger state is not allowed."
 msgstr ""
 
-#: includes/class-br-ledger.php:43
+#: includes/class-br-ledger.php:45
 msgid "The signed point amount does not match its transaction type."
 msgstr ""
 
-#: includes/class-br-ledger.php:44
+#: includes/class-br-ledger.php:46
 msgid "The ledger state does not match its transaction type."
 msgstr ""
 
-#: includes/class-br-ledger.php:45
+#: includes/class-br-ledger.php:47
 msgid "Only positive point credits may be pending."
 msgstr ""
 
-#: includes/class-br-ledger.php:49
+#: includes/class-br-ledger.php:51
 msgid "Ledger references must be non-negative whole numbers."
 msgstr ""
 
-#: includes/class-br-ledger.php:52
+#: includes/class-br-ledger.php:54
 msgid "Point availability must be a valid UTC date."
 msgstr ""
 
-#: includes/class-br-ledger.php:55
+#: includes/class-br-ledger.php:57
 msgid "The availability date does not exist."
 msgstr ""
 
-#: includes/class-br-ledger.php:57
+#: includes/class-br-ledger.php:59
 msgid "Only pending credits may have an availability date."
 msgstr ""
 
-#: includes/class-br-ledger.php:60
+#: includes/class-br-ledger.php:62
 msgid "Ledger metadata must be valid JSON data."
 msgstr ""
 
-#: includes/class-br-ledger.php:78
+#: includes/class-br-ledger.php:80
 msgid "A reward reversal must reference the matching customer credit."
 msgstr ""
 
-#: includes/class-br-ledger.php:79
+#: includes/class-br-ledger.php:81
 msgid "A pending reversal must use the original pending credit’s availability date."
 msgstr ""
 
-#: includes/class-br-ledger.php:83
+#: includes/class-br-ledger.php:85
 msgid "The reversal exceeds the original reward credit."
 msgstr ""
 
-#: includes/class-br-ledger.php:90
-#: includes/class-br-ledger.php:91
+#: includes/class-br-ledger.php:92
+#: includes/class-br-ledger.php:93
 msgid "This transaction exceeds the supported wallet limit."
 msgstr ""
 
-#: includes/class-br-ledger.php:92
-#: includes/class-br-ledger.php:242
-#: includes/class-br-woocommerce.php:730
+#: includes/class-br-ledger.php:94
+#: includes/class-br-ledger.php:244
+#: includes/class-br-woocommerce.php:731
 msgid "There are not enough available points for this reward."
 msgstr ""
 
-#: includes/class-br-ledger.php:93
+#: includes/class-br-ledger.php:95
 msgid "The debit exceeds this customer’s available points."
 msgstr ""
 
-#: includes/class-br-ledger.php:100
-#: includes/class-br-ledger.php:104
+#: includes/class-br-ledger.php:102
+#: includes/class-br-ledger.php:106
 msgid "The ledger transaction could not be recorded."
 msgstr ""
 
-#: includes/class-br-ledger.php:122
+#: includes/class-br-ledger.php:124
 msgid "The ledger transaction could not be safely recorded."
 msgstr ""
 
-#: includes/class-br-ledger.php:149
-#: includes/class-br-ledger.php:152
+#: includes/class-br-ledger.php:151
+#: includes/class-br-ledger.php:154
 msgid "This idempotency key is already used for a different ledger operation."
 msgstr ""
 
-#: includes/class-br-ledger.php:207
+#: includes/class-br-ledger.php:209
 msgid "A customer, order, and positive point amount are required."
 msgstr ""
 
-#: includes/class-br-ledger.php:209
+#: includes/class-br-ledger.php:211
 msgid "Reservation metadata is invalid."
 msgstr ""
 
-#: includes/class-br-ledger.php:211
+#: includes/class-br-ledger.php:213
 msgid "The checkout session could not be validated. Please refresh the cart and try again."
 msgstr ""
 
-#: includes/class-br-ledger.php:213
+#: includes/class-br-ledger.php:215
 msgid "The reward order does not belong to this customer."
 msgstr ""
 
-#: includes/class-br-ledger.php:214
+#: includes/class-br-ledger.php:216
 msgid "This order was cancelled. Create a new order to redeem rewards."
 msgstr ""
 
-#: includes/class-br-ledger.php:224
-#: includes/class-br-ledger.php:232
+#: includes/class-br-ledger.php:226
+#: includes/class-br-ledger.php:234
 msgid "This checkout has already been received. Please wait for the original order to finish processing."
 msgstr ""
 
-#: includes/class-br-ledger.php:232
-#: includes/class-br-ledger.php:246
+#: includes/class-br-ledger.php:234
+#: includes/class-br-ledger.php:248
 msgid "The reward reservation could not be saved."
 msgstr ""
 
-#: includes/class-br-ledger.php:236
+#: includes/class-br-ledger.php:238
 msgid "This order already has a different or closed points reservation."
 msgstr ""
 
-#: includes/class-br-ledger.php:241
+#: includes/class-br-ledger.php:243
 msgid "Points can only be reserved for an unpaid checkout order."
 msgstr ""
 
-#: includes/class-br-ledger.php:251
+#: includes/class-br-ledger.php:253
 msgid "The reward reservation could not be completed."
 msgstr ""
 
-#: includes/class-br-ledger.php:273
+#: includes/class-br-ledger.php:275
 msgid "The original reward customer could not be verified. Refund accounting remains pending for review."
 msgstr ""
 
-#: includes/class-br-ledger.php:334
+#: includes/class-br-ledger.php:336
 msgid "The reward refund status could not be saved."
 msgstr ""
 
-#: includes/class-br-ledger.php:335
+#: includes/class-br-ledger.php:337
 msgid "The points refund could not be committed."
 msgstr ""
 
-#: includes/class-br-ledger.php:339
+#: includes/class-br-ledger.php:341
 msgid "The points refund could not be safely processed."
 msgstr ""
 
-#: includes/class-br-ledger.php:348
+#: includes/class-br-ledger.php:350
 msgid "A cancelled customer order is required."
 msgstr ""
 
-#: includes/class-br-ledger.php:355
+#: includes/class-br-ledger.php:357
 msgid "Reward order ownership does not match."
 msgstr ""
 
-#: includes/class-br-ledger.php:361
+#: includes/class-br-ledger.php:363
 msgid "This reward cannot be cancelled in its current accounting state."
 msgstr ""
 
-#: includes/class-br-ledger.php:371
+#: includes/class-br-ledger.php:373
 msgid "Reward cancellation could not be saved."
 msgstr ""
 
-#: includes/class-br-ledger.php:373
+#: includes/class-br-ledger.php:375
 msgid "Reward cancellation could not be safely completed."
 msgstr ""
 
-#: includes/class-br-ledger.php:392
+#: includes/class-br-ledger.php:394
 msgid "A valid customer is required for a wallet transaction."
 msgstr ""
 
-#: includes/class-br-ledger.php:396
+#: includes/class-br-ledger.php:398
 msgid "Wallet accounting requires transactional database tables."
 msgstr ""
 
-#: includes/class-br-ledger.php:404
+#: includes/class-br-ledger.php:407
+#: includes/class-br-ledger.php:418
 msgid "The wallet could not be safely locked."
 msgstr ""
 
-#: includes/class-br-ledger.php:425
+#: includes/class-br-ledger.php:436
 msgid "The database transaction state could not be checked."
 msgstr ""
 
-#: includes/class-br-ledger.php:430
+#: includes/class-br-ledger.php:441
+#: includes/class-br-ledger.php:446
 msgid "The wallet transaction could not be started."
 msgstr ""
 
-#: includes/class-br-ledger.php:439
+#: includes/class-br-ledger.php:457
+msgid "Rewards accounting was interrupted. Successful completion was not recorded. Please retry or review pending recovery."
+msgstr ""
+
+#: includes/class-br-ledger.php:496
+#: includes/class-br-ledger.php:506
 msgid "There is no wallet transaction to finish."
 msgstr ""
 
-#: includes/class-br-ledger.php:454
+#: includes/class-br-ledger.php:524
 msgid "The wallet accounting transaction could not be completed."
 msgstr ""
 
-#: includes/class-br-ledger.php:455
+#: includes/class-br-ledger.php:525
 msgid "The wallet transaction was rolled back after an earlier database error."
 msgstr ""
 
-#: includes/class-br-ledger.php:474
+#: includes/class-br-ledger.php:544
 msgid "A valid reward order is required."
 msgstr ""
 
-#: includes/class-br-ledger.php:476
+#: includes/class-br-ledger.php:546
 msgid "Reward accounting could not be read safely. Please retry."
 msgstr ""
 
-#: includes/class-br-ledger.php:482
+#: includes/class-br-ledger.php:552
 msgid "This accounting operation requires InnoDB tables."
 msgstr ""
 
-#: includes/class-br-ledger.php:490
+#: includes/class-br-ledger.php:560
 msgid "The points reservation is no longer active."
 msgstr ""
 
-#: includes/class-br-ledger.php:491
+#: includes/class-br-ledger.php:561
 msgid "Only an active points reservation can be released."
 msgstr ""
 
-#: includes/class-br-ledger.php:495
+#: includes/class-br-ledger.php:565
 msgid "The reservation ledger row could not be transitioned."
 msgstr ""
 
-#: includes/class-br-ledger.php:514
-#: includes/class-br-ledger.php:515
-#: includes/class-br-ledger.php:521
+#: includes/class-br-ledger.php:584
+#: includes/class-br-ledger.php:585
+#: includes/class-br-ledger.php:591
 msgid "The reward status could not be updated."
 msgstr ""
 
-#: includes/class-br-ledger.php:516
+#: includes/class-br-ledger.php:586
 msgid "The reward status could not be committed."
 msgstr ""
 
@@ -2265,178 +2275,178 @@ msgid "Custom earning rate"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-woocommerce.php:622
-#: includes/class-br-woocommerce.php:638
+#: includes/class-br-woocommerce.php:623
+#: includes/class-br-woocommerce.php:639
 #, php-format
 msgid "This reward costs %s points."
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-woocommerce.php:624
-#: includes/class-br-woocommerce.php:638
+#: includes/class-br-woocommerce.php:625
+#: includes/class-br-woocommerce.php:639
 #, php-format
 msgid "Use %s points for this item instead of paying cash"
 msgstr ""
 
 #. translators: %cash is the formatted cash contribution; %points is the number of points.
-#: includes/class-br-woocommerce.php:626
-#: includes/class-br-woocommerce.php:640
+#: includes/class-br-woocommerce.php:627
+#: includes/class-br-woocommerce.php:641
 #, php-format
 msgid "Pay %cash plus %points points per item."
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-woocommerce.php:643
+#: includes/class-br-woocommerce.php:644
 #, php-format
 msgid "Your wallet: %s available points. Shipping and any applicable taxes remain payable in cash."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:644
+#: includes/class-br-woocommerce.php:645
 msgid "Sign in to redeem points"
 msgstr ""
 
-#: includes/class-br-woocommerce.php:656
+#: includes/class-br-woocommerce.php:657
 msgid "Rewards policy is temporarily unavailable. Please retry before placing your order."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:671
+#: includes/class-br-woocommerce.php:672
 msgid "A selected reward is no longer available for points. Remove it and choose a current reward."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:672
+#: includes/class-br-woocommerce.php:673
 msgid "This reward has an invalid cash contribution. Please contact the store."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:673
+#: includes/class-br-woocommerce.php:674
 msgid "A reward has an invalid points price or quantity."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:674
+#: includes/class-br-woocommerce.php:675
 msgid "A selected reward is not available in the requested quantity."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:704
-#: includes/class-br-woocommerce.php:727
+#: includes/class-br-woocommerce.php:705
+#: includes/class-br-woocommerce.php:728
 msgid "Sign in to redeem rewards with points."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:708
+#: includes/class-br-woocommerce.php:709
 msgid "You do not have enough available points for the reward items in your cart."
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-woocommerce.php:767
+#: includes/class-br-woocommerce.php:768
 msgid "Rewards payment"
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-woocommerce.php:767
+#: includes/class-br-woocommerce.php:768
 #, php-format
 msgid "%s points per item"
 msgstr ""
 
-#: includes/class-br-woocommerce.php:780
+#: includes/class-br-woocommerce.php:781
 msgid "Your available points are not sufficient for the reward items in your cart."
 msgstr ""
 
 #. translators: 1: Available wallet points. 2: Points used by this cart.
-#: includes/class-br-woocommerce.php:799
+#: includes/class-br-woocommerce.php:800
 #, php-format
 msgid "%1$s points available · %2$s points applied"
 msgstr ""
 
 #. translators: 1: Available wallet points. 2: Points used by this cart.
-#: includes/class-br-woocommerce.php:799
+#: includes/class-br-woocommerce.php:800
 msgid "Shipping, taxes, and cash items are charged through the selected payment method."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:889
+#: includes/class-br-woocommerce.php:890
 msgid "Reward quantities must be positive whole numbers."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:894
+#: includes/class-br-woocommerce.php:895
 msgid "A reward changed or is unavailable. Refresh your cart before trying again."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:896
+#: includes/class-br-woocommerce.php:897
 msgid "The reward purchase mode changed. Refresh your cart before trying again."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:900
+#: includes/class-br-woocommerce.php:901
 msgid "The reward cash contribution changed. Refresh your cart before trying again."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:902
+#: includes/class-br-woocommerce.php:903
 msgid "A reward product is unavailable."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:918
+#: includes/class-br-woocommerce.php:919
 msgid "The reserved reward items changed. Please contact the store for accounting review."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:930
+#: includes/class-br-woocommerce.php:931
 msgid "Reward quantity accounting could not be saved."
 msgstr ""
 
 #. translators: %s or %d is the localized number of points, orders, or days described in this message.
-#: includes/class-br-woocommerce.php:935
+#: includes/class-br-woocommerce.php:936
 #, php-format
 msgid "%s points reserved for reward redemption."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:941
+#: includes/class-br-woocommerce.php:942
 msgid "Reward redemption could not be reserved: "
 msgstr ""
 
-#: includes/class-br-woocommerce.php:975
+#: includes/class-br-woocommerce.php:976
 msgid "Reward items changed after reservation; fulfillment is paused for accounting review."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1018
+#: includes/class-br-woocommerce.php:1019
 msgid "Reward points could not be confirmed; fulfillment is paused while accounting recovers or the store reviews this order."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1023
+#: includes/class-br-woocommerce.php:1024
 msgid "Paid reward recovery could not be durably recorded. Keep fulfillment paused and use Retry rewards accounting after repairing the database."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1062
+#: includes/class-br-woocommerce.php:1063
 msgid "Reward accounting recovered; the original paid order status was restored."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1078
+#: includes/class-br-woocommerce.php:1079
 msgid "This reward reservation has closed or needs review. No new payment was submitted. Please return to the shop and start a new checkout, or contact the store about this order."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1102
+#: includes/class-br-woocommerce.php:1103
 msgid "Reward reservation could not be released. Confirmed points require cancellation or an itemized WooCommerce refund; review rewards accounting before retrying payment."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1117
+#: includes/class-br-woocommerce.php:1118
 msgid "Cancellation rewards ownership could not be read. No points changed; repair the database and retry rewards cancellation."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1121
+#: includes/class-br-woocommerce.php:1122
 msgid "Cancellation recovery could not be recorded. Review accounting before further redemption."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1126
+#: includes/class-br-woocommerce.php:1127
 msgid "Cancellation rewards accounting could not acquire its lock. Review and retry rewards cancellation."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1158
+#: includes/class-br-woocommerce.php:1159
 msgid "Cancellation rewards accounting completed: unreturned reward points were restored and remaining purchase/referral earnings reversed. Cash was not refunded by this action; use WooCommerce refunds for any paid cash balance. Cancelled orders are final for rewards; create a new order if the customer purchases again."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1164
+#: includes/class-br-woocommerce.php:1165
 msgid "Cancellation rewards accounting needs review. No partial cancellation wallet changes were committed. Retry rewards cancellation after resolving the accounting issue."
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1170
+#: includes/class-br-woocommerce.php:1171
 msgid "Retry rewards accounting"
 msgstr ""
 
-#: includes/class-br-woocommerce.php:1171
+#: includes/class-br-woocommerce.php:1172
 msgid "Retry rewards cancellation accounting"
 msgstr ""
 
@@ -2898,6 +2908,10 @@ msgstr ""
 
 #: includes/class-rr-evidence.php:160
 msgid "Mismatch — investigate before adjusting"
+msgstr ""
+
+#: includes/class-rr-freemius-transport.php:42
+msgid "Rewards & Referrals licensing requires verified HTTPS. Check the server certificate trust and connection, then try again."
 msgstr ""
 
 #: includes/class-rr-integrations.php:7
@@ -3852,43 +3866,51 @@ msgstr ""
 msgid "Plain text message"
 msgstr ""
 
-#: includes/class-rr-pro__premium_only.php:80
-msgid "Enter a valid campaign date or leave it empty. Invalid dates cannot create an ongoing campaign."
+#: includes/class-rr-pro__premium_only.php:78
+msgid "Enter an email subject."
 msgstr ""
 
-#: includes/class-rr-pro__premium_only.php:82
-msgid "A campaign end date must follow its start date."
-msgstr ""
-
-#: includes/class-rr-pro__premium_only.php:84
-msgid "Campaign multipliers must be between 0.01 and 100."
-msgstr ""
-
-#: includes/class-rr-pro__premium_only.php:86
-msgid "A campaign contains an unknown customer role."
-msgstr ""
-
-#: includes/class-rr-pro__premium_only.php:89
-msgid "Each campaign must have a unique identifier. Reload and try again."
+#: includes/class-rr-pro__premium_only.php:78
+msgid "Enter an email message."
 msgstr ""
 
 #: includes/class-rr-pro__premium_only.php:99
+msgid "Enter a valid campaign date or leave it empty. Invalid dates cannot create an ongoing campaign."
+msgstr ""
+
+#: includes/class-rr-pro__premium_only.php:101
+msgid "A campaign end date must follow its start date."
+msgstr ""
+
+#: includes/class-rr-pro__premium_only.php:103
+msgid "Campaign multipliers must be between 0.01 and 100."
+msgstr ""
+
+#: includes/class-rr-pro__premium_only.php:105
+msgid "A campaign contains an unknown customer role."
+msgstr ""
+
+#: includes/class-rr-pro__premium_only.php:108
+msgid "Each campaign must have a unique identifier. Reload and try again."
+msgstr ""
+
+#: includes/class-rr-pro__premium_only.php:118
 msgid "Campaign customer eligibility could not be verified. No points were awarded."
 msgstr ""
 
-#: includes/class-rr-recovery.php:75
+#: includes/class-rr-recovery.php:77
 msgid "Payment failed after points were awarded; the wallet review hold could not be recorded. Review rewards immediately."
 msgstr ""
 
-#: includes/class-rr-recovery.php:75
+#: includes/class-rr-recovery.php:77
 msgid "Payment failed after points were awarded. Buyer/referrer wallets are held for review. Confirm payment again or use cancellation / a full WooCommerce refund to resolve this hold; no duplicate earning will be created."
 msgstr ""
 
-#: includes/class-rr-recovery.php:114
+#: includes/class-rr-recovery.php:117
 msgid "Pending accounting recovery"
 msgstr ""
 
-#: includes/class-rr-recovery.php:114
+#: includes/class-rr-recovery.php:117
 msgid "Affected wallets remain locked while refunds, cancellations, paid confirmations or failed-payment releases recover. Payment review holds require confirmed payment, cancellation or a full refund. Missing orders/refunds require investigation; rebuilding a balance does not discard holds."
 msgstr ""
 
@@ -3938,7 +3960,7 @@ msgstr ""
 msgid "Start / restart bounded rebuild"
 msgstr ""
 
-#: rewards-referrals.php:111
+#: rewards-referrals.php:117
 msgid "Rewards & Referrals requires WooCommerce to be active."
 msgstr ""
 
@@ -4318,6 +4340,11 @@ msgid "New relationship approval"
 msgstr ""
 
 #. Declarative setting label, translated when the field is rendered.
+#: includes/class-br-rules.php:14
+msgid "No"
+msgstr ""
+
+#. Declarative setting label, translated when the field is rendered.
 #: includes/class-br-rules.php:48
 msgid "No earning on any reward order"
 msgstr ""
@@ -4462,14 +4489,9 @@ msgstr ""
 msgid "Yes, paid eligible product lines only"
 msgstr ""
 
-#: includes/class-rr-freemius-transport.php:42
-msgid "Rewards & Referrals licensing requires verified HTTPS. Check the server certificate trust and connection, then try again."
-msgstr ""
-
-#: includes/class-rr-pro__premium_only.php:78
-msgid "Enter an email subject."
-msgstr ""
-
-#: includes/class-rr-pro__premium_only.php:78
-msgid "Enter an email message."
+#. translators: %s or %d is the localized number of points, orders, or days described in this message.
+#: includes/class-br-frontend.php:188
+#: includes/class-br-woocommerce.php:613
+#, php-format
+msgid "%s points"
 msgstr ""

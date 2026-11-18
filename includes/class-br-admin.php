@@ -687,7 +687,12 @@ final class RR_Admin {
 		return '<svg class="rr-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="' . esc_attr( $path ) . '"/></svg>';
 	}
 
-	private static function format_rate( $rate ) { return rtrim( rtrim( number_format_i18n( (float) $rate, 2 ), '0' ), '.' ); }
+	private static function format_rate( $rate ) {
+		// Choose precision before localization: decimal separators can be commas or multibyte characters.
+		$canonical = number_format( (float) $rate, 2, '.', '' );
+		$decimals = strlen( rtrim( substr( $canonical, strpos( $canonical, '.' ) + 1 ), '0' ) );
+		return number_format_i18n( (float) $rate, $decimals );
+	}
 	private static function duration_label( $settings ) {
 		if ( 'first_order' === $settings['commission_duration'] ) { return __( 'First order', 'rewards-referrals' ); }
 		/* translators: %s or %d is the localized number of points, orders, or days described in this message. */

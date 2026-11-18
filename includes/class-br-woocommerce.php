@@ -99,7 +99,7 @@ final class RR_WooCommerce {
 		$wallets = array( $customer_id );
 		if ( $relationship ) { $wallets[] = (int) $relationship->referrer_id; }
 		$locked = RR_Ledger::begin_wallet_transaction( $wallets );
-		if ( is_wp_error( $locked ) ) { if ( in_array( $locked->get_error_code(), array( 'rr_wallet_rebuild_pending', 'rr_legacy_lot_maintenance' ), true ) ) { RR_Background::schedule( 'rr_retry_order_rewards', 60, array( absint( $order_id ) ) ); } else { $order->add_order_note( __( 'Rewards accounting could not acquire its wallet lock and needs review.', 'rewards-referrals' ) ); } return; }
+		if ( is_wp_error( $locked ) ) { if ( self::retryable_accounting_error( $locked ) ) { RR_Background::schedule( 'rr_retry_order_rewards', 60, array( absint( $order_id ) ) ); } else { $order->add_order_note( __( 'Rewards accounting could not acquire its wallet lock and needs review.', 'rewards-referrals' ) ); } return; }
 		$transaction_open = true;
 		try {
 			// Use a current shared policy read after locking, so settings/version cannot mix.
@@ -609,8 +609,9 @@ final class RR_WooCommerce {
 
 	public static function reward_price_html( $html, $product ) {
 		if ( is_admin() || 'points_only' !== self::reward_mode( $product ) || ! self::points_price( $product ) ) { return $html; }
-		/* translators: %s or %d is the localized number of points, orders, or days described in this message. */
-		return '<span class="rr-points-price">' . esc_html( sprintf( __( '%s points', 'rewards-referrals' ), number_format_i18n( self::points_price( $product ) ) ) ) . '</span>';
+		$points = self::points_price( $product );
+		/* translators: %s is the localized number of reward points. */
+		return '<span class="rr-points-price">' . esc_html( sprintf( _n( '%s point', '%s points', $points, 'rewards-referrals' ), number_format_i18n( $points ) ) ) . '</span>';
 	}
 
 	public static function frontend_assets() {
@@ -954,7 +955,7 @@ final class RR_WooCommerce {
 		return $rows ? reset( $rows ) : false;
 	}
 	private static function retryable_accounting_error( $result ) {
-		return is_wp_error( $result ) && in_array( $result->get_error_code(), array( 'rr_wallet_rebuild_pending', 'rr_legacy_lot_maintenance', 'rr_wallet_lock', 'rr_wallet_commit', 'rr_wallet_transaction', 'rr_order_storage' ), true );
+		return is_wp_error( $result ) && in_array( $result->get_error_code(), array( 'rr_wallet_rebuild_pending', 'rr_legacy_lot_maintenance', 'rr_wallet_lock', 'rr_wallet_commit', 'rr_wallet_transaction', 'rr_wallet_transaction_lost', 'rr_order_storage' ), true );
 	}
 	public static function confirm_order_redemption( $order_id ) {
 		$order = wc_get_order( $order_id );
@@ -988,7 +989,7 @@ final class RR_WooCommerce {
 				}
 				$finished = RR_Ledger::finish_wallet_transaction( ! is_wp_error( $result ) );
 				if ( is_wp_error( $finished ) ) { $result = $finished; }
-			} catch ( Throwable $error ) { RR_Ledger::finish_wallet_transaction( false ); $result = new WP_Error( 'rr_confirmation_review' ); }
+			} catch ( Throwable $error ) { $finished = RR_Ledger::finish_wallet_transaction( false ); $result = is_wp_error( $finished ) ? $finished : new WP_Error( 'rr_confirmation_review' ); }
 		}
 		if ( is_wp_error( $result ) ) {
 			self::pause_order_confirmation( $order_id, self::retryable_accounting_error( $result ) );
@@ -1094,7 +1095,7 @@ final class RR_WooCommerce {
 					$result = RR_Ledger::release_redemption( $order_id, 'order_failed' );
 					if ( ! is_wp_error( $result ) ) { $order->delete_meta_data( '_rr_confirmation_waiting' ); $order->save(); RR_Recovery::complete( 'release', $order_id ); RR_Recovery::complete( 'confirm', $order_id ); }
 					$finished = RR_Ledger::finish_wallet_transaction( ! is_wp_error( $result ) ); if ( is_wp_error( $finished ) ) { $result = $finished; }
-				} catch ( Throwable $error ) { RR_Ledger::finish_wallet_transaction( false ); $result = new WP_Error( 'rr_release_review' ); }
+				} catch ( Throwable $error ) { $finished = RR_Ledger::finish_wallet_transaction( false ); $result = is_wp_error( $finished ) ? $finished : new WP_Error( 'rr_release_review' ); }
 			}
 			if ( is_wp_error( $result ) ) {
 				$order = self::fresh_order( $order_id ); if ( ! $order || ! $order->has_status( 'failed' ) ) { return; }

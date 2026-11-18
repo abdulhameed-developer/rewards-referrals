@@ -1,0 +1,47 @@
+name: Public Free checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches:
+      - main
+      - 'fix/**'
+      - 'hotfix/**'
+      - 'maintenance/**'
+      - 'test/**'
+      - 'docs/**'
+      - 'release/**'
+      - 'security/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: free-source-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  free-source-validation:
+    name: Free source validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out public Free source without saved credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Record and check the syntax-tool environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          php --version
+          node --version
+          php -n -r 'exit(PHP_MAJOR_VERSION === 8 && PHP_MINOR_VERSION === 3 ? 0 : 1);'
+          node -e 'if (Number(process.versions.node.split(".")[0]) < 20) process.exit(1);'
+      - name: Validate public Free boundaries, metadata and syntax
+        env:
+          RR_BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: node .github/scripts/validate-free-source.mjs

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.5 — interrupted accounting recovery and localization maintenance
+
+- Detect loss of the live wallet transaction and block subsequent unsafe SQL after native database deadlocks/lock timeouts.
+- Preserve cancellation/refund/confirmation/release recovery and native award retries; do not record false completion after rollback.
+- Preserve immutable nested/caller-owned rollback boundaries and existing financial records. This patch does not scan or silently rewrite historical orders; inspect affected orders through supported recovery actions.
+- Correct localized earning-rate decimals, primary point-price plurals and POT extraction of short labels.
+- Preserve all Free/Pro capabilities, schema 23, installed identity, SDK/assets, license notices and existing HTTPS protections.
+- Targeted 1/2/4/8-worker, real deadlock/timeout and native lifecycle tests passed within their documented scopes. Full-package consolidated acceptance is PASS.
+
+
 ## 0.6.4 — verified Freemius transport security maintenance
 
 - Enforce certificate and hostname verification at the WordPress HTTP boundary, including when another SDK instance previously set a shared verification constant false.

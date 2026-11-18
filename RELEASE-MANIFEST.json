@@ -5,260 +5,102 @@
   "plugin_basename": "rewards-referrals/rewards-referrals.php",
   "text_domain": "rewards-referrals",
   "schema": 23,
-  "tested_primary_runtime": {
-    "wordpress": "7.1.4",
-    "woocommerce": "11.3.0",
-    "php": "8.2.12",
-    "database": "MariaDB10.11"
-  },
-  "limits": [
-    "No universal provider or theme certification; external Stripe/PayPal sandbox and licensed WoodMart fixtures remain unavailable.",
-    "External mail delivery, complete human translations, full assistive technology and real device coverage are not certified.",
-    "CSV uses at most 500 query rows and one serialized row in PHP memory, but requires available private temporary storage and hosting time. Client/network/process interruption can still prevent full delivery or cleanup.",
-    "PHP 8.4 CSV call semantics reviewed against the official manual; no fresh 8.4 runtime execution. Backslash CSV escaping intentionally preserves prior healthy bytes; no new RFC 4180 claim.",
-    "Artifact/source attestation does not certify every entitlement, expired/revoked license, provider or distribution workflow. Prior per-version evidence retains its historical scope."
-  ],
-  "distribution_note": "A GitHub release, an Unreleased Freemius deployment and a WordPress.org review submission are separate states. Use the actual channel status; no automatic customer rollout is implied by this manifest.",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "installer": {
-    "filename": "rewards-referrals-0.6.4.zip",
-    "sha256": "b43451b84386f30294c8b5fc5e142a16cc402b740c631c83686fb3dcee7d4080",
+    "filename": "rewards-referrals-0.6.5.zip",
+    "sha256": "ccbd4202834b619dee2c10e260e0a832697b6a15a29d29b13fd12780e6192e7f",
     "files": 295
   },
-  "maintenance_scope": "A first-party WordPress HTTP boundary now enforces verified HTTPS, certificate/hostname validation and the canonical WordPress CA bundle for the official Freemius service origins. It rejects plaintext API fallback, unsafe authorities and unsafe redirect destinations, retains bounded verified HTTPS CDN downloads and strips origin credential headers across allowed download redirects. Bundled SDK source is unchanged. No actual interception or credential exposure is claimed; signup requests already requested TLS verification, while the separately verified shared API path could request false verification. The commercial edition also rejects blank, whitespace-only or empty-after-sanitization event email subject/body overrides at the authorized server-side save boundary. Character-safe length limits preserve valid Unicode. Only that existing Pro save method changed; its implementation remains excluded from this Free tree.",
-  "reused_core_acceptance": {
-    "version": "0.6.0",
-    "archive_sha256": "cf90036d7b46f9eb134fe17bff927f2d0f4a0cd96ef993f164ef3f10ffe1eb07",
-    "runs": 61,
-    "validated_runs": 61,
-    "explicit_RESULT_assertions": 1493,
-    "failed": 0,
-    "scope": "Actual 0.6.0 exact Free result: 61 runs and 1,493 assertions retained for unchanged financial modules. This is not a new 0.6.2 full CI execution and is not added to maintenance check counts."
-  },
-  "additional_scope_reused_from_0_6_0": [
-    "Published0.5.2 upgrade with matched database/code rollback",
-    "Protected currentRC8/schema22 backup upgrade to schema23 with original172lots retained",
-    "Focused MySQL8.0.46 ownership/worker checks",
-    "PHP8.1/8.3/8.5 syntax checks",
-    "Native Elementor editor and multiple widgets; selected desktop/tablet/mobile and RTL workflows"
-  ],
+  "source_freeze_revision": "6b36aa8cdac5e91fb3018d91f5d3b6d918542587",
+  "maintenance_scope": "Detect interrupted wallet transactions and stop unsafe SQL continuation after native deadlocks/timeouts; preserve recovery holds and native retries instead of false completion. Keep immutable nested/caller-owned rollback boundaries. Correct localized earning-rate decimals, primary reward-price plurals and short-label POT extraction. No new independent feature, schema change or dependency.",
   "preserved_previous_release": {
-    "version": "0.6.3",
-    "public_tag": "v0.6.3",
-    "public_commit": "f26951b368b842076b011b5ac3bface2601d5d14",
-    "installer_sha256": "ca55552d00d12ecda33248e92a08a12a33f63a26003e9509bcebb6c14b3c8bd4",
-    "unchanged": true
-  },
-  "additional_targeted_accounting_evidence": {
-    "version": "0.6.1",
-    "installer_sha256": "9a5aa3ea7970a6a36d5c044feaa12e5d06488dd76216f9fe8213c9c489397af1",
-    "passed": 148,
-    "failed": 0,
-    "scope": "Fresh exact 0.6.1 Free isolated runtime: 128 assertions across 16 refund/spend/cancellation scenarios with no object cache and Redis 7.4, 18 fresh-process wallet reads and two financial nonmutation checks. Evidence for unchanged financial modules is reused; this is not a new 0.6.2 full-suite count or high-load HTTP benchmark.",
-    "cold_target_wallet_service_samples": {
-      "per_mode": 9,
-      "no_object_cache_p50_ms": 3.612,
-      "no_object_cache_p95_ms": 5.757,
-      "redis_p50_ms": 3.297,
-      "redis_p95_ms": 10.536,
-      "queries_per_read": 9,
-      "limits": "Target WordPress cache entries cleared; database and OS storage caches not purged. Service inside fresh PHP only, not HTTP request latency."
-    }
-  },
-  "source_freeze_revision": "4a89f520ed48fa111946aef090cc882b7e271bc7",
-  "historical_Pro_evidence": {
-    "original_version": "0.6.0",
-    "passed": 33,
-    "failed": 0,
-    "reuse_through_versions": [
-      "0.6.1",
-      "0.6.2",
-      "0.6.3"
-    ],
-    "scope": "Original 0.6.0 genuine licensed Pro checks are historical. The paid implementation remains byte-identical through 0.6.3; shared corrections have their separate targeted evidence. No new 0.6.3 licensed activation, expired/revoked entitlement fixture or paid browser workflow is claimed."
-  },
-  "previous_maintenance_release_0_6_2": {
-    "version": "0.6.2",
-    "source_revision": "59f0a154daa81996c670cefb4eed62c56ee3dabb",
-    "public_tag_commit": "4ea56dd771b1d795bdc3ed737c67323cfaf45f7d",
-    "installer_sha256": "4236a0b9cbb538910c0fefb43f1059f0fa3cdf5fa134c3da8ce740294eb2e88a",
-    "manifest_sha256": "2061a42479c8918e35b1446257cef4ef713be399ea80914f2082571e66bfd6f5",
-    "changed_or_replaced": false,
-    "maintenance_acceptance": {
-      "package_build": {
-        "status": "PASS",
-        "php_lint_files": 181,
-        "javascript_syntax_files": 6,
-        "errors": 0,
-        "archive_files": 294,
-        "scope": "Exact immutable 0.6.2 Free ZIP CRC/edition/config exclusions and synchronized version metadata; this is not runtime installation acceptance."
-      },
-      "catalog_context": {
-        "passed": 30,
-        "failed": 0,
-        "scope": "Actual WordPress rendering and normalization contracts on isolated candidate source; allowed context/defaults/malformed arrays/encoded query-shaped search/escaped hidden fields."
-      },
-      "reusable_components": {
-        "namespace_contract_checks": 33,
-        "independent_reference_boundary_checks": 21,
-        "separate_full_page_navigation_checks": 6,
-        "separate_AJAX_REST_composition_checks": 4,
-        "failed": 0,
-        "scope": "Candidate source checks preserve canonical account anchors; ordinary page namespaces are deterministic across independent requests and AJAX/REST preview fragments use independent identifiers. Counts overlap in behavior and are not feature counts."
-      },
-      "ledger_CSV": {
-        "actual_registered_callback_checks": 47,
-        "callback_processes": 16,
-        "independent_helper_check_definitions": 19,
-        "helper_runtime_versions": [
-          "8.1.34",
-          "8.2.12",
-          "8.3.36"
-        ],
-        "helper_assertions_across_three_runtimes": 57,
-        "failed": 0,
-        "scope": "Normal/filtered/empty CSV matched previous healthy bytes. First/later query, temporary file creation, zero-write and positive short-write failures returned 503 without partial records in actual isolated WordPress CLI callbacks. Independent helper checks cover cleanup/rewind/private 0600 file/long to short rows. No native browser CSV download or fresh PHP 8.4 runtime is claimed."
-      },
-      "minimum_runtime_smoke": {
-        "wordpress": "6.9",
-        "woocommerce": "10.8.0",
-        "php": "8.1.34",
-        "database": "MariaDB10.11.19",
-        "passed": 15,
-        "failed": 0,
-        "scope": "Real isolated minimum combination: native activation/schema 23, 100 buyer points and 25 direct-referrer points, cancellation/replay/reconciliation, TagProcessor APIs and full-page history navigation on the two UI corrections. Performed before the later CSV correction; not a full final-binary matrix."
-      },
-      "source_preservation": {
-        "status": "PASS",
-        "changed_product_files": 7,
-        "runtime_classes": 3,
-        "metadata_files": 4,
-        "scope": "Other product files byte-identical to 0.6.1; accounting/policy/schema implementations and SDK/assets unchanged. No new feature or dependency."
-      },
-      "native_exact_package_acceptance": {
-        "status": "PASS",
-        "installer_sha256": "4236a0b9cbb538910c0fefb43f1059f0fa3cdf5fa134c3da8ce740294eb2e88a",
-        "installed_files_exact": 294,
-        "package_and_runtime_attestation": {
-          "passed": 38,
-          "failed": 0,
-          "scope": "Exact Free/Pro/source archive contents and edition boundaries plus actual Free runtime identity; this count does not imply fresh Pro entitlement activation."
-        },
-        "synthetic_clone_preservation": {
-          "passed": 6,
-          "failed": 0,
-          "financial_table_hash_sets_unchanged": 10,
-          "settings_and_rules_unchanged": true,
-          "schema": 23,
-          "active_edition": "Free",
-          "scope": "Native WordPress uploaded-ZIP replacement from 0.6.1 to 0.6.2 on the protected synthetic site; all tracked financial hashes and reconciliation components preserved."
-        },
-        "faithful_backup_clone_rehearsal": {
-          "status": "PASS",
-          "tracked_rowsets_unchanged": 18,
-          "schema": 23,
-          "settings_active_edition_and_ownership_preserved": true,
-          "scope": "Restored protected localhost backup; native WordPress upgrader followed by fresh full WordPress bootstrap. No external gateway or SMTP action."
-        },
-        "evidence_sha256": {
-          "package_and_runtime_attestation": "f99c3a46fe675e7c220e0fb8fc991a7aa795ff47976014b2e54a5c813e8c14f7",
-          "native_preservation_summary": "e0b9fe61177bb784f7ce36305bd7082a293d6cbb5a7af85d5a9157e6258a12f0",
-          "faithful_backup_upgrade_summary": "5c03016c13b5ee61aeb510fc8d7a353661fa2112a4d0ad3c442f0cf432fc9355"
-        },
-        "limits": "Native installation and data-preservation acceptance do not certify every browser,theme,gateway or paid account state. The scoped source,CLI export and browser checks remain separately stated."
-      }
-    },
-    "scope": "Prior 0.6.2 results retained as historical evidence for its exact archive and byte-identical unchanged implementations; not a newly executed 0.6.3 full suite."
+    "version": "0.6.4",
+    "public_commit": "9314148fe924e5f3be25fdd731428b904e93013c",
+    "public_tag": "v0.6.4",
+    "installer_sha256": "b43451b84386f30294c8b5fc5e142a16cc402b740c631c83686fb3dcee7d4080",
+    "public_manifest_sha256": "f6abd2b4fa33f814a0b80b9425af38f7e95f6ee561cd1be6d3f018bab9844c69",
+    "all_history_and_archives_preserved": true
   },
   "maintenance_acceptance": {
-    "scope": "0.6.4 artifact/source preservation and separately executed transport tests. Historical/0.6.3 business acceptance is reused only for byte-identical implementations.",
-    "artifact_preservation": {
-      "local_assertions": 40,
-      "local_failures": 0,
-      "combined_local_and_generated_assertions": 50,
-      "combined_failures": 0,
-      "counting_note": "The combined count includes the local assertions; counts must not be added.",
-      "generated_Free_files": 282,
-      "generated_Free_sha256": "2bfc664540b59b7b16a9f4231035046490cd5a51fa501f4bbc3069e2baee97ff",
-      "processor_changes": "Thirteen SDK PO source omissions and reviewed equivalent bootstrap metadata transforms only."
+    "targeted_runtime": {
+      "wordpress": "7.1.4",
+      "woocommerce": "11.3.0/HPOS",
+      "php": "8.2.12",
+      "database": "MariaDB10.11.19"
     },
-    "new_module_sha256": "0532966fa3ea1a9c09aab25cdeb14a2020b7d3540acd0e12694676ca48d24e74",
-    "SDK_native_offline_contracts": {
-      "assertions_per_PHP_runtime": 36,
-      "PHP_runtimes": [
-        "8.1",
-        "8.2",
-        "8.3"
+    "mixed_workload": {
+      "workers": [
+        1,
+        2,
+        4,
+        8
       ],
-      "scope": "Actual SDK and native WordPress HTTP/Requests with offline transport and isolated environment adapters; not real TLS handshakes."
-    },
-    "physical_loopback_TLS_assertions": {
-      "assertions": 4,
+      "financial_assertions": 821,
+      "expiry_composite_outcome": 1,
       "failed": 0,
-      "scope": "Native HTTP/Requests/cURL, synthetic private QA trust anchor, trusted/untrusted server certificate and plaintext fallback; no official vendor certificate or genuine credential."
+      "eight_worker_operations": 1347,
+      "eight_worker_wall_seconds": 66.1248650159996,
+      "same_wallet_refund_spend_checks": 12,
+      "native_deadlock_recovery_checks": 40,
+      "native_timeout_fence_checks": 14,
+      "supported_historical_retry_checks": 6,
+      "scope": "Source-matched isolated financial candidate; exact financial hashes are identical to this installer. No provider payments or actual external mail."
     },
-    "reused_0_6_3_physical_checkout": {
-      "assertions": 35,
+    "changed_module_syntax": {
+      "checks": 20,
       "failed": 0,
-      "scope": "Four actual browser Classic/Blocks mixed physical orders, shipping/taxes, offline COD, native cancellation/refunds/replays. Exact financial modules remain unchanged; not newly repeated on 0.6.4."
+      "php_versions": [
+        "8.1.34",
+        "8.2.12",
+        "8.3.36",
+        "8.5.12"
+      ],
+      "scope": "Five changed PHP modules only; syntax is not full runtime compatibility."
     },
-    "not_claimed": [
-      "Universal gateway/theme/locale/device/accessibility certification",
-      "Actual customer credential exposure or an interception incident",
-      "A new complete historical regression campaign",
-      "Current ordinary Premium fulfillment before supported commercial release"
-    ]
-  },
-  "previous_maintenance_release_0_6_3": {
-    "installer": {
-      "filename": "rewards-referrals-0.6.3.zip",
-      "sha256": "ca55552d00d12ecda33248e92a08a12a33f63a26003e9509bcebb6c14b3c8bd4",
-      "files": 294
+    "consolidated_exact_free_package": {
+      "status": "PASS",
+      "validated_stages": 62,
+      "complete": true,
+      "archive_sha256": "ccbd4202834b619dee2c10e260e0a832697b6a15a29d29b13fd12780e6192e7f",
+      "carried_stages": 61,
+      "resumed_stages": 1,
+      "explicit_RESULT_assertions_counted_once": 1548,
+      "continuous_original_runner_pass": false,
+      "note": "Provenance-based closure of 62 validated stages:61 unchanged hash-verified attempt2 outputs plus one corrected fresh Redis profile.1,548 explicit RESULT passes/zero failures counted once; Redis52 is not doubled with its leaf summaries. Both earlier stopped attempts remain preserved. This is not an uninterrupted full-run pass."
     },
-    "source_freeze_revision": "f3326bb5c0faae0e60952e4fc967bac2df71814a",
-    "maintenance_scope": "One existing product-editor correction: an unused zero points price no longer blocks saving an ordinary cash product. Only the simple-product input minimum changes from one to zero; server-side positive reward prices, financial policies, schema 23, prior 0.6.2 corrections, SDK/assets, Pro modules and technical identifiers remain unchanged.",
-    "maintenance_acceptance": {
-      "product_editor_minimum": {
-        "status": "PASS",
-        "fix_sha256": "d11673a722f82ab4f8bc75b798c7188c5897a7bee8845381f103dbcba39b80b1",
-        "independent_read_only_contracts": {
-          "passed": 23,
-          "failed": 0
-        },
-        "scope": "The exact one-byte candidate passed native product save and purchase/commission previews on the isolated runtime, with23 independent read-only contracts. After installing the final0.6.3 ZIP, the zero-price cash product again passed native Update. Positive-price reward eligibility and charges remain enforced."
-      },
-      "package_build": {
-        "status": "PASS",
-        "php_lint_files": 181,
-        "javascript_syntax_files": 6,
-        "errors": 0,
-        "archive_files": 294
-      },
-      "exact_content_attestation": {
-        "status": "PASS",
-        "passed": 36,
-        "failed": 0,
-        "changed_product_files": 5,
-        "scope": "One exact input minimum plus four metadata files; all other source bytes match immutable 0.6.2. No behavioral suite is executed by the content attester."
-      },
-      "native_exact_package_acceptance": {
-        "status": "PASS",
-        "installer_sha256": "ca55552d00d12ecda33248e92a08a12a33f63a26003e9509bcebb6c14b3c8bd4",
-        "installed_files_exact": 294,
-        "version": "0.6.3",
-        "schema": 23,
-        "financial_table_hash_sets_unchanged": 10,
-        "settings_and_rule_version_unchanged": true,
-        "native_product_update_with_zero_price": "PASS",
-        "scope": "Actual native uploaded-ZIP replacement on the isolated QA site followed by exact294-file identity and financial/settings preservation. Subsequent ordinary cash-product Update succeeded with min0/value0 and no invalid fields. This does not claim a new licensedPro activation, provider test or universal browser/compatibility suite.",
-        "evidence_sha256": {
-          "runtime": "28ae2de108fd591552ec1c1a097dbf1c6096f68cb7991780e6228c5e6b16764f",
-          "native_upgrade": "80e78761e2c079026f5be1ca0f2ffcaa687c60e51ffb20002bf06046a2ed6a02",
-          "native_product_update": "45cd3e55fe9aeaa313d149a9ddcf78903e543e31f9888167f3a91abfa9a16a02",
-          "field_validity": "a5a13fbaa993aef77108240072e58bcb582f8a1783ef53b6eead4c23f1891bb6",
-          "after_product_update_snapshot": "424e23906a540056fe55a063b7d21f0df3d43fe8cda1d88923cef42ed8b7d2ce"
-        }
-      }
+    "generated_Freemius_packages": {
+      "artifact_audit": "40 scoped checks passed/zero failed; known processor transformations only",
+      "Free_files": 282,
+      "Free_sha256": "39b63386954b57d282cc643308aa476b41b56bfe5b58bf17b12a3bee867d04e8",
+      "Pro_files": 284,
+      "Pro_sha256": "0bed37e041acfd4a471ed7375ee81e1b170f16efd7c48868b3f2e68cd78f6a51",
+      "commercial_distribution": "Separate observed Freemius deployment/channel state; no rollout performed by this manifest."
+    },
+    "genuine_Pro_entitlement_scope": {
+      "version": "0.6.5",
+      "active_valid_cache_outage_checks": 8,
+      "denied_historical_Pro_refund_cancellation_and_standard_earning_checks": 10,
+      "failed": 0,
+      "scope": "Genuine dedicated license, native SDK activation/sync and locally blocked actual SDK request. Genuine Pro awards200/200 reversed under vendor-cancelled denied entitlement; new standard100 earning while saved campaign paused. No license/cache fabrication or real payment. Earlier genuine expired blocking/nonblocking cases executed0.6.4; unchanged240 SDK files/commercial gate justify scoped reuse. Not universal billing, renewal or offline-grace certification."
     }
-  }
+  },
+  "source_file_sha256": {
+    "README.md": "f3a794f7768e0bdcc80c4844926b452e31114cb4eea4f0f8aa2223ace14f8106",
+    "includes/class-br-admin.php": "dd8ed3470ea846efb17e45a5a7b67da4b7ca11975783da04f3df330c995d4d0e",
+    "includes/class-br-frontend.php": "10d2a4e3ababbd7bb3d5e2d0915cc7f59d801a7e472eabc7cc81403e90facc58",
+    "includes/class-br-ledger.php": "a5d9947f6b3c84169b15ae9d925d298a61b3abaae88b65bb6874037dbd5a03b1",
+    "includes/class-br-woocommerce.php": "84e7e4e0e237cca19e0b5df751e999e66cc2dcda21b0c5b76ba5d0ed3e8f1aa4",
+    "includes/class-rr-recovery.php": "83e6d8cc2dc0cfd4d1f3feac48492cd61ff1daa5f6abe2762dd91244174d0c02",
+    "languages/rewards-referrals.pot": "ff42973cfd5e532a23f04f9df460cace2b881a47ab1d60f33ce45b63c789d3f1",
+    "readme.txt": "af14673e03cf93ddcc073cdc673b79f29e0af5508fc36ede77232626c3093a2a",
+    "rewards-referrals.php": "010c47dc2fcd11b8f133f3f9a27c1a8a5cb251ac6b742d16f8b47a26d6bfda03"
+  },
+  "distribution_state": "Staging only. Root must verify final acceptance and actual GitHub, WordPress.org and Freemius states; no remote publication is performed by the staging script.",
+  "limits": [
+    "Finite local tests are not universal security, provider, theme, device, assistive-technology or translation certification.",
+    "Target cache eviction is not a cold database/OS-cache benchmark; local callback latency is not production throughput or HTTP page latency.",
+    "Native wpdb can replay a query internally on automatic reconnect before another query-filter pass. Deadlock/timeout acceptance does not certify arbitrary disconnect/reconnect atomicity.",
+    "Genuine scoped Pro entitlement/cancellation/history checks are reported separately. External Internet inbox receipt, authorized provider sandboxes and manual directory approval remain separate external requirements; they are not inferred from artifact integrity.",
+    "Existing false-complete historical orders are not automatically scanned or rewritten by this maintenance patch. Use supported recovery/retry actions and retain a matched database/code backup."
+  ]
 }
